@@ -1,0 +1,76 @@
+{
+  "realm": "bravito",
+  "enabled": true,
+  "roles": {
+    "realm": [
+      {
+        "name": "admin",
+        "description": "Administrador do sistema"
+      },
+      {
+        "name": "gestor",
+        "description": "Gestor"
+      },
+      {
+        "name": "operador",
+        "description": "Operador"
+      },
+      {
+        "name": "auditor",
+        "description": "Auditor"
+      }
+    ]
+  },
+  "clients": [
+    {
+      "clientId": "bravito-flutter",
+      "enabled": true,
+      "clientAuthenticatorType": "client-secret",
+      "publicClient": true,
+      "redirectUris": [
+        "http://localhost:*",
+        "https://localhost:*",
+        "bravito://*"
+      ],
+      "webOrigins": [
+        "*"
+      ],
+      "standardFlowEnabled": true,
+      "implicitFlowEnabled": false,
+      "directAccessGrantsEnabled": false,
+      "attributes": {
+        "pkce.code.challenge.method": "S256"
+      }
+    },
+    {
+      "clientId": "bravito-api",
+      "enabled": true,
+      "clientAuthenticatorType": "client-secret",
+      "publicClient": false,
+      "bearerOnly": true,
+      "standardFlowEnabled": false,
+      "implicitFlowEnabled": false,
+      "directAccessGrantsEnabled": false
+    }
+  ],
+  "users": [
+    {
+      "username": "dev.admin",
+      "enabled": true,
+      "email": "dev.admin@bravito.local",
+      "firstName": "Dev",
+      "lastName": "Admin",
+      "emailVerified": true,
+      "credentials": [
+        {
+          "type": "password",
+          "value": "Admin@123456",
+          "temporary": false
+        }
+      ],
+      "realmRoles": [
+        "admin"
+      ]
+    }
+  ]
+}

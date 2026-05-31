@@ -1,0 +1,40 @@
+# Arquivos de Ambiente (.env)
+.env
+*.env
+.env.*
+!.env.example
+
+# Arquivos e pastas do sistema operacional
+.DS_Store
+Thumbs.db
+
+# .NET / C#
+bin/
+obj/
+*.user
+*.suo
+.vs/
+*.userosscache
+*.sln.docstates
+
+# Flutter / Dart
+.dart_tool/
+.packages
+build/
+.pub-cache/
+.pub/
+/frontend/bravito_app/android/app/src/main/java/io/flutter/plugins/GeneratedPluginRegistrant.java
+/frontend/bravito_app/ios/Flutter/App.framework
+/frontend/bravito_app/ios/Flutter/Flutter.framework
+/frontend/bravito_app/ios/Flutter/Generated.xcconfig
+/frontend/bravito_app/ios/Flutter/app.flx
+/frontend/bravito_app/ios/Flutter/flutter_assets
+/frontend/bravito_app/ios/Flutter/flutter_export_environment.sh
+/frontend/bravito_app/ios/ServiceDefinitions.json
+/frontend/bravito_app/ios/Runner/GeneratedPluginRegistrant.*
+/frontend/bravito_app/linux/flutter/generated_plugin_registrant.cc
+/frontend/bravito_app/linux/flutter/generated_plugins.cmake
+/frontend/bravito_app/macos/Flutter/GeneratedPluginRegistrant.swift
+/frontend/bravito_app/macos/Flutter/ephemeral
+/frontend/bravito_app/windows/flutter/generated_plugin_registrant.cc
+/frontend/bravito_app/windows/flutter/generated_plugins.cmake
