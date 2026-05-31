@@ -131,3 +131,25 @@ docker compose down
 - **PostgreSQL**: `localhost:5432`
 
 > **Nota:** As credenciais contidas no `.env.example` são destinadas **apenas para desenvolvimento local**. Jamais versione um arquivo `.env` ou use senhas fracas em ambientes de produção.
+
+---
+
+## 📱 Executando o Frontend (Flutter)
+
+O projeto Flutter está localizado na pasta `frontend/bravito_app`. 
+Para executar o aplicativo em ambiente de desenvolvimento, siga os passos abaixo:
+
+1. Acesse o diretório do frontend:
+   ```bash
+   cd frontend/bravito_app
+   ```
+2. Instale as dependências:
+   ```bash
+   flutter pub get
+   ```
+3. Execute o projeto (selecione o dispositivo, como Web, Android, iOS, ou Windows):
+   ```bash
+   flutter run
+   ```
+
+> **Nota:** No momento, o aplicativo possui apenas as interfaces visuais (UI placeholders) preparadas, sem implementação real de autenticação e comunicação com o backend.
