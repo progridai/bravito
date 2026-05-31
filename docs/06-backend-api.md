@@ -104,7 +104,7 @@ GET /health/n8n
 Regras obrigatórias
 API deve validar JWT.
 API deve validar permissões.
-API deve validar TenantId.
+API deve validar EmpresaId.
 API deve registrar auditoria.
 API deve proteger endpoints sensíveis.
 API deve não retornar stack trace ao frontend.

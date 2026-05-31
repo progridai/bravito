@@ -81,6 +81,52 @@ Ao gerar estilos, interfaces ou sugerir elementos de UI, use exclusivamente a pa
 > A aplicação deve ter uma aparência corporativa, moderna, segura e amigável.
 > O mascote do Bravito é uma **coruja tecnológica**. Ela pode ser usada como apoio visual, mas a interface deve permanecer profissional e madura, nunca parecendo infantil.
 
+## Padrão obrigatório de nomenclatura do banco de dados
+
+A estrutura de banco de dados do Projeto Bravito deve usar nomes em português.
+
+Essa regra vale para:
+
+* Tabelas.
+* Colunas.
+* Índices.
+* Constraints.
+* Migrations.
+* Entidades persistidas.
+* Configurações de mapeamento do Entity Framework.
+
+Não criar tabelas ou campos em inglês.
+
+Exemplos corretos:
+
+* `Empresas`
+* `Usuarios`
+* `Perfis`
+* `ConversasChat`
+* `MensagensChat`
+* `LogsAuditoria`
+* `ConfiguracoesIntegracao`
+
+Exemplos incorretos:
+
+* `Tenants`
+* `Users`
+* `UserProfiles`
+* `ChatConversations`
+* `ChatMessages`
+* `AuditLogs`
+* `IntegrationSettings`
+
+Exceções permitidas:
+
+* Nomes técnicos de bibliotecas, pacotes e frameworks.
+* Claims padrão do Keycloak/JWT, como `sub`, `email`, `preferred_username`, `realm_access`.
+* Client IDs já definidos no Keycloak, como `bravito-flutter` e `bravito-api`.
+* Variáveis técnicas de ambiente quando forem padrão da ferramenta.
+
+Sempre que for criar uma nova tabela, entidade ou migration, usar nomenclatura em português, clara e consistente.
+
+
 ---
 
 ## 🚀 Escopo Atual (Fase 1)
@@ -105,3 +151,4 @@ Ao gerar estilos, interfaces ou sugerir elementos de UI, use exclusivamente a pa
 - Gestão completa e avançada de usuários.
 - Arquitetura baseada em Microsserviços.
 - Orquestração de containers com Kubernetes.
+

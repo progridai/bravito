@@ -35,7 +35,7 @@ Itens:
 - Gestão de usuários.
 - Gestão de perfis.
 - Gestão de permissões.
-- Gestão de tenants.
+- Gestão de empresas.
 - Auditoria avançada.
 - Painel administrativo.
 - Controle por empresa/unidade.

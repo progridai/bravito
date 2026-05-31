@@ -11,6 +11,7 @@ O foco da primeira fase é a consolidação de uma fundação extremamente segur
 *   **📱 Aplicação Flutter (Mobile/Web)**: Interface responsiva desenvolvida em Flutter com arquitetura de ponta baseada em Material 3.
 *   **⚙️ API Backend em ASP.NET Core**: Gateway seguro e centralizador com implementação de Clean Architecture.
 *   **🗄️ Banco PostgreSQL**: Armazenamento relacional robusto e versionado via migrations.
+*   **🛡️ Autenticação Segura API**: API ASP.NET Core configurada para validar JWT Bearer garantindo restrição severa de endpoints (CORS local e GlobalExceptionHandler prontos).
 *   **💬 Chat com Assistente no n8n**: Canal de chat integrado à inteligência artificial por meio de webhooks seguros.
 *   **📝 Auditoria & Logs Estruturados**: Logs estruturados em tempo real (Serilog) e trilha básica de auditoria de dados.
 *   **🌱 Estrutura Escalável**: Código-fonte desacoplado e modelagem preparada para expansão contínua.

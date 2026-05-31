@@ -73,3 +73,5 @@ O n8n opera exclusivamente como um serviço de rede interno/privado.
 *   **Autenticação**: Uso obrigatório do cabeçalho `Authorization: Bearer <N8N_INTERNAL_TOKEN>` configurado no backend.
 *   **Enriquecimento**: O payload enviado ao n8n deve ser formatado pelo backend, contendo o contexto limpo do usuário (`tenantId`, `userId`) sem trafegar dados brutos ou confidenciais desnecessários.
 *   **Resiliência**: O backend deve aplicar timeouts rigorosos (ex: 15-30 segundos no HTTP Client) para evitar travamento de threads em caso de indisponibilidade do n8n.
+
+O Keycloak será usado como servidor de identidade e autenticação. A aplicação Bravito terá futuramente uma área administrativa própria para gerenciar usuários, vínculos, empresas, lojas, módulos e permissões de negócio. Essa área poderá consumir a API administrativa do Keycloak, evitando que administradores comuns precisem acessar diretamente o painel do Keycloak.

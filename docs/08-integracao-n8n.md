@@ -38,8 +38,8 @@ API registra resposta
 API retorna para Flutter
 Payload sugerido para envio ao n8n
 {
-  "tenantId": "empresa_001",
-  "userId": "usuario_123",
+  "empresaId": "empresa_001",
+  "usuarioId": "usuario_123",
   "userName": "Nome do Usuário",
   "conversationId": "conv_123",
   "message": "Mensagem enviada pelo usuário",
@@ -68,7 +68,7 @@ Log seguro.
 Validação de resposta.
 Headers sugeridos
 Authorization: Bearer {N8N_INTERNAL_TOKEN}
-X-Bravito-Tenant: empresa_001
+X-Bravito-Empresa: empresa_001
 X-Bravito-Source: api
 Regras
 Não colocar URL do webhook no Flutter.

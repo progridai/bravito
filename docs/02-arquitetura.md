@@ -64,7 +64,7 @@ A API ASP.NET Core atua como o gatekeeper de toda a aplicação:
 *   Persistência e manipulação segura de dados no **PostgreSQL** via EF Core.
 *   Centralização e disparo autenticado de webhooks para o **n8n**.
 *   Registro e formatação estruturada de logs técnicos e auditoria.
-*   Configuração e execução de regras de negócio e controle multiempresa (multi-tenant).
+*   Configuração e execução de regras de negócio e controle multiempresa.
 
 ---
 
@@ -80,11 +80,11 @@ O Keycloak é o motor central de autenticação e governança de acesso:
 
 ### 🗄️ 4. Responsabilidade do PostgreSQL (Armazenamento Relacional)
 O PostgreSQL gerencia o armazenamento persistente e versionado dos dados proprietários do ecossistema:
-*   Registros de empresas inquilinas (Tenants).
+*   Registros de empresas inquilinas (Empresas).
 *   Perfis estendidos de usuários associados ao Keycloak.
-*   Histórico estruturado de conversas (ChatConversations).
-*   Histórico de mensagens de chat (ChatMessages) e metadados.
-*   Trilhas de auditoria das operações executadas (AuditLogs).
+*   Histórico estruturado de conversas (ConversasChat).
+*   Histórico de mensagens de chat (MensagensChat) e metadados.
+*   Trilhas de auditoria das operações executadas (LogsAuditoria).
 *   Configurações parametrizadas de integrações da plataforma.
 
 ---
