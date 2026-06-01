@@ -68,14 +68,10 @@ builder.Services.AddCors(options =>
 {
     options.AddPolicy("AllowLocalhost", policy =>
     {
-        policy.WithOrigins(
-                "http://localhost",
-                "http://localhost:3000",
-                "http://localhost:5000",
-                "http://localhost:8080",
-                "http://localhost:5173")
+        policy.SetIsOriginAllowed(origin => new Uri(origin).Host == "localhost" || new Uri(origin).Host == "127.0.0.1")
               .AllowAnyHeader()
-              .AllowAnyMethod();
+              .AllowAnyMethod()
+              .AllowCredentials();
     });
 });
 
@@ -87,8 +83,8 @@ if (app.Environment.IsDevelopment())
 {
     app.UseSwagger();
     app.UseSwaggerUI();
-    app.UseCors("AllowLocalhost");
 }
+app.UseCors("AllowLocalhost");
 
 app.UseHttpsRedirection();
 
