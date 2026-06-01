@@ -9,21 +9,21 @@ FROM mcr.microsoft.com/dotnet/sdk:8.0 AS build
 ARG BUILD_CONFIGURATION=Release
 WORKDIR /src
 
-# Copia os arquivos de projeto (csproj) de cada camada da Clean Architecture
-COPY ["src/Bravito.Api/Bravito.Api.csproj", "src/Bravito.Api/"]
-COPY ["src/Bravito.Application/Bravito.Application.csproj", "src/Bravito.Application/"]
-COPY ["src/Bravito.Domain/Bravito.Domain.csproj", "src/Bravito.Domain/"]
-COPY ["src/Bravito.Infrastructure/Bravito.Infrastructure.csproj", "src/Bravito.Infrastructure/"]
-COPY ["src/Bravito.Shared/Bravito.Shared.csproj", "src/Bravito.Shared/"]
+# Copia os arquivos de projeto (csproj) ajustando para a pasta backend/
+COPY ["backend/src/Bravito.Api/Bravito.Api.csproj", "backend/src/Bravito.Api/"]
+COPY ["backend/src/Bravito.Application/Bravito.Application.csproj", "backend/src/Bravito.Application/"]
+COPY ["backend/src/Bravito.Domain/Bravito.Domain.csproj", "backend/src/Bravito.Domain/"]
+COPY ["backend/src/Bravito.Infrastructure/Bravito.Infrastructure.csproj", "backend/src/Bravito.Infrastructure/"]
+COPY ["backend/src/Bravito.Shared/Bravito.Shared.csproj", "backend/src/Bravito.Shared/"]
 
 # Restaura as dependências
-RUN dotnet restore "./src/Bravito.Api/Bravito.Api.csproj"
+RUN dotnet restore "./backend/src/Bravito.Api/Bravito.Api.csproj"
 
-# Copia todo o código-fonte
-COPY . .
+# Copia todo o restante do código da pasta backend/
+COPY backend/ backend/
 
 # Compila o projeto
-WORKDIR "/src/src/Bravito.Api"
+WORKDIR "/src/backend/src/Bravito.Api"
 RUN dotnet build "./Bravito.Api.csproj" -c $BUILD_CONFIGURATION -o /app/build
 
 # Publica a aplicação
