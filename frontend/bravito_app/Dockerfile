@@ -8,7 +8,6 @@ COPY . .
 
 # Instala as dependências e gera os assets nativos
 RUN flutter pub get
-RUN dart run flutter_launcher_icons
 RUN flutter build web --release
 
 # Estágio 2: Servidor Web (Nginx)
