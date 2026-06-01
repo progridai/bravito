@@ -9,7 +9,10 @@ O foco da primeira fase é a consolidação de uma fundação extremamente segur
 
 *   **🔒 Login com Keycloak**: Autenticação centralizada e segura no padrão OpenID Connect (OIDC).
 *   **📱 Aplicação Flutter (Mobile/Web)**: Interface responsiva desenvolvida em Flutter com arquitetura de ponta baseada em Material 3.
+    *   **Autenticação:** Integrado via `flutter_appauth` e interceptores do `Dio`.
+    *   **Roteamento:** Gerenciado via `go_router` com proteção de rotas baseada no AuthState.
 *   **⚙️ API Backend em ASP.NET Core**: Gateway seguro e centralizador com implementação de Clean Architecture.
+    *   **n8n Assistant Webhook:** Integração segura (Server-to-Server) com o assistente n8n via API backend ASP.NET Core (`POST /api/chat/enviar`). A API atua como um proxy de segurança, populando e blindando o contexto do usuário autenticado no Keycloak antes de enviar ao Webhook, de modo que a URL do n8n e metadados confidenciais nunca cheguem ao Frontend.
 *   **🗄️ Banco PostgreSQL**: Armazenamento relacional robusto e versionado via migrations.
 *   **🛡️ Autenticação Segura API**: API ASP.NET Core configurada para validar JWT Bearer garantindo restrição severa de endpoints (CORS local e GlobalExceptionHandler prontos).
 *   **💬 Chat com Assistente no n8n**: Canal de chat integrado à inteligência artificial por meio de webhooks seguros.
@@ -152,4 +155,18 @@ Para executar o aplicativo em ambiente de desenvolvimento, siga os passos abaixo
    flutter run
    ```
 
-> **Nota:** No momento, o aplicativo possui apenas as interfaces visuais (UI placeholders) preparadas, sem implementação real de autenticação e comunicação com o backend.
+> **Nota:** O aplicativo agora possui integração real de autenticação com Keycloak usando **PKCE (Authorization Code Flow)**. A comunicação com o Backend ASP.NET Core (`/api/auth/me`) já está operacional e protegida por tokens JWT armazenados com segurança.
+
+## 💬 Testando o Chat com o Assistente n8n
+
+Para testar o fluxo completo de mensagens (Flutter -> Backend -> n8n -> Backend -> Flutter):
+
+1. Certifique-se de que a **API ASP.NET Core** está rodando (`dotnet run` dentro de `backend/src/Bravito.Api`).
+2. Abra o Flutter na Web (Google Chrome):
+   ```bash
+   cd frontend/bravito_app
+   flutter run -d chrome
+   ```
+3. Faça Login usando as credenciais do Keycloak (`dev.admin` e `Admin@123456`).
+4. Ao ser redirecionado para a página do Chat, digite uma mensagem. A API encaminhará a mensagem autenticada para o Webhook do n8n de forma segura e invisível para o Client.
+5. Em alguns instantes o balão do assistente deverá aparecer com a resposta do webhook!

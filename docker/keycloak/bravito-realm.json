@@ -36,7 +36,7 @@
         "*"
       ],
       "standardFlowEnabled": true,
-      "implicitFlowEnabled": false,
+      "implicitFlowEnabled": true,
       "directAccessGrantsEnabled": true,
       "attributes": {
         "pkce.code.challenge.method": "S256"

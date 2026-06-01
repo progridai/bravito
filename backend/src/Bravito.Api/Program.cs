@@ -13,6 +13,10 @@ builder.Services.AddControllers();
 var keycloakOptions = builder.Configuration.GetSection("Keycloak").Get<KeycloakOptions>();
 builder.Services.Configure<KeycloakOptions>(builder.Configuration.GetSection("Keycloak"));
 
+// Configure N8n integration
+builder.Services.Configure<Bravito.Infrastructure.Integrations.N8n.Options.N8nOptions>(builder.Configuration.GetSection("N8n"));
+builder.Services.AddHttpClient<Bravito.Application.Chat.Interfaces.IAssistenteChatService, Bravito.Infrastructure.Integrations.N8n.N8nAssistenteChatService>();
+
 builder.Services.AddAuthentication(JwtBearerDefaults.AuthenticationScheme)
     .AddJwtBearer(options =>
     {
