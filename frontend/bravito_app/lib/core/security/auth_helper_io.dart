@@ -29,6 +29,11 @@ class AuthHelperIO implements AuthHelper {
   Future<void> logout() async {
     // Implementação de logout para mobile
   }
+
+  @override
+  Future<Map<String, String>?> handleRedirect() async {
+    return null;
+  }
 }
 
 AuthHelper getAuthHelper() => AuthHelperIO();

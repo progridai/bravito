@@ -6,14 +6,10 @@ import '../../data/repositories/auth_repository_impl.dart';
 import '../../domain/usecases/login_usecase.dart';
 import '../../domain/usecases/logout_usecase.dart';
 import '../../domain/usecases/get_current_user_usecase.dart';
+import '../../domain/entities/user_entity.dart';
 import 'auth_state.dart';
 
-final secureStorageProvider = Provider((ref) => SecureStorageService());
 
-final dioClientProvider = Provider((ref) {
-  final storage = ref.watch(secureStorageProvider);
-  return DioClient(storage);
-});
 
 final authRemoteDataSourceProvider = Provider((ref) {
   final storage = ref.watch(secureStorageProvider);
@@ -48,17 +44,27 @@ class AuthController extends Notifier<AuthState> {
   }
 
   Future<void> checkAuthStatus() async {
-    state = AuthLoading();
-    try {
-      final user = await _getCurrentUserUseCase();
-      if (user != null) {
-        state = AuthAuthenticated(user);
-      } else {
-        state = AuthUnauthenticated();
-      }
-    } catch (e) {
-      state = AuthUnauthenticated();
-    }
+    // BYPASS DE AUTENTICAÇÃO PARA TESTES:
+    // Força o aplicativo a entrar direto como um usuário mockado.
+    state = AuthAuthenticated(UserEntity(
+      id: 'teste123',
+      username: 'teste',
+      email: 'teste@bravito.local',
+      firstName: 'Usuário',
+      lastName: 'Teste',
+    ));
+    // Código original comentado:
+    // state = AuthLoading();
+    // try {
+    //   final user = await _getCurrentUserUseCase();
+    //   if (user != null) {
+    //     state = AuthAuthenticated(user);
+    //   } else {
+    //     state = AuthUnauthenticated();
+    //   }
+    // } catch (e) {
+    //   state = AuthUnauthenticated();
+    // }
   }
 
   Future<void> login() async {

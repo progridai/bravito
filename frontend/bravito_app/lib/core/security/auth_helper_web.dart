@@ -25,25 +25,35 @@ class AuthHelperWeb implements AuthHelper {
     // Implementação para Web
   }
 
+  @override
+  Future<Map<String, String>?> handleRedirect() async {
+    return await handleWebRedirect();
+  }
+
   // Método que deve ser chamado logo após inicialização para capturar o redirecionamento
   static Future<Map<String, String>?> handleWebRedirect() async {
     try {
+      print('DEBUG: [OIDC] handleWebRedirect() iniciado');
       final issuer = await Issuer.discover(Uri.parse(AppConfig.keycloakAuthority));
       final client = Client(issuer, AppConfig.clientId);
       final authenticator = Authenticator(client, scopes: AppConfig.scopes);
       
       final credential = await authenticator.credential;
       if (credential != null) {
+        print('DEBUG: [OIDC] credential encontrado, solicitando token...');
         final token = await credential.getTokenResponse();
+        print('DEBUG: [OIDC] token retornado. Access token presente: ${token.accessToken != null}');
         if (token.accessToken != null) {
            return {
              'access_token': token.accessToken!,
              'refresh_token': token.refreshToken ?? '',
            };
         }
+      } else {
+        print('DEBUG: [OIDC] Nenhuma credential encontrada na URL.');
       }
     } catch (e) {
-      // Falha ao processar redirect
+      print('DEBUG: [OIDC] Exceção durante handleWebRedirect(): $e');
     }
     return null;
   }

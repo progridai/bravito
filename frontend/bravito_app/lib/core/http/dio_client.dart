@@ -1,7 +1,15 @@
 import 'package:dio/dio.dart';
+import 'package:flutter_riverpod/flutter_riverpod.dart';
 import '../config/app_config.dart';
 import 'auth_interceptor.dart';
 import '../storage/secure_storage_service.dart';
+
+final secureStorageProvider = Provider((ref) => SecureStorageService());
+
+final dioClientProvider = Provider((ref) {
+  final storage = ref.watch(secureStorageProvider);
+  return DioClient(storage);
+});
 
 class DioClient {
   late final Dio _dio;

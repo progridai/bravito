@@ -26,7 +26,7 @@ builder.Services.AddAuthentication(JwtBearerDefaults.AuthenticationScheme)
         options.TokenValidationParameters = new TokenValidationParameters
         {
             ValidateIssuer = true,
-            ValidateAudience = true,
+            ValidateAudience = false, // Desativado para tolerar instâncias do Keycloak sem o Audience Mapper configurado na VPS
             ValidateLifetime = true,
             ValidateIssuerSigningKey = true,
             ValidAudience = keycloakOptions?.Audience

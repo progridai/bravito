@@ -68,7 +68,17 @@ class _ChatPageState extends ConsumerState<ChatPage> {
     }
 
     return BravitoAppScaffold(
-      title: 'Bravito Chat',
+      titleWidget: Row(
+        children: [
+          const CircleAvatar(
+            backgroundImage: AssetImage('assets/images/bravito_avatar.png'),
+            backgroundColor: AppColors.white,
+            radius: 18,
+          ),
+          const SizedBox(width: AppSpacing.sm),
+          const Text('Bravito Chat', style: TextStyle(fontWeight: FontWeight.w600)),
+        ],
+      ),
       actions: [
         Padding(
           padding: const EdgeInsets.only(right: AppSpacing.sm),
@@ -121,14 +131,15 @@ class _ChatPageState extends ConsumerState<ChatPage> {
             ),
           Container(
             padding: const EdgeInsets.all(AppSpacing.md),
-            decoration: const BoxDecoration(
+            decoration: BoxDecoration(
               color: AppColors.white,
-              border: Border(
-                top: BorderSide(
-                  color: AppColors.lightGray,
-                  width: 1,
+              boxShadow: [
+                BoxShadow(
+                  color: AppColors.darkGray.withOpacity(0.05),
+                  blurRadius: 10,
+                  offset: const Offset(0, -4),
                 ),
-              ),
+              ],
             ),
             child: Row(
               children: [
@@ -153,7 +164,7 @@ class _ChatPageState extends ConsumerState<ChatPage> {
                 ),
                 const SizedBox(width: AppSpacing.sm),
                 CircleAvatar(
-                  backgroundColor: AppColors.primaryBlue,
+                  backgroundColor: AppColors.gold,
                   child: IconButton(
                     icon: const Icon(Icons.send, color: AppColors.white, size: 20),
                     onPressed: chatState.carregando ? null : _enviarMensagem,

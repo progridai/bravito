@@ -52,39 +52,57 @@ namespace Bravito.Infrastructure.Integrations.N8n
 
                 var responseString = await response.Content.ReadAsStringAsync(cancellationToken);
                 
-                using var jsonDoc = JsonDocument.Parse(responseString);
-                var root = jsonDoc.RootElement;
-
                 string textoResposta = string.Empty;
                 bool sucesso = true;
 
-                if (root.TryGetProperty("message", out var msgElement) && msgElement.ValueKind == JsonValueKind.String)
+                try
                 {
-                    textoResposta = msgElement.GetString() ?? string.Empty;
-                    if (root.TryGetProperty("success", out var successElement)) sucesso = successElement.GetBoolean();
-                }
-                else if (root.TryGetProperty("resposta", out var respElement) && respElement.ValueKind == JsonValueKind.String)
-                {
-                    textoResposta = respElement.GetString() ?? string.Empty;
-                    if (root.TryGetProperty("sucesso", out var sucessoElement)) sucesso = sucessoElement.GetBoolean();
-                }
-                else if (root.TryGetProperty("output", out var outElement) && outElement.ValueKind == JsonValueKind.String)
-                {
-                    textoResposta = outElement.GetString() ?? string.Empty;
-                }
-                else if (root.TryGetProperty("text", out var textElement) && textElement.ValueKind == JsonValueKind.String)
-                {
-                    textoResposta = textElement.GetString() ?? string.Empty;
-                }
-                else
-                {
-                    _logger.LogWarning("O assistente n8n retornou uma resposta com formato desconhecido. Payload: {Response}", responseString);
-                    return new EnviarMensagemChatResponse
+                    using var jsonDoc = JsonDocument.Parse(responseString);
+                    var root = jsonDoc.RootElement;
+
+                    if (root.ValueKind == JsonValueKind.Object)
                     {
-                        Sucesso = false,
-                        MensagemErro = "O assistente não retornou uma resposta válida no momento.",
-                        ConversaId = request.ConversaId
-                    };
+                        if (root.TryGetProperty("message", out var msgElement) && msgElement.ValueKind == JsonValueKind.String)
+                        {
+                            textoResposta = msgElement.GetString() ?? string.Empty;
+                            if (root.TryGetProperty("success", out var successElement)) sucesso = successElement.GetBoolean();
+                        }
+                        else if (root.TryGetProperty("resposta", out var respElement) && respElement.ValueKind == JsonValueKind.String)
+                        {
+                            textoResposta = respElement.GetString() ?? string.Empty;
+                            if (root.TryGetProperty("sucesso", out var sucessoElement)) sucesso = sucessoElement.GetBoolean();
+                        }
+                        else if (root.TryGetProperty("output", out var outElement) && outElement.ValueKind == JsonValueKind.String)
+                        {
+                            textoResposta = outElement.GetString() ?? string.Empty;
+                        }
+                        else if (root.TryGetProperty("text", out var textElement) && textElement.ValueKind == JsonValueKind.String)
+                        {
+                            textoResposta = textElement.GetString() ?? string.Empty;
+                        }
+                        else
+                        {
+                            textoResposta = responseString; // JSON genérico
+                        }
+                    }
+                    else if (root.ValueKind == JsonValueKind.Array && root.GetArrayLength() > 0)
+                    {
+                        textoResposta = root[0].ToString(); // Array JSON
+                    }
+                    else
+                    {
+                        textoResposta = responseString;
+                    }
+                }
+                catch (JsonException)
+                {
+                    // Não é JSON, provavelmente texto puro retornado pelo Respond to Webhook do n8n
+                    textoResposta = responseString;
+                }
+
+                if (string.IsNullOrWhiteSpace(textoResposta))
+                {
+                    textoResposta = "✅ O n8n recebeu a mensagem com sucesso, mas retornou uma resposta vazia.";
                 }
 
                 _logger.LogInformation("Mensagem processada pelo assistente com sucesso. UsuarioId: {UsuarioId}", usuario.Id);

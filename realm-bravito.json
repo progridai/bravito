@@ -1,0 +1,76 @@
+{
+  "id": "bravito",
+  "realm": "bravito",
+  "displayName": "Bravito Realm",
+  "enabled": true,
+  "sslRequired": "external",
+  "registrationAllowed": true,
+  "registrationEmailAsUsername": false,
+  "rememberMe": true,
+  "verifyEmail": false,
+  "loginWithEmailAllowed": true,
+  "duplicateEmailsAllowed": false,
+  "resetPasswordAllowed": true,
+  "clients": [
+    {
+      "clientId": "bravito-flutter",
+      "name": "Bravito Flutter Client",
+      "description": "Cliente para o aplicativo Flutter do Bravito",
+      "enabled": true,
+      "clientAuthenticatorType": "client-secret",
+      "redirectUris": [
+        "http://localhost:*/*",
+        "bravito://login-callback",
+        "https://bravito-app-bravito.lchoyg.easypanel.host/*"
+      ],
+      "webOrigins": [
+        "*"
+      ],
+      "standardFlowEnabled": true,
+      "implicitFlowEnabled": true,
+      "directAccessGrantsEnabled": true,
+      "serviceAccountsEnabled": false,
+      "publicClient": true,
+      "frontchannelLogout": true,
+      "protocol": "openid-connect",
+      "attributes": {
+        "post.logout.redirect.uris": "+"
+      }
+    },
+    {
+      "clientId": "bravito-api",
+      "name": "Bravito Backend API",
+      "description": "Audiência para validação de tokens na API ASP.NET Core",
+      "enabled": true,
+      "clientAuthenticatorType": "client-secret",
+      "redirectUris": [],
+      "webOrigins": [],
+      "standardFlowEnabled": false,
+      "implicitFlowEnabled": false,
+      "directAccessGrantsEnabled": false,
+      "serviceAccountsEnabled": false,
+      "publicClient": true,
+      "protocol": "openid-connect"
+    }
+  ],
+  "users": [
+    {
+      "username": "teste",
+      "enabled": true,
+      "emailVerified": true,
+      "firstName": "Usuario",
+      "lastName": "Teste",
+      "email": "teste@bravito.com.br",
+      "credentials": [
+        {
+          "type": "password",
+          "value": "Bravida@2023!",
+          "temporary": false
+        }
+      ],
+      "realmRoles": [
+        "default-roles-bravito"
+      ]
+    }
+  ]
+}

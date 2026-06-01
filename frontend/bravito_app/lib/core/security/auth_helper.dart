@@ -5,6 +5,7 @@ import 'auth_helper_stub.dart'
 abstract class AuthHelper {
   Future<Map<String, String>?> login();
   Future<void> logout();
+  Future<Map<String, String>?> handleRedirect();
 
   factory AuthHelper() => getAuthHelper();
 }

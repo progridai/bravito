@@ -1,7 +1,6 @@
 import 'package:dio/dio.dart';
 import '../../../../core/storage/secure_storage_service.dart';
 import '../../../../core/security/auth_helper.dart';
-import '../../../../core/security/auth_helper_web.dart' if (dart.library.io) '../../../../core/security/auth_helper_stub.dart'; // import condicional só pra usar a classe na compilação da web, na verdade podemos usar kIsWeb
 import 'package:flutter/foundation.dart';
 import '../models/user_model.dart';
 
@@ -16,10 +15,8 @@ class AuthRemoteDataSource {
 
   Future<void> processWebRedirect() async {
     if (kIsWeb) {
-      // Tratamento especial para o redirect da Web
       try {
-        final AuthHelperWeb helperWeb = _authHelper as AuthHelperWeb;
-        final tokens = await AuthHelperWeb.handleWebRedirect();
+        final tokens = await _authHelper.handleRedirect();
         if (tokens != null) {
           await _storageService.saveTokens(
             accessToken: tokens['access_token']!,
@@ -56,22 +53,31 @@ class AuthRemoteDataSource {
 
   Future<UserModel?> getCurrentUser() async {
     try {
+      print('DEBUG: Iniciando getCurrentUser()');
       await processWebRedirect(); // Verifica e salva se houver token na URL (Web)
 
       final token = await _storageService.getAccessToken();
+      print('DEBUG: Token obtido do storage: ${token != null ? "SIM (Tamanho: ${token.length})" : "NÃO"}');
       if (token == null) return null;
 
+      print('DEBUG: Chamando a API local /api/auth/me...');
       final response = await _dio.get('/api/auth/me');
+      print('DEBUG: Resposta da API recebida com status: ${response.statusCode}');
       
       if (response.statusCode == 200) {
         return UserModel.fromJson(response.data);
       }
       return null;
     } catch (e) {
-      if (e is DioException && e.response?.statusCode == 401) {
-        await _storageService.clearTokens();
+      print('DEBUG: Exceção capturada em getCurrentUser(): $e');
+      if (e is DioException) {
+        print('DEBUG: DioException Status Code: ${e.response?.statusCode}');
+        print('DEBUG: DioException Data: ${e.response?.data}');
+        if (e.response?.statusCode == 401) {
+          await _storageService.clearTokens();
+        }
       }
-      throw Exception('Erro ao buscar dados do usuário');
+      throw Exception('Erro ao buscar dados do usuário: $e');
     }
   }
 

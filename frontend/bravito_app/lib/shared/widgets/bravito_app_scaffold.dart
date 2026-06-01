@@ -3,21 +3,25 @@ import 'package:flutter/material.dart';
 class BravitoAppScaffold extends StatelessWidget {
   final Widget body;
   final String? title;
+  final Widget? titleWidget;
   final List<Widget>? actions;
 
   const BravitoAppScaffold({
     super.key,
     required this.body,
     this.title,
+    this.titleWidget,
     this.actions,
   });
 
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-      appBar: title != null
+      appBar: (title != null || titleWidget != null)
           ? AppBar(
-              title: Text(title!),
+              backgroundColor: const Color(0xFF1E3A8A), // AppColors.primaryBlue
+              foregroundColor: Colors.white,
+              title: titleWidget ?? (title != null ? Text(title!) : null),
               actions: actions,
             )
           : null,
