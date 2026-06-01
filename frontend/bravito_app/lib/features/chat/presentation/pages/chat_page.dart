@@ -98,8 +98,7 @@ class _ChatPageState extends ConsumerState<ChatPage> {
           ),
           tooltip: 'Trocar Tema',
           onPressed: () {
-            final isDark = ref.read(themeModeProvider) == ThemeMode.dark;
-            ref.read(themeModeProvider.notifier).state = isDark ? ThemeMode.light : ThemeMode.dark;
+            ref.read(themeModeProvider.notifier).toggle();
           },
         ),
         IconButton(
