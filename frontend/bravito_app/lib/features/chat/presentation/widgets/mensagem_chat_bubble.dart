@@ -20,6 +20,8 @@ class MensagemChatBubble extends StatelessWidget {
     Color bubbleColor;
     Color textColor;
 
+    final isDark = Theme.of(context).brightness == Brightness.dark;
+
     if (isSistema) {
       bubbleColor = AppColors.error.withOpacity(0.1);
       textColor = AppColors.error;
@@ -27,8 +29,8 @@ class MensagemChatBubble extends StatelessWidget {
       bubbleColor = AppColors.primaryBlue;
       textColor = AppColors.white;
     } else {
-      bubbleColor = AppColors.lightGray;
-      textColor = AppColors.darkGray;
+      bubbleColor = isDark ? AppColors.darkGray.withOpacity(0.5) : AppColors.lightGray;
+      textColor = isDark ? AppColors.white : AppColors.darkGray;
     }
 
     return Align(

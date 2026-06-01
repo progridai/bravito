@@ -9,6 +9,7 @@ import '../../../../shared/widgets/bravito_app_scaffold.dart';
 import '../../domain/entities/tipo_remetente.dart';
 import '../controllers/chat_controller.dart';
 import '../widgets/mensagem_chat_bubble.dart';
+import '../../../../app/theme_provider.dart';
 
 class ChatPage extends ConsumerStatefulWidget {
   const ChatPage({super.key});
@@ -90,6 +91,18 @@ class _ChatPageState extends ConsumerState<ChatPage> {
           ),
         ),
         IconButton(
+          icon: Icon(
+            Theme.of(context).brightness == Brightness.dark 
+                ? Icons.light_mode 
+                : Icons.dark_mode,
+          ),
+          tooltip: 'Trocar Tema',
+          onPressed: () {
+            final isDark = ref.read(themeModeProvider) == ThemeMode.dark;
+            ref.read(themeModeProvider.notifier).state = isDark ? ThemeMode.light : ThemeMode.dark;
+          },
+        ),
+        IconButton(
           icon: const Icon(Icons.logout),
           tooltip: 'Sair',
           onPressed: () {
@@ -132,7 +145,7 @@ class _ChatPageState extends ConsumerState<ChatPage> {
           Container(
             padding: const EdgeInsets.all(AppSpacing.md),
             decoration: BoxDecoration(
-              color: AppColors.white,
+              color: Theme.of(context).colorScheme.surface,
               boxShadow: [
                 BoxShadow(
                   color: AppColors.darkGray.withOpacity(0.05),
@@ -154,7 +167,7 @@ class _ChatPageState extends ConsumerState<ChatPage> {
                         borderSide: BorderSide.none,
                       ),
                       filled: true,
-                      fillColor: AppColors.lightGray,
+                      fillColor: Theme.of(context).scaffoldBackgroundColor,
                       contentPadding: const EdgeInsets.symmetric(
                         horizontal: AppSpacing.lg,
                         vertical: AppSpacing.sm,
