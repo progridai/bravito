@@ -10,7 +10,7 @@ namespace Bravito.Api.Controllers
 {
     [ApiController]
     [Route("api/[controller]")]
-    [AllowAnonymous] // Permitindo acesso livre temporário para testes
+    [Authorize]
     public class ChatController : ControllerBase
     {
         private readonly IAssistenteChatService _assistenteChatService;
@@ -28,13 +28,12 @@ namespace Bravito.Api.Controllers
                 return BadRequest(new { erro = "A mensagem não pode estar vazia." });
             }
 
-            // BYPASS: Preenchendo dados falsos do usuário para não quebrar a integração com o n8n
             var usuario = new UsuarioAutenticado
             {
-                Id = "teste123",
-                NomeUsuario = "usuario_teste",
-                Email = "teste@bravito.local",
-                EmpresaId = "empresa_teste"
+                Id = User.FindFirst(ClaimTypes.NameIdentifier)?.Value ?? string.Empty,
+                NomeUsuario = User.FindFirst("preferred_username")?.Value ?? string.Empty,
+                Email = User.FindFirst(ClaimTypes.Email)?.Value ?? string.Empty,
+                EmpresaId = null // TODO: Obter de claim ou banco no futuro
             };
 
             var resposta = await _assistenteChatService.EnviarMensagemAsync(request, usuario, cancellationToken);

@@ -44,27 +44,17 @@ class AuthController extends Notifier<AuthState> {
   }
 
   Future<void> checkAuthStatus() async {
-    // BYPASS DE AUTENTICAÇÃO PARA TESTES:
-    // Força o aplicativo a entrar direto como um usuário mockado.
-    state = AuthAuthenticated(UserEntity(
-      id: 'teste123',
-      username: 'teste',
-      email: 'teste@bravito.local',
-      firstName: 'Usuário',
-      lastName: 'Teste',
-    ));
-    // Código original comentado:
-    // state = AuthLoading();
-    // try {
-    //   final user = await _getCurrentUserUseCase();
-    //   if (user != null) {
-    //     state = AuthAuthenticated(user);
-    //   } else {
-    //     state = AuthUnauthenticated();
-    //   }
-    // } catch (e) {
-    //   state = AuthUnauthenticated();
-    // }
+    state = AuthLoading();
+    try {
+      final user = await _getCurrentUserUseCase();
+      if (user != null) {
+        state = AuthAuthenticated(user);
+      } else {
+        state = AuthUnauthenticated();
+      }
+    } catch (e) {
+      state = AuthUnauthenticated();
+    }
   }
 
   Future<void> login() async {
