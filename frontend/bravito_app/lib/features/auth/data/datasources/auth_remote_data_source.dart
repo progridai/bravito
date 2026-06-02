@@ -54,7 +54,6 @@ class AuthRemoteDataSource {
   Future<UserModel?> getCurrentUser() async {
     try {
       print('DEBUG: Iniciando getCurrentUser()');
-      await processWebRedirect(); // Verifica e salva se houver token na URL (Web)
 
       final token = await _storageService.getAccessToken();
       print('DEBUG: Token obtido do storage: ${token != null ? "SIM (Tamanho: ${token.length})" : "NÃO"}');
