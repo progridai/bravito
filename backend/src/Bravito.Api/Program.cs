@@ -88,14 +88,6 @@ var app = builder.Build();
 using (var scope = app.Services.CreateScope())
 {
     var db = scope.ServiceProvider.GetRequiredService<Bravito.Infrastructure.Data.BravitoDbContext>();
-    
-    // Limpa as tabelas antigas para evitar conflitos com a nova migration
-    db.Database.ExecuteSqlRaw("DROP TABLE IF EXISTS conversas_contextos CASCADE;");
-    db.Database.ExecuteSqlRaw("DROP TABLE IF EXISTS conversas_eventos CASCADE;");
-    db.Database.ExecuteSqlRaw("DROP TABLE IF EXISTS conversas_mensagens CASCADE;");
-    db.Database.ExecuteSqlRaw("DROP TABLE IF EXISTS conversas CASCADE;");
-    db.Database.ExecuteSqlRaw("DELETE FROM \"__EFMigrationsHistory\";");
-
     db.Database.Migrate();
 }
 
