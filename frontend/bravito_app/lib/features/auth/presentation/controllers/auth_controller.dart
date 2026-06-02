@@ -1,4 +1,5 @@
 import 'package:flutter/services.dart';
+import 'package:flutter/foundation.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:local_auth/local_auth.dart';
 import '../../../../core/storage/secure_storage_service.dart';
@@ -50,7 +51,7 @@ class AuthController extends Notifier<AuthState> {
     try {
       final user = await _getCurrentUserUseCase();
       if (user != null) {
-        if (requireBiometric) {
+        if (requireBiometric && !kIsWeb) {
           final LocalAuthentication auth = LocalAuthentication();
           final bool canAuthenticateWithBiometrics = await auth.canCheckBiometrics;
           final bool canAuthenticate = canAuthenticateWithBiometrics || await auth.isDeviceSupported();
@@ -59,10 +60,6 @@ class AuthController extends Notifier<AuthState> {
             try {
               final bool didAuthenticate = await auth.authenticate(
                 localizedReason: 'Por favor, autentique-se para acessar o Bravito',
-                options: const AuthenticationOptions(
-                  stickyAuth: true,
-                  biometricOnly: false,
-                ),
               );
               
               if (!didAuthenticate) {
