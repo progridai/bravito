@@ -28,7 +28,7 @@ android {
         targetSdk = flutter.targetSdkVersion
         versionCode = flutter.versionCode
         versionName = flutter.versionName
-        manifestPlaceholders["appAuthRedirectScheme"] = "br.com.rsul.bravito"
+        manifestPlaceholders["appAuthRedirectScheme"] = "bravito"
     }
 
     buildTypes {

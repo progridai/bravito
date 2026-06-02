@@ -1,7 +1,7 @@
 class AppConfig {
   AppConfig._();
 
-  static const String keycloakAuthority = 'https://bravito-keycloak.lchoyg.easypanel.host/realms/bravito';
+  static const String keycloakAuthority = 'https://auth.bravida.com.br/realms/bravito';
   static const String clientId = 'bravito-flutter';
   static const String apiBaseUrl = 'https://bravito-app-bravito.lchoyg.easypanel.host';
   
