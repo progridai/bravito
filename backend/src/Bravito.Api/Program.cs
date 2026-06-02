@@ -30,11 +30,16 @@ builder.Services.AddAuthentication(JwtBearerDefaults.AuthenticationScheme)
     {
         options.Authority = keycloakOptions?.Authority;
         options.Audience = keycloakOptions?.Audience;
-        options.RequireHttpsMetadata = keycloakOptions?.RequireHttpsMetadata ?? false;
+        options.RequireHttpsMetadata = false; // Como é tráfego interno no Docker, não exige HTTPS para o metadado
+        
+        // Bypass do bloqueio de DNS/NAT Loopback do Easypanel usando a rede interna do Docker
+        options.MetadataAddress = "http://keycloak:8080/realms/bravito/.well-known/openid-configuration";
+
         options.TokenValidationParameters = new TokenValidationParameters
         {
             ValidateIssuer = true,
-            ValidateAudience = false, // Desativado para tolerar instâncias do Keycloak sem o Audience Mapper configurado na VPS
+            ValidIssuer = keycloakOptions?.Authority, // Exige que o token venha do domínio oficial (auth.bravida.com.br)
+            ValidateAudience = false,
             ValidateLifetime = true,
             ValidateIssuerSigningKey = true,
             ValidAudience = keycloakOptions?.Audience
