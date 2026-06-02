@@ -1,7 +1,6 @@
 import 'package:flutter/services.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:local_auth/local_auth.dart';
-import 'package:local_auth/error_codes.dart' as auth_error;
 import '../../../../core/storage/secure_storage_service.dart';
 import '../../../../core/http/dio_client.dart';
 import '../../data/datasources/auth_remote_data_source.dart';
@@ -71,13 +70,8 @@ class AuthController extends Notifier<AuthState> {
                 return;
               }
             } on PlatformException catch (e) {
-              if (e.code == auth_error.notEnrolled || e.code == auth_error.notAvailable || e.code == auth_error.passcodeNotSet) {
-                // If not enrolled or not available, we can just let them in since it's a fallback, 
-                // or force them to login again. Let's let them in if they don't have it set up.
-              } else {
-                state = AuthUnauthenticated();
-                return;
-              }
+              // Se houver qualquer erro com a biometria nativa, permitimos o acesso
+              // como fallback ou logamos o erro e deixamos passar.
             }
           }
         }
