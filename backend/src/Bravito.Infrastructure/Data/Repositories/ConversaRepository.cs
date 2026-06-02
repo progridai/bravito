@@ -11,9 +11,9 @@ namespace Bravito.Infrastructure.Data.Repositories
 {
     public class ConversaRepository : IConversaRepository
     {
-        private readonly DbContext _context; // Assumindo BravitoDbContext no futuro
+        private readonly BravitoDbContext _context; // Assumindo BravitoDbContext no futuro
 
-        public ConversaRepository(DbContext context)
+        public ConversaRepository(BravitoDbContext context)
         {
             _context = context;
         }
