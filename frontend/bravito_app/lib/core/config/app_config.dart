@@ -3,7 +3,7 @@ class AppConfig {
 
   static const String keycloakAuthority = 'https://bravito-keycloak.lchoyg.easypanel.host/realms/bravito';
   static const String clientId = 'bravito-flutter';
-  static const String apiBaseUrl = 'https://bravito-api.lchoyg.easypanel.host';
+  static const String apiBaseUrl = 'https://bravito-app-bravito.lchoyg.easypanel.host';
   
   // Custom scheme para redirect URI no mobile (bravito://login-callback)
   static const String redirectUrlScheme = 'bravito';
