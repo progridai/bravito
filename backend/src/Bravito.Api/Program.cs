@@ -85,7 +85,7 @@ if (app.Environment.IsDevelopment())
 }
 app.UseCors("AllowAll");
 
-app.UseHttpsRedirection();
+// app.UseHttpsRedirection(); // Removido pois o Easypanel (Traefik) já cuida do HTTPS e redirecionamentos
 
 app.UseAuthentication();
 app.UseAuthorization();
