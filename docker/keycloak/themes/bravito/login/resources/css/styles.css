@@ -10,6 +10,10 @@
 body {
     background-color: #F2F4F7 !important;
     font-family: 'Inter', sans-serif !important;
+    display: flex !important;
+    align-items: center !important;
+    justify-content: center !important;
+    min-height: 100vh !important;
 }
 
 /* Modificando o Header para Bravito */
@@ -39,6 +43,20 @@ body {
     box-shadow: 0 10px 25px rgba(30, 58, 138, 0.1) !important;
     border: 1px solid rgba(212, 175, 55, 0.3) !important; /* Dourado */
     padding: 2rem !important;
+    width: 100% !important;
+    max-width: 450px !important;
+    margin: 0 auto !important;
+}
+
+.pf-v5-c-login {
+    justify-content: center !important;
+    align-items: center !important;
+}
+
+.pf-v5-c-login__container {
+    width: 100% !important;
+    max-width: 450px !important;
+    margin: 0 auto !important;
 }
 
 /* Título (Sign in to your account) */
