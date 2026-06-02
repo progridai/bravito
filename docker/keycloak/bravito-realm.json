@@ -1,6 +1,7 @@
 {
   "realm": "bravito",
   "enabled": true,
+  "loginTheme": "bravito",
   "roles": {
     "realm": [
       {

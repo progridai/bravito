@@ -22,6 +22,14 @@ class _ChatPageState extends ConsumerState<ChatPage> {
   final TextEditingController _textController = TextEditingController();
   final ScrollController _scrollController = ScrollController();
 
+  @override
+  void initState() {
+    super.initState();
+    WidgetsBinding.instance.addPostFrameCallback((_) {
+      ref.read(chatControllerProvider.notifier).carregarHistorico();
+    });
+  }
+
   void _enviarMensagem() {
     final texto = _textController.text;
     if (texto.trim().isEmpty) return;

@@ -1,4 +1,7 @@
+import 'package:flutter/services.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
+import 'package:local_auth/local_auth.dart';
+import 'package:local_auth/error_codes.dart' as auth_error;
 import '../../../../core/storage/secure_storage_service.dart';
 import '../../../../core/http/dio_client.dart';
 import '../../data/datasources/auth_remote_data_source.dart';
@@ -39,15 +42,45 @@ class AuthController extends Notifier<AuthState> {
     
     // We can't do async initialization directly in build if we want to return a synchronous state 
     // without returning AsyncValue. But for simplicity, we return AuthInitial and trigger check.
-    Future.microtask(() => checkAuthStatus());
+    Future.microtask(() => checkAuthStatus(requireBiometric: true));
     return AuthInitial();
   }
 
-  Future<void> checkAuthStatus() async {
+  Future<void> checkAuthStatus({bool requireBiometric = false}) async {
     state = AuthLoading();
     try {
       final user = await _getCurrentUserUseCase();
       if (user != null) {
+        if (requireBiometric) {
+          final LocalAuthentication auth = LocalAuthentication();
+          final bool canAuthenticateWithBiometrics = await auth.canCheckBiometrics;
+          final bool canAuthenticate = canAuthenticateWithBiometrics || await auth.isDeviceSupported();
+
+          if (canAuthenticate) {
+            try {
+              final bool didAuthenticate = await auth.authenticate(
+                localizedReason: 'Por favor, autentique-se para acessar o Bravito',
+                options: const AuthenticationOptions(
+                  stickyAuth: true,
+                  biometricOnly: false,
+                ),
+              );
+              
+              if (!didAuthenticate) {
+                state = AuthUnauthenticated();
+                return;
+              }
+            } on PlatformException catch (e) {
+              if (e.code == auth_error.notEnrolled || e.code == auth_error.notAvailable || e.code == auth_error.passcodeNotSet) {
+                // If not enrolled or not available, we can just let them in since it's a fallback, 
+                // or force them to login again. Let's let them in if they don't have it set up.
+              } else {
+                state = AuthUnauthenticated();
+                return;
+              }
+            }
+          }
+        }
         state = AuthAuthenticated(user);
       } else {
         state = AuthUnauthenticated();
@@ -61,7 +94,7 @@ class AuthController extends Notifier<AuthState> {
     state = AuthLoading();
     try {
       await _loginUseCase();
-      await checkAuthStatus();
+      await checkAuthStatus(requireBiometric: false);
     } catch (e) {
       state = AuthError('Erro ao realizar login. Tente novamente.');
     }

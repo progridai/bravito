@@ -9,6 +9,7 @@ import '../../domain/entities/mensagem_chat.dart';
 import '../../domain/entities/tipo_remetente.dart';
 import '../../domain/repositories/chat_repository.dart';
 import '../../domain/usecases/enviar_mensagem_chat_usecase.dart';
+import '../../domain/usecases/obter_historico_chat_usecase.dart';
 import 'chat_state.dart';
 
 final chatRemoteDataSourceProvider = Provider((ref) {
@@ -24,14 +25,44 @@ final enviarMensagemChatUseCaseProvider = Provider((ref) {
   return EnviarMensagemChatUseCase(ref.watch(chatRepositoryProvider));
 });
 
+final obterHistoricoChatUseCaseProvider = Provider((ref) {
+  return ObterHistoricoChatUseCase(ref.watch(chatRepositoryProvider));
+});
+
 class ChatController extends Notifier<ChatState> {
   late EnviarMensagemChatUseCase _enviarMensagemUseCase;
+  late ObterHistoricoChatUseCase _obterHistoricoUseCase;
   final _uuid = const Uuid();
 
   @override
   ChatState build() {
     _enviarMensagemUseCase = ref.watch(enviarMensagemChatUseCaseProvider);
+    _obterHistoricoUseCase = ref.watch(obterHistoricoChatUseCaseProvider);
     return ChatState();
+  }
+
+  Future<void> carregarHistorico() async {
+    try {
+      state = state.copyWith(carregando: true, clearErro: true);
+      
+      final response = await _obterHistoricoUseCase();
+      if (response.sucesso) {
+        final mensagensHistorico = response.mensagens.map((e) => e.toEntity()).toList();
+        
+        state = state.copyWith(
+          mensagens: mensagensHistorico,
+          conversaId: response.conversaId ?? state.conversaId,
+          carregando: false,
+        );
+      } else {
+        state = state.copyWith(carregando: false);
+      }
+    } catch (e) {
+      state = state.copyWith(
+        carregando: false,
+        erro: _formatarErro(e),
+      );
+    }
   }
 
   Future<void> enviarMensagem(String texto) async {

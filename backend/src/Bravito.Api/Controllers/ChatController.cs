@@ -6,6 +6,7 @@ using System.Threading;
 using Bravito.Application.Chat.Interfaces;
 using Bravito.Application.Chat.Models;
 using Bravito.Domain.Chat;
+using System.Linq;
 
 namespace Bravito.Api.Controllers
 {
@@ -92,6 +93,43 @@ namespace Bravito.Api.Controllers
             await _conversaRepository.SalvarAlteracoesAsync(cancellationToken);
 
             return Ok(resposta);
+        }
+
+        [HttpGet("historico")]
+        public async Task<IActionResult> ObterHistorico(CancellationToken cancellationToken)
+        {
+            var usuarioId = User.FindFirst(ClaimTypes.NameIdentifier)?.Value;
+            if (string.IsNullOrEmpty(usuarioId))
+            {
+                return Unauthorized();
+            }
+
+            var conversas = await _conversaRepository.ObterPorUsuarioIdAsync(usuarioId, cancellationToken);
+            var ultimaConversa = conversas.FirstOrDefault();
+
+            var response = new HistoricoChatResponse
+            {
+                Sucesso = true
+            };
+
+            if (ultimaConversa != null)
+            {
+                response.ConversaId = ultimaConversa.Id.ToString();
+                
+                // O repositório já inclui as mensagens na ObterPorIdAsync, mas ObterPorUsuarioIdAsync não inclui.
+                // Então buscamos as mensagens separadamente para garantir.
+                var mensagens = await _conversaRepository.ObterMensagensPorConversaIdAsync(ultimaConversa.Id, cancellationToken);
+                
+                response.Mensagens = mensagens.Select(m => new MensagemChatDto
+                {
+                    Id = m.Id.ToString(),
+                    TipoRemetente = m.TipoRemetente,
+                    Conteudo = m.Conteudo,
+                    DataCriacao = m.DataCriacao
+                }).ToList();
+            }
+
+            return Ok(response);
         }
     }
 }
