@@ -36,27 +36,37 @@ body {
     letter-spacing: -0.5px;
 }
 
-/* O container principal do Login */
-.pf-v5-c-login__main {
+/* Forçar o grid do PatternFly a se comportar como flexbox centralizado */
+.pf-v5-c-login {
+    display: flex !important;
+    align-items: center !important;
+    justify-content: center !important;
+    min-height: 100vh !important;
+    background-color: #334155 !important; /* Cor escura do fundo */
+    background-image: none !important;
+}
+
+/* O container que engloba tudo (cabeçalho + form) */
+.pf-v5-c-login__container {
+    display: block !important;
+    width: 100% !important;
+    max-width: 450px !important; /* Limite do card */
+    margin: 0 auto !important;
     background-color: #ffffff !important;
     border-radius: 16px !important;
-    box-shadow: 0 10px 25px rgba(30, 58, 138, 0.1) !important;
-    border: 1px solid rgba(212, 175, 55, 0.3) !important; /* Dourado */
+    box-shadow: 0 10px 25px rgba(0, 0, 0, 0.3) !important;
+    border: 1px solid rgba(212, 175, 55, 0.3) !important;
     padding: 2rem !important;
-    width: 100% !important;
-    max-width: 450px !important;
-    margin: 0 auto !important;
+    grid-template-columns: 1fr !important; /* Remove o grid padrão se houver */
 }
 
-.pf-v5-c-login {
-    justify-content: center !important;
-    align-items: center !important;
-}
-
-.pf-v5-c-login__container {
-    width: 100% !important;
-    max-width: 450px !important;
-    margin: 0 auto !important;
+/* Remover o estilo extra do main para não ter "caixa dentro de caixa" */
+.pf-v5-c-login__main {
+    background: transparent !important;
+    box-shadow: none !important;
+    border: none !important;
+    padding: 0 !important;
+    max-width: none !important;
 }
 
 /* Título (Sign in to your account) */
