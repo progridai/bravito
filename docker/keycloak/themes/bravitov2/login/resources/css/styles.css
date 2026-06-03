@@ -1,0 +1,58 @@
+/* Bravito Theme v2 */
+@import url('https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&display=swap');
+
+.pf-v5-c-background-image { display: none !important; }
+body { background-color: #F2F4F7 !important; font-family: 'Inter', sans-serif !important; }
+
+#kc-header-wrapper { visibility: hidden; position: relative; }
+#kc-header-wrapper::after {
+    visibility: visible; content: "Bravito"; position: absolute;
+    top: 0; left: 0; width: 100%; text-align: center; font-size: 36px;
+    font-weight: 700; color: #1E3A8A; letter-spacing: -0.5px;
+}
+
+/* Forçar o grid do PatternFly a se comportar como flexbox centralizado */
+.pf-v5-c-login {
+    display: flex !important; align-items: center !important;
+    justify-content: center !important; min-height: 100vh !important;
+    background-color: #1E293B !important; /* Cor escura do fundo */
+    background-image: none !important;
+}
+
+/* O container que vira o "card" */
+.pf-v5-c-login__container {
+    display: block !important; width: 100% !important; max-width: 450px !important;
+    margin: 0 auto !important; background-color: #ffffff !important;
+    border-radius: 16px !important; box-shadow: 0 10px 25px rgba(0, 0, 0, 0.3) !important;
+    border: 1px solid rgba(212, 175, 55, 0.3) !important; padding: 2rem !important;
+    grid-template-columns: 1fr !important;
+}
+
+.pf-v5-c-login__main {
+    background: transparent !important; box-shadow: none !important;
+    border: none !important; padding: 0 !important; max-width: none !important;
+}
+
+#kc-page-title { color: #334155 !important; font-weight: 600 !important; font-size: 24px !important; }
+.pf-v5-c-form__label-text { color: #334155 !important; font-weight: 500 !important; }
+
+.pf-v5-c-form-control input {
+    background-color: #F2F4F7 !important; border-radius: 8px !important;
+    border: 1px solid #e2e8f0 !important; color: #334155 !important;
+}
+
+.pf-v5-c-form-control input:focus {
+    border-color: #2563EB !important; border-bottom-color: #2563EB !important;
+    box-shadow: 0 0 0 2px rgba(37, 99, 235, 0.1) !important;
+}
+
+.pf-v5-c-button.pf-m-primary {
+    background-color: #1E3A8A !important; color: #ffffff !important;
+    border-radius: 8px !important; font-weight: 600 !important;
+    transition: all 0.2s ease !important;
+}
+
+.pf-v5-c-button.pf-m-primary:hover { background-color: #2563EB !important; }
+a { color: #D4AF37 !important; font-weight: 500 !important; }
+a:hover { color: #b3912a !important; text-decoration: none !important; }
+.pf-v5-c-check__label { color: #334155 !important; }
