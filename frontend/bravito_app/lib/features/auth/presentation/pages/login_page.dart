@@ -43,13 +43,15 @@ class LoginPage extends ConsumerWidget {
                 mainAxisSize: MainAxisSize.min,
                 crossAxisAlignment: CrossAxisAlignment.stretch,
                 children: [
-                  ClipRRect(
-                    borderRadius: BorderRadius.circular(16),
-                    child: Image.asset(
-                      'assets/images/bravito_avatar.png',
-                      width: 120,
-                      height: 120,
-                      fit: BoxFit.cover,
+                  Center(
+                    child: ClipRRect(
+                      borderRadius: BorderRadius.circular(16),
+                      child: Image.asset(
+                        'assets/images/bravito_mascot_4.png',
+                        width: 140,
+                        height: 140,
+                        fit: BoxFit.contain,
+                      ),
                     ),
                   ),
                   const SizedBox(height: AppSpacing.md),
