@@ -43,10 +43,14 @@ class LoginPage extends ConsumerWidget {
                 mainAxisSize: MainAxisSize.min,
                 crossAxisAlignment: CrossAxisAlignment.stretch,
                 children: [
-                  const Icon(
-                    Icons.smart_toy_rounded,
-                    size: 64,
-                    color: AppColors.primaryBlue,
+                  ClipRRect(
+                    borderRadius: BorderRadius.circular(16),
+                    child: Image.asset(
+                      'assets/images/bravito_avatar.png',
+                      width: 120,
+                      height: 120,
+                      fit: BoxFit.cover,
+                    ),
                   ),
                   const SizedBox(height: AppSpacing.md),
                   const Text(
@@ -68,7 +72,7 @@ class LoginPage extends ConsumerWidget {
                   ),
                   const SizedBox(height: AppSpacing.xl),
                   BravitoPrimaryButton(
-                    text: 'Entrar com Keycloak',
+                    text: 'Autenticar',
                     isLoading: isLoading,
                     onPressed: () {
                       ref.read(authControllerProvider.notifier).login();
