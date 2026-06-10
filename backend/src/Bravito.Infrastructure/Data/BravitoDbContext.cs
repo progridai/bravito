@@ -70,17 +70,18 @@ namespace Bravito.Infrastructure.Data
             var perfisRecursos = new List<PerfilAcessoRecurso>();
 
             // Admin recebe todos
+            int i = 1;
             foreach (var r in recursos)
             {
-                perfisRecursos.Add(new PerfilAcessoRecurso { Id = Guid.NewGuid(), PerfilAcessoId = adminPerfilId, RecursoId = r.Id, DataCriacao = DateTime.UtcNow });
+                perfisRecursos.Add(new PerfilAcessoRecurso { Id = Guid.Parse($"b0000000-0000-0000-0000-00000000000{i++}"), PerfilAcessoId = adminPerfilId, RecursoId = r.Id, DataCriacao = DateTime.UtcNow });
             }
 
             // Operador recebe chat e conversas
-            perfisRecursos.Add(new PerfilAcessoRecurso { Id = Guid.NewGuid(), PerfilAcessoId = operadorPerfilId, RecursoId = Guid.Parse("a0000000-0000-0000-0000-000000000001"), DataCriacao = DateTime.UtcNow });
-            perfisRecursos.Add(new PerfilAcessoRecurso { Id = Guid.NewGuid(), PerfilAcessoId = operadorPerfilId, RecursoId = Guid.Parse("a0000000-0000-0000-0000-000000000002"), DataCriacao = DateTime.UtcNow });
+            perfisRecursos.Add(new PerfilAcessoRecurso { Id = Guid.Parse($"b0000000-0000-0000-0000-000000000101"), PerfilAcessoId = operadorPerfilId, RecursoId = Guid.Parse("a0000000-0000-0000-0000-000000000001"), DataCriacao = DateTime.UtcNow });
+            perfisRecursos.Add(new PerfilAcessoRecurso { Id = Guid.Parse($"b0000000-0000-0000-0000-000000000102"), PerfilAcessoId = operadorPerfilId, RecursoId = Guid.Parse("a0000000-0000-0000-0000-000000000002"), DataCriacao = DateTime.UtcNow });
 
             // Somente Chat recebe chat
-            perfisRecursos.Add(new PerfilAcessoRecurso { Id = Guid.NewGuid(), PerfilAcessoId = somenteChatPerfilId, RecursoId = Guid.Parse("a0000000-0000-0000-0000-000000000001"), DataCriacao = DateTime.UtcNow });
+            perfisRecursos.Add(new PerfilAcessoRecurso { Id = Guid.Parse($"b0000000-0000-0000-0000-000000000201"), PerfilAcessoId = somenteChatPerfilId, RecursoId = Guid.Parse("a0000000-0000-0000-0000-000000000001"), DataCriacao = DateTime.UtcNow });
 
             modelBuilder.Entity<PerfilAcessoRecurso>().HasData(perfisRecursos);
         }

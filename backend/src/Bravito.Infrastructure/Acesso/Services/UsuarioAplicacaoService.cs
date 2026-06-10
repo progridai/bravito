@@ -44,21 +44,7 @@ namespace Bravito.Infrastructure.Acesso.Services
                     Ativo = true,
                     DataCriacao = DateTime.UtcNow
                 };
-
-                // Se for o primeiro usuário, atribui perfil Administrador
-                var isFirstUser = !await _context.Usuarios.AnyAsync(cancellationToken);
-                if (isFirstUser)
-                {
-                    var adminPerfilId = Guid.Parse("11111111-1111-1111-1111-111111111111");
-                    usuario.PerfisAcesso.Add(new UsuarioPerfilAcesso
-                    {
-                        Id = Guid.NewGuid(),
-                        PerfilAcessoId = adminPerfilId,
-                        UsuarioId = usuario.Id,
-                        DataCriacao = DateTime.UtcNow
-                    });
-                }
-
+                // Se for o primeiro usuário (ou não há nenhum), será tratado no fluxo abaixo
                 await _context.Usuarios.AddAsync(usuario, cancellationToken);
                 await _context.SaveChangesAsync(cancellationToken);
             }
@@ -84,6 +70,28 @@ namespace Bravito.Infrastructure.Acesso.Services
                 }
             }
 
+            // Garante que o primeiro usuário a logar (ou se o sistema estiver sem admins) vire Administrador
+            var adminPerfilId = Guid.Parse("11111111-1111-1111-1111-111111111111");
+            var existeAdmin = await _context.UsuariosPerfisAcesso.AnyAsync(upa => upa.PerfilAcessoId == adminPerfilId, cancellationToken);
+            
+            if (!existeAdmin && !usuario.PerfisAcesso.Any(pa => pa.PerfilAcessoId == adminPerfilId))
+            {
+                var novoVinculo = new UsuarioPerfilAcesso
+                {
+                    Id = Guid.NewGuid(),
+                    PerfilAcessoId = adminPerfilId,
+                    UsuarioId = usuario.Id,
+                    DataCriacao = DateTime.UtcNow
+                };
+                usuario.PerfisAcesso.Add(novoVinculo);
+                
+                if (_context.Entry(usuario).State == EntityState.Detached)
+                {
+                    _context.UsuariosPerfisAcesso.Add(novoVinculo);
+                }
+                
+                await _context.SaveChangesAsync(cancellationToken);
+            }
             return usuario;
         }
     }
