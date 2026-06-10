@@ -23,8 +23,8 @@ class MensagemChatBubble extends StatelessWidget {
     final isDark = Theme.of(context).brightness == Brightness.dark;
 
     if (isSistema) {
-      bubbleColor = BravitoColors.error.withOpacity(0.1);
-      textColor = BravitoColors.error;
+      bubbleColor = BravitoColors.erro.withOpacity(0.1);
+      textColor = BravitoColors.erro;
     } else if (isUsuario) {
       bubbleColor = BravitoColors.dourado;
       textColor = BravitoColors.branco;
@@ -72,7 +72,7 @@ class MensagemChatBubble extends StatelessWidget {
               Text(
                 mensagem.erro!,
                 style: const TextStyle(
-                  color: BravitoColors.error,
+                  color: BravitoColors.erro,
                   fontSize: 12,
                 ),
               ),

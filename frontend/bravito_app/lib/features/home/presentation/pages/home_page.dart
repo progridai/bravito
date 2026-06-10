@@ -1,6 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:go_router/go_router.dart';
+import '../../../../core/constants/app_colors.dart';
 import '../../../../core/theme/app_theme.dart';
 import '../../../../core/constants/app_spacing.dart';
 import '../../../../core/security/recursos_app.dart';
@@ -57,13 +58,13 @@ class HomePage extends ConsumerWidget {
             const Icon(
               Icons.pets, 
               size: 80,
-              color: BravitoColors.azulPrincipal,
+              color: BravitoColors.dourado,
             ),
             const SizedBox(height: AppSpacing.lg),
             Text(
               'Olá, $userName!',
               style: Theme.of(context).textTheme.headlineSmall?.copyWith(
-                    color: BravitoColors.azulPrincipal,
+                    color: BravitoColors.dourado,
                     fontWeight: FontWeight.bold,
                   ),
               textAlign: TextAlign.center,
@@ -91,8 +92,8 @@ class HomePage extends ConsumerWidget {
                 context.push('/menu');
               },
               style: OutlinedButton.styleFrom(
-                foregroundColor: BravitoColors.azulPrincipal,
-                side: const BorderSide(color: BravitoColors.azulPrincipal, width: 2),
+                foregroundColor: BravitoColors.dourado,
+                side: const BorderSide(color: BravitoColors.dourado, width: 2),
                 padding: const EdgeInsets.symmetric(vertical: 16),
                 shape: RoundedRectangleBorder(
                   borderRadius: BorderRadius.circular(8),

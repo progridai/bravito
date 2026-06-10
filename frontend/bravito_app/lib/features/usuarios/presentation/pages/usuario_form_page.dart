@@ -1,6 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:go_router/go_router.dart';
+import '../../../../core/constants/app_colors.dart';
 import '../../../../core/theme/app_theme.dart';
 import '../../../../core/constants/app_spacing.dart';
 import '../../../../shared/widgets/bravito_app_scaffold.dart';
@@ -149,20 +150,20 @@ class _UsuarioFormPageState extends ConsumerState<UsuarioFormPage> {
                 const SizedBox(height: AppSpacing.md),
               ],
               SwitchListTile(
-                title: const Text('Usuário Ativo', style: TextStyle(fontWeight: FontWeight.bold, color: BravitoColors.cinzaEscuro)),
+                title: const Text('Usuário Ativo', style: TextStyle(fontWeight: FontWeight.bold, color: BravitoColors.pretoSuave)),
                 value: _ativo,
-                activeColor: BravitoColors.azulPrincipal,
+                activeColor: BravitoColors.dourado,
                 onChanged: (val) => setState(() => _ativo = val),
               ),
               const SizedBox(height: AppSpacing.md),
-              const Text('Perfis de Acesso', style: TextStyle(fontWeight: FontWeight.bold, fontSize: 16, color: BravitoColors.cinzaEscuro)),
+              const Text('Perfis de Acesso', style: TextStyle(fontWeight: FontWeight.bold, fontSize: 16, color: BravitoColors.pretoSuave)),
               const SizedBox(height: AppSpacing.sm),
               ...state.perfisDisponiveis.map((perfil) {
                 return CheckboxListTile(
                   title: Text(perfil.nome, style: const TextStyle(fontWeight: FontWeight.bold)),
                   subtitle: perfil.descricao != null ? Text(perfil.descricao!) : null,
                   value: _selectedPerfis.contains(perfil.id),
-                  activeColor: BravitoColors.azulPrincipal,
+                  activeColor: BravitoColors.dourado,
                   onChanged: (bool? checked) {
                     setState(() {
                       if (checked == true) {

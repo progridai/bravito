@@ -1,6 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:go_router/go_router.dart';
+import '../../../../core/constants/app_colors.dart';
 import '../../../../core/theme/app_theme.dart';
 import '../../../../core/constants/app_spacing.dart';
 import '../../../../core/security/recursos_app.dart';
@@ -32,10 +33,10 @@ class MenuPage extends ConsumerWidget {
             BravitoCard(
               padding: const EdgeInsets.all(0),
               child: ListTile(
-                leading: const Icon(Icons.people_outline, color: BravitoColors.azulPrincipal),
+                leading: const Icon(Icons.people_outline, color: BravitoColors.dourado),
                 title: const Text(
                   'Usuários',
-                  style: TextStyle(fontWeight: FontWeight.bold, color: BravitoColors.cinzaEscuro),
+                  style: TextStyle(fontWeight: FontWeight.bold, color: BravitoColors.pretoSuave),
                 ),
                 trailing: const Icon(Icons.arrow_forward_ios, size: 16),
                 onTap: () {
@@ -48,10 +49,10 @@ class MenuPage extends ConsumerWidget {
           BravitoCard(
             padding: const EdgeInsets.all(0),
             child: ListTile(
-              leading: const Icon(Icons.lock_outline, color: BravitoColors.azulPrincipal),
+              leading: const Icon(Icons.lock_outline, color: BravitoColors.dourado),
               title: const Text(
                 'Alterar Senha',
-                style: TextStyle(fontWeight: FontWeight.bold, color: BravitoColors.cinzaEscuro),
+                style: TextStyle(fontWeight: FontWeight.bold, color: BravitoColors.pretoSuave),
               ),
               trailing: const Icon(Icons.arrow_forward_ios, size: 16),
               onTap: () {
@@ -64,10 +65,10 @@ class MenuPage extends ConsumerWidget {
             BravitoCard(
               padding: const EdgeInsets.all(0),
               child: ListTile(
-                leading: const Icon(Icons.chat_bubble_outline, color: BravitoColors.azulPrincipal),
+                leading: const Icon(Icons.chat_bubble_outline, color: BravitoColors.dourado),
                 title: const Text(
                   'Visualizar Conversas',
-                  style: TextStyle(fontWeight: FontWeight.bold, color: BravitoColors.cinzaEscuro),
+                  style: TextStyle(fontWeight: FontWeight.bold, color: BravitoColors.pretoSuave),
                 ),
                 trailing: const Icon(Icons.arrow_forward_ios, size: 16),
                 onTap: () {

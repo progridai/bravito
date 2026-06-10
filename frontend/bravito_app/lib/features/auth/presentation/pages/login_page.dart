@@ -23,7 +23,7 @@ class LoginPage extends ConsumerWidget {
         ScaffoldMessenger.of(context).showSnackBar(
           SnackBar(
             content: Text(next.message),
-            backgroundColor: BravitoColors.error,
+            backgroundColor: BravitoColors.erro,
           ),
         );
       }

@@ -1,6 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:go_router/go_router.dart';
+import '../../../../core/constants/app_colors.dart';
 import '../../../../core/theme/app_theme.dart';
 import '../../../../core/constants/app_spacing.dart';
 import '../../../../shared/widgets/bravito_app_scaffold.dart';
@@ -45,11 +46,11 @@ class _UsuariosPageState extends ConsumerState<UsuariosPage> {
         actions: [
           TextButton(
             onPressed: () => Navigator.of(context).pop(false),
-            child: const Text('Cancelar', style: TextStyle(color: BravitoColors.cinzaEscuro)),
+            child: const Text('Cancelar', style: TextStyle(color: BravitoColors.pretoSuave)),
           ),
           TextButton(
             onPressed: () => Navigator.of(context).pop(true),
-            child: const Text('Confirmar', style: TextStyle(color: BravitoColors.azulPrincipal)),
+            child: const Text('Confirmar', style: TextStyle(color: BravitoColors.dourado)),
           ),
         ],
       ),
@@ -90,7 +91,7 @@ class _UsuariosPageState extends ConsumerState<UsuariosPage> {
       body: _buildBody(state, podeEditar, podeDesativar),
       floatingActionButton: podeCadastrar
           ? FloatingActionButton(
-              backgroundColor: BravitoColors.azulPrincipal,
+              backgroundColor: BravitoColors.dourado,
               onPressed: () => context.push('/menu/usuarios/form'),
               child: const Icon(Icons.add, color: Colors.white),
             )

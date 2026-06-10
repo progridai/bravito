@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import '../../../../core/constants/app_colors.dart';
 import '../../../../core/theme/app_theme.dart';
 import '../../../../core/constants/app_spacing.dart';
 import '../../../../shared/widgets/bravito_app_scaffold.dart';
@@ -19,13 +20,13 @@ class ConversasPage extends StatelessWidget {
               const Icon(
                 Icons.chat_bubble_outline,
                 size: 80,
-                color: BravitoColors.cinzaEscuro,
+                color: BravitoColors.pretoSuave,
               ),
               const SizedBox(height: AppSpacing.lg),
               Text(
                 'Nenhuma conversa carregada ainda.',
                 style: Theme.of(context).textTheme.titleLarge?.copyWith(
-                      color: BravitoColors.cinzaEscuro,
+                      color: BravitoColors.pretoSuave,
                     ),
                 textAlign: TextAlign.center,
               ),

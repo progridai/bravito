@@ -1,6 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:url_launcher/url_launcher.dart';
 import '../../../../core/config/app_config.dart';
+import '../../../../core/constants/app_colors.dart';
 import '../../../../core/theme/app_theme.dart';
 import '../../../../core/constants/app_spacing.dart';
 import '../../../../shared/widgets/bravito_app_scaffold.dart';
@@ -48,13 +49,13 @@ class AlterarSenhaPage extends StatelessWidget {
                   const Icon(
                     Icons.security,
                     size: 64,
-                    color: BravitoColors.azulPrincipal,
+                    color: BravitoColors.dourado,
                   ),
                   const SizedBox(height: AppSpacing.md),
                   Text(
                     'Ambiente Seguro',
                     style: Theme.of(context).textTheme.titleLarge?.copyWith(
-                          color: BravitoColors.azulPrincipal,
+                          color: BravitoColors.dourado,
                           fontWeight: FontWeight.bold,
                         ),
                     textAlign: TextAlign.center,
@@ -89,7 +90,7 @@ class AlterarSenhaPage extends StatelessWidget {
               child: const Text(
                 'Voltar',
                 style: TextStyle(
-                  color: BravitoColors.azulPrincipal,
+                  color: BravitoColors.dourado,
                   fontWeight: FontWeight.bold,
                   fontSize: 16,
                 ),

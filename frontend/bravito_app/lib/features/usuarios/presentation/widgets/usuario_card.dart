@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import '../../../../core/constants/app_colors.dart';
 import '../../../../core/theme/app_theme.dart';
 import '../../../../core/constants/app_spacing.dart';
 import '../../../../shared/widgets/bravito_card.dart';
@@ -28,10 +29,10 @@ class UsuarioCard extends StatelessWidget {
         crossAxisAlignment: CrossAxisAlignment.start,
         children: [
           CircleAvatar(
-            backgroundColor: BravitoColors.azulPrincipal.withOpacity(0.1),
+            backgroundColor: BravitoColors.dourado.withOpacity(0.1),
             child: Text(
               usuario.nome.isNotEmpty ? usuario.nome[0].toUpperCase() : 'U',
-              style: const TextStyle(color: BravitoColors.azulPrincipal, fontWeight: FontWeight.bold),
+              style: const TextStyle(color: BravitoColors.dourado, fontWeight: FontWeight.bold),
             ),
           ),
           const SizedBox(width: AppSpacing.md),
@@ -44,7 +45,7 @@ class UsuarioCard extends StatelessWidget {
                   style: const TextStyle(
                     fontWeight: FontWeight.bold,
                     fontSize: 16,
-                    color: BravitoColors.cinzaEscuro,
+                    color: BravitoColors.pretoSuave,
                   ),
                 ),
                 const SizedBox(height: 4),
@@ -99,7 +100,7 @@ class UsuarioCard extends StatelessWidget {
             children: [
               if (podeEditar)
                 IconButton(
-                  icon: const Icon(Icons.edit, color: BravitoColors.azulSecundario, size: 20),
+                  icon: const Icon(Icons.edit, color: BravitoColors.pretoSuave, size: 20),
                   onPressed: onEdit,
                   tooltip: 'Editar',
                 ),
