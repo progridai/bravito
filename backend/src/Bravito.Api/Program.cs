@@ -20,7 +20,10 @@ builder.Services.AddHttpClient<Bravito.Application.Chat.Interfaces.IAssistenteCh
 
 // Configure PostgreSQL Database
 builder.Services.AddDbContext<Bravito.Infrastructure.Data.BravitoDbContext>(options =>
-    options.UseNpgsql(builder.Configuration.GetConnectionString("DefaultConnection")));
+{
+    options.UseNpgsql(builder.Configuration.GetConnectionString("DefaultConnection"));
+    options.ConfigureWarnings(warnings => warnings.Ignore(Microsoft.EntityFrameworkCore.Diagnostics.RelationalEventId.PendingModelChangesWarning));
+});
 
 // Configure Repositories
 builder.Services.AddScoped<Bravito.Application.Chat.Interfaces.IConversaRepository, Bravito.Infrastructure.Data.Repositories.ConversaRepository>();
