@@ -71,7 +71,7 @@ class _UsuarioFormPageState extends ConsumerState<UsuarioFormPage> {
       }
 
       final controller = ref.read(usuarioFormControllerProvider.notifier);
-      final success = await controller.salvarUsuario(
+      final errorMessage = await controller.salvarUsuario(
         id: widget.usuarioId,
         nome: _nomeController.text,
         email: _emailController.text,
@@ -80,11 +80,17 @@ class _UsuarioFormPageState extends ConsumerState<UsuarioFormPage> {
         perfilIds: _selectedPerfis,
       );
 
-      if (success && mounted) {
-        ScaffoldMessenger.of(context).showSnackBar(
-          const SnackBar(content: Text('Usuário salvo com sucesso!'), backgroundColor: Colors.green),
-        );
-        context.pop();
+      if (mounted) {
+        if (errorMessage == null) {
+          ScaffoldMessenger.of(context).showSnackBar(
+            const SnackBar(content: Text('Usuário salvo com sucesso!'), backgroundColor: Colors.green),
+          );
+          context.pop();
+        } else {
+          ScaffoldMessenger.of(context).showSnackBar(
+            SnackBar(content: Text(errorMessage), backgroundColor: Colors.red),
+          );
+        }
       }
     }
   }
@@ -93,13 +99,7 @@ class _UsuarioFormPageState extends ConsumerState<UsuarioFormPage> {
   Widget build(BuildContext context) {
     final state = ref.watch(usuarioFormControllerProvider);
 
-    ref.listen<UsuarioFormState>(usuarioFormControllerProvider, (previous, next) {
-      if (next is UsuarioFormError) {
-        ScaffoldMessenger.of(context).showSnackBar(
-          SnackBar(content: Text(next.message), backgroundColor: Colors.red),
-        );
-      }
-    });
+
 
     return BravitoAppScaffold(
       title: widget.usuarioId == null ? 'Novo Usuário' : 'Editar Usuário',

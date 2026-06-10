@@ -62,7 +62,7 @@ class UsuarioFormController extends Notifier<UsuarioFormState> {
     }
   }
 
-  Future<bool> salvarUsuario({
+  Future<String?> salvarUsuario({
     String? id,
     required String nome,
     required String email,
@@ -70,6 +70,10 @@ class UsuarioFormController extends Notifier<UsuarioFormState> {
     required bool ativo,
     required List<String> perfilIds,
   }) async {
+    UsuarioFormLoaded? previousState;
+    if (state is UsuarioFormLoaded) {
+      previousState = state as UsuarioFormLoaded;
+    }
     state = UsuarioFormLoading();
     try {
       if (id == null) {
@@ -93,7 +97,7 @@ class UsuarioFormController extends Notifier<UsuarioFormState> {
       ref.read(usuariosControllerProvider.notifier).carregarUsuarios();
       
       state = UsuarioFormSuccess();
-      return true;
+      return null;
     } on DioException catch (e) {
       final data = e.response?.data;
       String errorMessage = 'Não foi possível salvar o usuário. Tente novamente.';
@@ -108,11 +112,20 @@ class UsuarioFormController extends Notifier<UsuarioFormState> {
         }
       }
 
-      state = UsuarioFormError(errorMessage);
-      return false;
+      if (previousState != null) {
+        state = previousState;
+      } else {
+        state = UsuarioFormError(errorMessage);
+      }
+      return errorMessage;
     } catch (e) {
-      state = UsuarioFormError('Não foi possível salvar o usuário. Tente novamente.');
-      return false;
+      String errorMessage = 'Não foi possível salvar o usuário. Tente novamente.';
+      if (previousState != null) {
+        state = previousState;
+      } else {
+        state = UsuarioFormError(errorMessage);
+      }
+      return errorMessage;
     }
   }
 }
