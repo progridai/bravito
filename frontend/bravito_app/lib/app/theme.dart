@@ -61,13 +61,13 @@ class AppTheme {
         primary: BravitoColors.dourado,
         secondary: BravitoColors.dourado,
         tertiary: BravitoColors.dourado,
-        surface: BravitoColors.pretoSuave,
+        surface: Color(0xFF1A1A1A),
         onSurface: BravitoColors.branco,
       ),
-      scaffoldBackgroundColor: const Color(0xFF1E293B), // Um tom um pouco mais escuro que o darkGray para o fundo
+      scaffoldBackgroundColor: const Color(0xFF121212), // Fundo principal escuro puro
       appBarTheme: const AppBarTheme(
-        backgroundColor: BravitoColors.dourado,
-        foregroundColor: BravitoColors.branco,
+        backgroundColor: Color(0xFF1A1A1A), // Fundo da AppBar escuro
+        foregroundColor: BravitoColors.dourado, // Texto e ícones dourados
         elevation: 0,
         centerTitle: true,
       ),

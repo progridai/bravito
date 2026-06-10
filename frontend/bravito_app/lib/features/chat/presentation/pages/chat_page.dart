@@ -89,15 +89,6 @@ class _ChatPageState extends ConsumerState<ChatPage> {
         ],
       ),
       actions: [
-        Padding(
-          padding: const EdgeInsets.only(right: AppSpacing.sm),
-          child: Center(
-            child: Text(
-              'Olá, $userName',
-              style: const TextStyle(fontSize: 14),
-            ),
-          ),
-        ),
         IconButton(
           icon: Icon(
             Theme.of(context).brightness == Brightness.dark 

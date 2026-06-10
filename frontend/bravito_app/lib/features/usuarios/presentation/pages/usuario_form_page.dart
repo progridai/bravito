@@ -150,13 +150,13 @@ class _UsuarioFormPageState extends ConsumerState<UsuarioFormPage> {
                 const SizedBox(height: AppSpacing.md),
               ],
               SwitchListTile(
-                title: const Text('Usuário Ativo', style: TextStyle(fontWeight: FontWeight.bold, color: BravitoColors.pretoSuave)),
+                title: const Text('Usuário Ativo', style: TextStyle(fontWeight: FontWeight.bold)),
                 value: _ativo,
                 activeColor: BravitoColors.dourado,
                 onChanged: (val) => setState(() => _ativo = val),
               ),
               const SizedBox(height: AppSpacing.md),
-              const Text('Perfis de Acesso', style: TextStyle(fontWeight: FontWeight.bold, fontSize: 16, color: BravitoColors.pretoSuave)),
+              const Text('Perfis de Acesso', style: TextStyle(fontWeight: FontWeight.bold, fontSize: 16)),
               const SizedBox(height: AppSpacing.sm),
               ...state.perfisDisponiveis.map((perfil) {
                 return CheckboxListTile(
