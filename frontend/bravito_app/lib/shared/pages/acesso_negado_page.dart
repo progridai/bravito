@@ -4,6 +4,8 @@ import '../../core/theme/app_theme.dart';
 import '../../core/constants/app_spacing.dart';
 import '../widgets/bravito_primary_button.dart';
 import '../widgets/bravito_app_scaffold.dart';
+import '../../core/constants/app_colors.dart';
+
 
 class AcessoNegadoPage extends StatelessWidget {
   const AcessoNegadoPage({super.key});
