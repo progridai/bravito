@@ -18,11 +18,11 @@ class BravitoCard extends StatelessWidget {
     return Container(
       padding: padding ?? const EdgeInsets.all(AppSpacing.md),
       decoration: BoxDecoration(
-        color: AppColors.white,
+        color: BravitoColors.branco,
         borderRadius: BorderRadius.circular(AppRadius.lg),
         boxShadow: [
           BoxShadow(
-            color: AppColors.darkGray.withOpacity(0.05),
+            color: BravitoColors.pretoSuave.withOpacity(0.05),
             blurRadius: 10,
             offset: const Offset(0, 4),
           ),

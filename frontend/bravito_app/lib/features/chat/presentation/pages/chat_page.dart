@@ -81,7 +81,7 @@ class _ChatPageState extends ConsumerState<ChatPage> {
         children: [
           const CircleAvatar(
             backgroundImage: AssetImage('assets/images/bravito_avatar.png'),
-            backgroundColor: AppColors.white,
+            backgroundColor: BravitoColors.branco,
             radius: 18,
           ),
           const SizedBox(width: AppSpacing.sm),
@@ -125,7 +125,7 @@ class _ChatPageState extends ConsumerState<ChatPage> {
                     child: Text(
                       'Como posso ajudar você hoje?',
                       style: TextStyle(
-                        color: AppColors.darkGray.withOpacity(0.6),
+                        color: BravitoColors.pretoSuave.withOpacity(0.6),
                         fontSize: 16,
                       ),
                     ),
@@ -146,7 +146,7 @@ class _ChatPageState extends ConsumerState<ChatPage> {
               child: SizedBox(
                 height: 20,
                 width: 20,
-                child: CircularProgressIndicator(strokeWidth: 2, color: AppColors.primaryBlue),
+                child: CircularProgressIndicator(strokeWidth: 2, color: BravitoColors.dourado),
               ),
             ),
           Container(
@@ -155,7 +155,7 @@ class _ChatPageState extends ConsumerState<ChatPage> {
               color: Theme.of(context).colorScheme.surface,
               boxShadow: [
                 BoxShadow(
-                  color: AppColors.darkGray.withOpacity(0.05),
+                  color: BravitoColors.pretoSuave.withOpacity(0.05),
                   blurRadius: 10,
                   offset: const Offset(0, -4),
                 ),
@@ -184,9 +184,9 @@ class _ChatPageState extends ConsumerState<ChatPage> {
                 ),
                 const SizedBox(width: AppSpacing.sm),
                 CircleAvatar(
-                  backgroundColor: AppColors.gold,
+                  backgroundColor: BravitoColors.dourado,
                   child: IconButton(
-                    icon: const Icon(Icons.send, color: AppColors.white, size: 20),
+                    icon: const Icon(Icons.send, color: BravitoColors.branco, size: 20),
                     onPressed: chatState.carregando ? null : _enviarMensagem,
                   ),
                 ),

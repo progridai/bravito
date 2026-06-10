@@ -1,39 +1,32 @@
 import 'package:flutter/material.dart';
+import '../constants/app_colors.dart';
 
-class AppColors {
-  // Cores oficiais do Bravito
-  static const Color azulPrincipal = Color(0xFF1E3A8A);
-  static const Color azulSecundario = Color(0xFF2563EB);
-  static const Color dourado = Color(0xFFD4AF37);
-  static const Color cinzaClaro = Color(0xFFF2F4F7);
-  static const Color cinzaEscuro = Color(0xFF334155);
-}
-
-class AppTheme {
+class AppThemeLegacy {
   static ThemeData get lightTheme {
     return ThemeData(
       useMaterial3: true,
+      fontFamily: 'Inter',
       colorScheme: ColorScheme.fromSeed(
-        seedColor: AppColors.azulPrincipal,
-        primary: AppColors.azulPrincipal,
-        secondary: AppColors.azulSecundario,
-        tertiary: AppColors.dourado,
-        background: AppColors.cinzaClaro,
+        seedColor: BravitoColors.dourado,
+        primary: BravitoColors.dourado,
+        secondary: BravitoColors.dourado,
+        tertiary: BravitoColors.dourado,
+        background: BravitoColors.cinzaClaro,
         surface: Colors.white,
         onPrimary: Colors.white,
         onSecondary: Colors.white,
-        onBackground: AppColors.cinzaEscuro,
-        onSurface: AppColors.cinzaEscuro,
+        onBackground: BravitoColors.pretoSuave,
+        onSurface: BravitoColors.pretoSuave,
       ),
-      scaffoldBackgroundColor: AppColors.cinzaClaro,
+      scaffoldBackgroundColor: BravitoColors.cinzaClaro,
       appBarTheme: const AppBarTheme(
-        backgroundColor: AppColors.azulPrincipal,
+        backgroundColor: BravitoColors.dourado,
         foregroundColor: Colors.white,
         elevation: 0,
       ),
       elevatedButtonTheme: ElevatedButtonThemeData(
         style: ElevatedButton.styleFrom(
-          backgroundColor: AppColors.azulPrincipal,
+          backgroundColor: BravitoColors.dourado,
           foregroundColor: Colors.white,
           shape: RoundedRectangleBorder(
             borderRadius: BorderRadius.circular(8),
@@ -41,9 +34,9 @@ class AppTheme {
         ),
       ),
       textTheme: const TextTheme(
-        bodyLarge: TextStyle(color: AppColors.cinzaEscuro),
-        bodyMedium: TextStyle(color: AppColors.cinzaEscuro),
-        titleLarge: TextStyle(color: AppColors.azulPrincipal, fontWeight: FontWeight.bold),
+        bodyLarge: TextStyle(color: BravitoColors.pretoSuave),
+        bodyMedium: TextStyle(color: BravitoColors.pretoSuave),
+        titleLarge: TextStyle(color: BravitoColors.dourado, fontWeight: FontWeight.bold, fontFamily: 'Montserrat'),
       ),
     );
   }

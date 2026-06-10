@@ -48,13 +48,13 @@ class AlterarSenhaPage extends StatelessWidget {
                   const Icon(
                     Icons.security,
                     size: 64,
-                    color: AppColors.azulPrincipal,
+                    color: BravitoColors.azulPrincipal,
                   ),
                   const SizedBox(height: AppSpacing.md),
                   Text(
                     'Ambiente Seguro',
                     style: Theme.of(context).textTheme.titleLarge?.copyWith(
-                          color: AppColors.azulPrincipal,
+                          color: BravitoColors.azulPrincipal,
                           fontWeight: FontWeight.bold,
                         ),
                     textAlign: TextAlign.center,
@@ -89,7 +89,7 @@ class AlterarSenhaPage extends StatelessWidget {
               child: const Text(
                 'Voltar',
                 style: TextStyle(
-                  color: AppColors.azulPrincipal,
+                  color: BravitoColors.azulPrincipal,
                   fontWeight: FontWeight.bold,
                   fontSize: 16,
                 ),

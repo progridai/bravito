@@ -2,120 +2,79 @@
 
 ## Identidade visual
 
-Toda a aplicação deve seguir o padrão visual oficial do Bravito.
+A interface da aplicação segue rigorosamente o Manual de Identidade Visual oficial da marca **Bravida** e seu mascote, **Bravito**.
 
-A interface deve transmitir:
-
-- Segurança.
+Bravito é a coruja da inteligência artificial parceira da Bravida, criada para representar nossos valores e propósito no mercado de seguros de vida e previdência.
+A interface deve transmitir os conceitos oficiais:
 - Inteligência.
-- Simplicidade.
+- Orientação.
+- Proteção.
 - Confiança.
-- Resultado.
-- Modernidade.
-- Aparência corporativa.
+- Performance comercial.
+- Suporte técnico.
+- Vida e cuidado.
+- Evolução e resultados.
+- Tecnologia.
+
+**Personalidade da marca e do mascote**: Amigável, Inteligente, Confiável, Protetora, Focada em resultados, Técnica, Clara, Segura.
+Bravito deve ser percebido como um guia amigável, técnico e confiável em toda a experiência digital da Bravida.
 
 ## Cores oficiais
 
 ```text
-Azul principal: #1E3A8A
-Azul secundário: #2563EB
-Dourado/amarelo: #D4AF37
-Cinza claro/fundo: #F2F4F7
-Cinza escuro/texto: #334155
-Uso das cores
-Azul principal — #1E3A8A
+Dourado: #D4AF37
+Branco: #FFFFFF
+Preto suave: #1A1A1A
+Cinza claro: #F6F6F6
+```
 
-Usar para:
+### Diretrizes de uso das cores
 
-Títulos principais.
-Botões primários.
-AppBar.
-Elementos de autoridade.
-Elementos ligados a segurança.
-Azul secundário — #2563EB
+- **Dourado (#D4AF37)**: Usar como cor de destaque e ação principal. É o foco de atenção (botões principais, detalhes premium, pequenos destaques). Não deve ser usado como fundo dominante de grandes superfícies. Preservar sempre a cor original, sem alterações ou distorções de tom.
+- **Branco (#FFFFFF)**: Fundo de cards, painéis principais, modais, etc. Proporciona área de respiro e limpeza visual.
+- **Preto suave (#1A1A1A)**: Usar para textos principais, títulos e ícones de alta importância. Proporciona leitura confortável.
+- **Cinza claro (#F6F6F6)**: Fundo principal das telas (Scaffold), áreas neutras, e fundos de separação visual.
 
-Usar para:
+Evitar o uso de cores fora dessa paleta (exceto cores funcionais de erro/sucesso suaves). Cores antigas provisórias (Azul #1E3A8A / #2563EB) **foram descontinuadas**.
 
-Ações secundárias.
-Links.
-Estados ativos.
-Destaques interativos.
-Bordas de foco.
-Dourado — #D4AF37
+## Tipografia recomendada
 
-Usar para:
+A tipografia é baseada em legibilidade clara e hierarquia forte.
 
-Detalhes visuais.
-Destaques premium.
-Ícones importantes.
-Elementos de apoio.
-Pequenas chamadas de atenção.
+- **Títulos**: Montserrat Semibold
+- **Interface/Textos**: Inter Regular e Inter Medium
 
-Não usar dourado como cor dominante da interface.
+Se estas fontes não puderem ser carregadas, o sistema usará a fonte do sistema corporativa padrão (fallback seguro), sem quebrar o layout.
 
-Cinza claro — #F2F4F7
+## O Mascote Bravito
 
-Usar para:
+As versões do Bravito seguem assinaturas oficiais para a aplicação:
 
-Fundo principal.
-Áreas secundárias.
-Cards suaves.
-Separadores visuais.
-Cinza escuro — #334155
+1. **Bravito em pé**: Telas principais, apresentações, boas-vindas.
+2. **Bravito esférico**: Momentos de inovação, transições, carregamento (loading), assistente.
+3. **Ícone institucional (com escudo)**: Ícones de aplicativo, atalhos, segurança.
 
-Usar para:
+### Aplicações no App
+- **Onboarding/Boas-vindas**: Recepcionar usuários de forma amigável.
+- **Ajuda contextual**: Suporte rápido e claro.
+- **Carregamento/Assistente**: Reforçar a presença da IA durante processamentos.
+- **Aprovação/Sucesso**: Reforçar a confiança na conclusão de ações.
 
-Texto principal.
-Texto secundário.
-Ícones neutros.
-Descrições.
-Mascote
+### O que Fazer
+- Usar fundo claro nas aplicações do mascote.
+- Preservar o dourado original e contornos nítidos.
+- Usar cards claros com sombras leves, cantos arredondados e manter o visual corporativo, seguro e amigável.
+- Usar contraste limpo.
 
-O mascote do Bravito é uma coruja tecnológica.
+### O que Evitar
+- Trocar a cor do dourado.
+- Distorcer proporções do mascote.
+- Usar fundo poluído que prejudique a leitura.
+- Remover o símbolo 'B' do peito/escudo do mascote.
+- Espalhar cores hardcoded no código; tudo deve estar via `ThemeData`.
+- Usar as imagens completas do manual (anexos inteiros) como assets da interface. O manual é referência; os assets do mascote devem ser recortes individuais.
 
-Personalidade do mascote:
+## Referência Visual
 
-Amigável.
-Inteligente.
-Guia confiável.
-Protetor.
-Focado em resultados.
-Seguro.
-Corporativo.
-Moderno.
-
-O mascote pode ser usado em:
-
-Tela de boas-vindas.
-Login.
-Onboarding.
-Tela vazia.
-Mensagens amigáveis.
-Feedback visual.
-
-O mascote não deve deixar a aplicação infantil. O visual geral precisa continuar corporativo.
-
-Padrão de UI
-
-A interface deve seguir:
-
-Visual limpo.
-Fundo claro.
-Cards brancos.
-Bordas suaves.
-Cantos arredondados.
-Sombras leves.
-Botões bem definidos.
-Espaçamento confortável.
-Tipografia clara.
-Ícones simples.
-Pouco uso de cores fortes.
-Azul como cor principal de ação.
-Dourado apenas como detalhe.
-Layout responsivo para mobile e web.
-Regras obrigatórias
-Não espalhar códigos hexadecimais pelo projeto.
-Centralizar cores no tema.
-Criar tokens visuais reutilizáveis.
-Manter consistência entre telas.
-Não usar componentes visuais fora do padrão sem justificativa.
+Os anexos do Manual de Identidade Visual oficial servem como a única fonte de verdade para a aplicação da marca. Todos os componentes devem ser validados em comparação com os conceitos descritos lá.
+Tamanhos mínimos: Avatar/app icon (64px), Mascote em interface (120px), Slide/vídeo (220px).

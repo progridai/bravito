@@ -19,13 +19,13 @@ class ConversasPage extends StatelessWidget {
               const Icon(
                 Icons.chat_bubble_outline,
                 size: 80,
-                color: AppColors.cinzaEscuro,
+                color: BravitoColors.cinzaEscuro,
               ),
               const SizedBox(height: AppSpacing.lg),
               Text(
                 'Nenhuma conversa carregada ainda.',
                 style: Theme.of(context).textTheme.titleLarge?.copyWith(
-                      color: AppColors.cinzaEscuro,
+                      color: BravitoColors.cinzaEscuro,
                     ),
                 textAlign: TextAlign.center,
               ),

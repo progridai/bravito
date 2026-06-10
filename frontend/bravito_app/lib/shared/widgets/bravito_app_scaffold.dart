@@ -22,7 +22,7 @@ class BravitoAppScaffold extends StatelessWidget {
     return Scaffold(
       appBar: (title != null || titleWidget != null)
           ? AppBar(
-              backgroundColor: const Color(0xFF1E3A8A), // AppColors.primaryBlue
+              backgroundColor: const Color(0xFF1E3A8A), // BravitoColors.dourado
               foregroundColor: Colors.white,
               title: titleWidget ?? (title != null ? Text(title!) : null),
               actions: actions,

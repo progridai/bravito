@@ -7,22 +7,26 @@ class AppTextStyles {
   static const TextStyle heading1 = TextStyle(
     fontSize: 32,
     fontWeight: FontWeight.bold,
-    color: AppColors.primaryBlue,
+    fontFamily: 'Montserrat',
+    color: BravitoColors.dourado,
   );
 
   static const TextStyle heading2 = TextStyle(
     fontSize: 24,
     fontWeight: FontWeight.bold,
-    color: AppColors.primaryBlue,
+    fontFamily: 'Montserrat',
+    color: BravitoColors.dourado,
   );
 
   static const TextStyle bodyText = TextStyle(
     fontSize: 16,
-    color: AppColors.darkGray,
+    fontFamily: 'Inter',
+    color: BravitoColors.pretoSuave,
   );
 
   static const TextStyle caption = TextStyle(
     fontSize: 12,
-    color: AppColors.darkGray,
+    fontFamily: 'Inter',
+    color: BravitoColors.pretoSuave,
   );
 }

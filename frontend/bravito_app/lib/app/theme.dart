@@ -8,24 +8,25 @@ class AppTheme {
   static ThemeData get lightTheme {
     return ThemeData(
       useMaterial3: true,
+      fontFamily: 'Inter',
       colorScheme: const ColorScheme.light(
-        primary: AppColors.primaryBlue,
-        secondary: AppColors.secondaryBlue,
-        tertiary: AppColors.gold,
-        surface: AppColors.lightGray,
-        onSurface: AppColors.darkGray,
+        primary: BravitoColors.dourado,
+        secondary: BravitoColors.dourado,
+        tertiary: BravitoColors.dourado,
+        surface: BravitoColors.cinzaClaro,
+        onSurface: BravitoColors.pretoSuave,
       ),
-      scaffoldBackgroundColor: AppColors.lightGray,
+      scaffoldBackgroundColor: BravitoColors.cinzaClaro,
       appBarTheme: const AppBarTheme(
-        backgroundColor: AppColors.primaryBlue,
-        foregroundColor: AppColors.white,
+        backgroundColor: BravitoColors.dourado,
+        foregroundColor: BravitoColors.branco,
         elevation: 0,
         centerTitle: true,
       ),
       elevatedButtonTheme: ElevatedButtonThemeData(
         style: ElevatedButton.styleFrom(
-          backgroundColor: AppColors.primaryBlue,
-          foregroundColor: AppColors.white,
+          backgroundColor: BravitoColors.dourado,
+          foregroundColor: BravitoColors.branco,
           shape: RoundedRectangleBorder(
             borderRadius: BorderRadius.circular(AppRadius.md),
           ),
@@ -34,7 +35,7 @@ class AppTheme {
       ),
       inputDecorationTheme: InputDecorationTheme(
         filled: true,
-        fillColor: AppColors.white,
+        fillColor: BravitoColors.branco,
         border: OutlineInputBorder(
           borderRadius: BorderRadius.circular(AppRadius.md),
           borderSide: BorderSide.none,
@@ -45,7 +46,7 @@ class AppTheme {
         ),
         focusedBorder: OutlineInputBorder(
           borderRadius: BorderRadius.circular(AppRadius.md),
-          borderSide: const BorderSide(color: AppColors.secondaryBlue, width: 2),
+          borderSide: const BorderSide(color: BravitoColors.dourado, width: 2),
         ),
         contentPadding: const EdgeInsets.symmetric(horizontal: 16, vertical: 16),
       ),
@@ -55,24 +56,25 @@ class AppTheme {
   static ThemeData get darkTheme {
     return ThemeData(
       useMaterial3: true,
+      fontFamily: 'Inter',
       colorScheme: const ColorScheme.dark(
-        primary: AppColors.primaryBlue,
-        secondary: AppColors.secondaryBlue,
-        tertiary: AppColors.gold,
-        surface: AppColors.darkGray,
-        onSurface: AppColors.white,
+        primary: BravitoColors.dourado,
+        secondary: BravitoColors.dourado,
+        tertiary: BravitoColors.dourado,
+        surface: BravitoColors.pretoSuave,
+        onSurface: BravitoColors.branco,
       ),
       scaffoldBackgroundColor: const Color(0xFF1E293B), // Um tom um pouco mais escuro que o darkGray para o fundo
       appBarTheme: const AppBarTheme(
-        backgroundColor: AppColors.primaryBlue,
-        foregroundColor: AppColors.white,
+        backgroundColor: BravitoColors.dourado,
+        foregroundColor: BravitoColors.branco,
         elevation: 0,
         centerTitle: true,
       ),
       elevatedButtonTheme: ElevatedButtonThemeData(
         style: ElevatedButton.styleFrom(
-          backgroundColor: AppColors.gold,
-          foregroundColor: AppColors.darkGray,
+          backgroundColor: BravitoColors.dourado,
+          foregroundColor: BravitoColors.pretoSuave,
           shape: RoundedRectangleBorder(
             borderRadius: BorderRadius.circular(AppRadius.md),
           ),
@@ -81,7 +83,7 @@ class AppTheme {
       ),
       inputDecorationTheme: InputDecorationTheme(
         filled: true,
-        fillColor: AppColors.darkGray,
+        fillColor: BravitoColors.pretoSuave,
         border: OutlineInputBorder(
           borderRadius: BorderRadius.circular(AppRadius.md),
           borderSide: BorderSide.none,
@@ -92,7 +94,7 @@ class AppTheme {
         ),
         focusedBorder: OutlineInputBorder(
           borderRadius: BorderRadius.circular(AppRadius.md),
-          borderSide: const BorderSide(color: AppColors.gold, width: 2),
+          borderSide: const BorderSide(color: BravitoColors.dourado, width: 2),
         ),
         contentPadding: const EdgeInsets.symmetric(horizontal: 16, vertical: 16),
       ),

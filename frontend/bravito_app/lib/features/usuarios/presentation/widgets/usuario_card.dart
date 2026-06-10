@@ -28,10 +28,10 @@ class UsuarioCard extends StatelessWidget {
         crossAxisAlignment: CrossAxisAlignment.start,
         children: [
           CircleAvatar(
-            backgroundColor: AppColors.azulPrincipal.withOpacity(0.1),
+            backgroundColor: BravitoColors.azulPrincipal.withOpacity(0.1),
             child: Text(
               usuario.nome.isNotEmpty ? usuario.nome[0].toUpperCase() : 'U',
-              style: const TextStyle(color: AppColors.azulPrincipal, fontWeight: FontWeight.bold),
+              style: const TextStyle(color: BravitoColors.azulPrincipal, fontWeight: FontWeight.bold),
             ),
           ),
           const SizedBox(width: AppSpacing.md),
@@ -44,7 +44,7 @@ class UsuarioCard extends StatelessWidget {
                   style: const TextStyle(
                     fontWeight: FontWeight.bold,
                     fontSize: 16,
-                    color: AppColors.cinzaEscuro,
+                    color: BravitoColors.cinzaEscuro,
                   ),
                 ),
                 const SizedBox(height: 4),
@@ -78,14 +78,14 @@ class UsuarioCard extends StatelessWidget {
                       Container(
                         padding: const EdgeInsets.symmetric(horizontal: 8, vertical: 2),
                         decoration: BoxDecoration(
-                          color: AppColors.dourado.withOpacity(0.1),
+                          color: BravitoColors.dourado.withOpacity(0.1),
                           borderRadius: BorderRadius.circular(12),
                         ),
                         child: Text(
                           usuario.perfis.join(', '),
                           style: const TextStyle(
                             fontSize: 12,
-                            color: AppColors.dourado,
+                            color: BravitoColors.dourado,
                             fontWeight: FontWeight.bold,
                           ),
                         ),
@@ -99,7 +99,7 @@ class UsuarioCard extends StatelessWidget {
             children: [
               if (podeEditar)
                 IconButton(
-                  icon: const Icon(Icons.edit, color: AppColors.azulSecundario, size: 20),
+                  icon: const Icon(Icons.edit, color: BravitoColors.azulSecundario, size: 20),
                   onPressed: onEdit,
                   tooltip: 'Editar',
                 ),

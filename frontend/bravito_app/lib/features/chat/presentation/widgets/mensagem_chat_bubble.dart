@@ -23,14 +23,14 @@ class MensagemChatBubble extends StatelessWidget {
     final isDark = Theme.of(context).brightness == Brightness.dark;
 
     if (isSistema) {
-      bubbleColor = AppColors.error.withOpacity(0.1);
-      textColor = AppColors.error;
+      bubbleColor = BravitoColors.error.withOpacity(0.1);
+      textColor = BravitoColors.error;
     } else if (isUsuario) {
-      bubbleColor = AppColors.primaryBlue;
-      textColor = AppColors.white;
+      bubbleColor = BravitoColors.dourado;
+      textColor = BravitoColors.branco;
     } else {
-      bubbleColor = isDark ? AppColors.darkGray.withOpacity(0.5) : AppColors.lightGray;
-      textColor = isDark ? AppColors.white : AppColors.darkGray;
+      bubbleColor = isDark ? BravitoColors.pretoSuave.withOpacity(0.5) : BravitoColors.cinzaClaro;
+      textColor = isDark ? BravitoColors.branco : BravitoColors.pretoSuave;
     }
 
     return Align(
@@ -72,7 +72,7 @@ class MensagemChatBubble extends StatelessWidget {
               Text(
                 mensagem.erro!,
                 style: const TextStyle(
-                  color: AppColors.error,
+                  color: BravitoColors.error,
                   fontSize: 12,
                 ),
               ),

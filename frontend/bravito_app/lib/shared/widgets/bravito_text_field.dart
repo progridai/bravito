@@ -30,7 +30,7 @@ class BravitoTextField extends StatelessWidget {
           label,
           style: const TextStyle(
             fontWeight: FontWeight.w600,
-            color: AppColors.darkGray,
+            color: BravitoColors.pretoSuave,
           ),
         ),
         const SizedBox(height: 8),
@@ -41,7 +41,7 @@ class BravitoTextField extends StatelessWidget {
           validator: validator,
           decoration: InputDecoration(
             hintText: hint,
-            prefixIcon: prefixIcon != null ? Icon(prefixIcon, color: AppColors.secondaryBlue) : null,
+            prefixIcon: prefixIcon != null ? Icon(prefixIcon, color: BravitoColors.dourado) : null,
           ),
         ),
       ],

@@ -32,10 +32,10 @@ class MenuPage extends ConsumerWidget {
             BravitoCard(
               padding: const EdgeInsets.all(0),
               child: ListTile(
-                leading: const Icon(Icons.people_outline, color: AppColors.azulPrincipal),
+                leading: const Icon(Icons.people_outline, color: BravitoColors.azulPrincipal),
                 title: const Text(
                   'Usuários',
-                  style: TextStyle(fontWeight: FontWeight.bold, color: AppColors.cinzaEscuro),
+                  style: TextStyle(fontWeight: FontWeight.bold, color: BravitoColors.cinzaEscuro),
                 ),
                 trailing: const Icon(Icons.arrow_forward_ios, size: 16),
                 onTap: () {
@@ -48,10 +48,10 @@ class MenuPage extends ConsumerWidget {
           BravitoCard(
             padding: const EdgeInsets.all(0),
             child: ListTile(
-              leading: const Icon(Icons.lock_outline, color: AppColors.azulPrincipal),
+              leading: const Icon(Icons.lock_outline, color: BravitoColors.azulPrincipal),
               title: const Text(
                 'Alterar Senha',
-                style: TextStyle(fontWeight: FontWeight.bold, color: AppColors.cinzaEscuro),
+                style: TextStyle(fontWeight: FontWeight.bold, color: BravitoColors.cinzaEscuro),
               ),
               trailing: const Icon(Icons.arrow_forward_ios, size: 16),
               onTap: () {
@@ -64,10 +64,10 @@ class MenuPage extends ConsumerWidget {
             BravitoCard(
               padding: const EdgeInsets.all(0),
               child: ListTile(
-                leading: const Icon(Icons.chat_bubble_outline, color: AppColors.azulPrincipal),
+                leading: const Icon(Icons.chat_bubble_outline, color: BravitoColors.azulPrincipal),
                 title: const Text(
                   'Visualizar Conversas',
-                  style: TextStyle(fontWeight: FontWeight.bold, color: AppColors.cinzaEscuro),
+                  style: TextStyle(fontWeight: FontWeight.bold, color: BravitoColors.cinzaEscuro),
                 ),
                 trailing: const Icon(Icons.arrow_forward_ios, size: 16),
                 onTap: () {

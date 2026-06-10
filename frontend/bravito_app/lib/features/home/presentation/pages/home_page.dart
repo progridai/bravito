@@ -8,6 +8,7 @@ import '../../../../shared/widgets/bravito_app_scaffold.dart';
 import '../../../../shared/widgets/bravito_primary_button.dart';
 import '../../../auth/presentation/controllers/auth_controller.dart';
 import '../../../auth/presentation/controllers/auth_state.dart';
+import '../../../../app/theme_provider.dart';
 
 class HomePage extends ConsumerWidget {
   const HomePage({super.key});
@@ -29,7 +30,19 @@ class HomePage extends ConsumerWidget {
       title: 'Início',
       actions: [
         IconButton(
+          icon: Icon(
+            Theme.of(context).brightness == Brightness.dark 
+                ? Icons.light_mode 
+                : Icons.dark_mode,
+          ),
+          tooltip: 'Trocar Tema',
+          onPressed: () {
+            ref.read(themeModeProvider.notifier).toggle();
+          },
+        ),
+        IconButton(
           icon: const Icon(Icons.logout),
+          tooltip: 'Sair',
           onPressed: () {
             ref.read(authControllerProvider.notifier).logout();
           },
@@ -44,13 +57,13 @@ class HomePage extends ConsumerWidget {
             const Icon(
               Icons.pets, 
               size: 80,
-              color: AppColors.azulPrincipal,
+              color: BravitoColors.azulPrincipal,
             ),
             const SizedBox(height: AppSpacing.lg),
             Text(
               'Olá, $userName!',
               style: Theme.of(context).textTheme.headlineSmall?.copyWith(
-                    color: AppColors.azulPrincipal,
+                    color: BravitoColors.azulPrincipal,
                     fontWeight: FontWeight.bold,
                   ),
               textAlign: TextAlign.center,
@@ -78,8 +91,8 @@ class HomePage extends ConsumerWidget {
                 context.push('/menu');
               },
               style: OutlinedButton.styleFrom(
-                foregroundColor: AppColors.azulPrincipal,
-                side: const BorderSide(color: AppColors.azulPrincipal, width: 2),
+                foregroundColor: BravitoColors.azulPrincipal,
+                side: const BorderSide(color: BravitoColors.azulPrincipal, width: 2),
                 padding: const EdgeInsets.symmetric(vertical: 16),
                 shape: RoundedRectangleBorder(
                   borderRadius: BorderRadius.circular(8),

@@ -149,20 +149,20 @@ class _UsuarioFormPageState extends ConsumerState<UsuarioFormPage> {
                 const SizedBox(height: AppSpacing.md),
               ],
               SwitchListTile(
-                title: const Text('Usuário Ativo', style: TextStyle(fontWeight: FontWeight.bold, color: AppColors.cinzaEscuro)),
+                title: const Text('Usuário Ativo', style: TextStyle(fontWeight: FontWeight.bold, color: BravitoColors.cinzaEscuro)),
                 value: _ativo,
-                activeColor: AppColors.azulPrincipal,
+                activeColor: BravitoColors.azulPrincipal,
                 onChanged: (val) => setState(() => _ativo = val),
               ),
               const SizedBox(height: AppSpacing.md),
-              const Text('Perfis de Acesso', style: TextStyle(fontWeight: FontWeight.bold, fontSize: 16, color: AppColors.cinzaEscuro)),
+              const Text('Perfis de Acesso', style: TextStyle(fontWeight: FontWeight.bold, fontSize: 16, color: BravitoColors.cinzaEscuro)),
               const SizedBox(height: AppSpacing.sm),
               ...state.perfisDisponiveis.map((perfil) {
                 return CheckboxListTile(
                   title: Text(perfil.nome, style: const TextStyle(fontWeight: FontWeight.bold)),
                   subtitle: perfil.descricao != null ? Text(perfil.descricao!) : null,
                   value: _selectedPerfis.contains(perfil.id),
-                  activeColor: AppColors.azulPrincipal,
+                  activeColor: BravitoColors.azulPrincipal,
                   onChanged: (bool? checked) {
                     setState(() {
                       if (checked == true) {

@@ -23,7 +23,7 @@ class LoginPage extends ConsumerWidget {
         ScaffoldMessenger.of(context).showSnackBar(
           SnackBar(
             content: Text(next.message),
-            backgroundColor: AppColors.error,
+            backgroundColor: BravitoColors.error,
           ),
         );
       }
@@ -64,13 +64,13 @@ class LoginPage extends ConsumerWidget {
                   Text(
                     'Sua IA parceira para vender mais e melhor.',
                     textAlign: TextAlign.center,
-                    style: AppTextStyles.bodyText.copyWith(color: AppColors.darkGray.withOpacity(0.7)),
+                    style: AppTextStyles.bodyText.copyWith(color: BravitoColors.pretoSuave.withOpacity(0.7)),
                   ),
                   const SizedBox(height: AppSpacing.xl),
                   Text(
                     'Você será redirecionado para o portal de login seguro do sistema.',
                     textAlign: TextAlign.center,
-                    style: TextStyle(color: AppColors.darkGray.withOpacity(0.8), fontSize: 14),
+                    style: TextStyle(color: BravitoColors.pretoSuave.withOpacity(0.8), fontSize: 14),
                   ),
                   const SizedBox(height: AppSpacing.xl),
                   BravitoPrimaryButton(

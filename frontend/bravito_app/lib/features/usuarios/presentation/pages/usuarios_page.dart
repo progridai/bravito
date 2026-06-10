@@ -45,11 +45,11 @@ class _UsuariosPageState extends ConsumerState<UsuariosPage> {
         actions: [
           TextButton(
             onPressed: () => Navigator.of(context).pop(false),
-            child: const Text('Cancelar', style: TextStyle(color: AppColors.cinzaEscuro)),
+            child: const Text('Cancelar', style: TextStyle(color: BravitoColors.cinzaEscuro)),
           ),
           TextButton(
             onPressed: () => Navigator.of(context).pop(true),
-            child: const Text('Confirmar', style: TextStyle(color: AppColors.azulPrincipal)),
+            child: const Text('Confirmar', style: TextStyle(color: BravitoColors.azulPrincipal)),
           ),
         ],
       ),
@@ -90,7 +90,7 @@ class _UsuariosPageState extends ConsumerState<UsuariosPage> {
       body: _buildBody(state, podeEditar, podeDesativar),
       floatingActionButton: podeCadastrar
           ? FloatingActionButton(
-              backgroundColor: AppColors.azulPrincipal,
+              backgroundColor: BravitoColors.azulPrincipal,
               onPressed: () => context.push('/menu/usuarios/form'),
               child: const Icon(Icons.add, color: Colors.white),
             )

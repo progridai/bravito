@@ -1,14 +1,19 @@
 import 'package:flutter/material.dart';
 
-class AppColors {
-  AppColors._();
+class BravitoColors {
+  BravitoColors._();
 
-  static const Color primaryBlue = Color(0xFF1E3A8A);
-  static const Color secondaryBlue = Color(0xFF2563EB);
-  static const Color gold = Color(0xFFD4AF37);
-  static const Color lightGray = Color(0xFFF2F4F7);
-  static const Color darkGray = Color(0xFF334155);
+  static const Color dourado = Color(0xFFD4AF37);
+  static const Color branco = Color(0xFFFFFFFF);
+  static const Color pretoSuave = Color(0xFF1A1A1A);
+  static const Color cinzaClaro = Color(0xFFF6F6F6);
   
-  static const Color white = Colors.white;
-  static const Color error = Colors.redAccent;
+  // Semantic names
+  static const Color fundo = cinzaClaro;
+  static const Color textoPrincipal = pretoSuave;
+  static const Color card = branco;
+  static const Color borda = Color(0xFFE2E8F0);
+  
+  static const Color erro = Colors.redAccent;
+  static const Color sucesso = Colors.green;
 }

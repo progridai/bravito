@@ -68,6 +68,9 @@ Para obter detalhes de implementação de cada área do projeto, consulte a docu
 8. **[Integração n8n](docs/08-integracao-n8n.md)**: Modelagem e autenticação dos payloads de webhook.
 9. **[Roadmap](docs/09-roadmap.md)**: Acompanhamento de entregas e fases futuras.
 10. **[Prompts de Assistência](docs/10-prompts.md)**: Prompts padrão para aceleração de desenvolvimento.
+11. **[Identidade Visual Oficial (Bravito)](docs/25-identidade-visual-oficial-bravito.md)**: Regras oficiais de UI e design system do mascote Bravito.
+
+> **Nota:** A identidade visual oficial do Bravito foi definida. A aplicação utiliza o padrão corporativo da Bravida (Dourado, Branco, Cinza Claro, Preto Suave) substituindo paletas provisórias. Mais detalhes em `docs/03-padrao-visual.md` e `docs/25-identidade-visual-oficial-bravito.md`.
 
 Stack
 Frontend
