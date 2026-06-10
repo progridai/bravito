@@ -6,12 +6,15 @@ class BravitoAppScaffold extends StatelessWidget {
   final Widget? titleWidget;
   final List<Widget>? actions;
 
+  final Widget? floatingActionButton;
+
   const BravitoAppScaffold({
     super.key,
     required this.body,
     this.title,
     this.titleWidget,
     this.actions,
+    this.floatingActionButton,
   });
 
   @override
@@ -26,6 +29,7 @@ class BravitoAppScaffold extends StatelessWidget {
             )
           : null,
       body: SafeArea(child: body),
+      floatingActionButton: floatingActionButton,
     );
   }
 }

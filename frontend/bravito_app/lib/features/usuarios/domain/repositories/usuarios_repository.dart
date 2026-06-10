@@ -1,7 +1,7 @@
 import '../../domain/entities/usuario.dart';
 import '../../domain/entities/perfil_acesso.dart';
-import '../models/criar_usuario_request_model.dart';
-import '../models/editar_usuario_request_model.dart';
+import '../../data/models/criar_usuario_request_model.dart';
+import '../../data/models/editar_usuario_request_model.dart';
 
 abstract class UsuariosRepository {
   Future<List<Usuario>> listarUsuarios();

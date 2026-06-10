@@ -6,8 +6,8 @@ import '../../../../core/constants/app_spacing.dart';
 import '../../../../core/security/recursos_app.dart';
 import '../../../../shared/widgets/bravito_app_scaffold.dart';
 import '../../../../shared/widgets/bravito_card.dart';
-import '../../auth/presentation/controllers/auth_controller.dart';
-import '../../auth/presentation/controllers/auth_state.dart';
+import '../../../auth/presentation/controllers/auth_controller.dart';
+import '../../../auth/presentation/controllers/auth_state.dart';
 
 class MenuPage extends ConsumerWidget {
   const MenuPage({super.key});

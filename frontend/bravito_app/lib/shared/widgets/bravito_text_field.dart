@@ -3,16 +3,22 @@ import '../../core/constants/app_colors.dart';
 
 class BravitoTextField extends StatelessWidget {
   final String label;
-  final String hint;
+  final String? hint;
   final bool obscureText;
   final IconData? prefixIcon;
+  final TextEditingController? controller;
+  final TextInputType? keyboardType;
+  final String? Function(String?)? validator;
 
   const BravitoTextField({
     super.key,
     required this.label,
-    required this.hint,
+    this.hint,
     this.obscureText = false,
     this.prefixIcon,
+    this.controller,
+    this.keyboardType,
+    this.validator,
   });
 
   @override
@@ -28,8 +34,11 @@ class BravitoTextField extends StatelessWidget {
           ),
         ),
         const SizedBox(height: 8),
-        TextField(
+        TextFormField(
+          controller: controller,
           obscureText: obscureText,
+          keyboardType: keyboardType,
+          validator: validator,
           decoration: InputDecoration(
             hintText: hint,
             prefixIcon: prefixIcon != null ? Icon(prefixIcon, color: AppColors.secondaryBlue) : null,
