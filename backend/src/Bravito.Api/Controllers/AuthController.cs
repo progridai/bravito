@@ -36,7 +36,7 @@ namespace Bravito.Api.Controllers
                 KeycloakId = usuario.KeycloakId,
                 Nome = usuario.Nome,
                 Email = usuario.Email,
-                Perfis = usuario.PerfisAcesso.Select(p => p.PerfilAcesso.Nome).ToList(),
+                Perfis = usuario.PerfisAcesso.Where(p => p.PerfilAcesso != null).Select(p => p.PerfilAcesso.Nome).ToList(),
                 Recursos = recursos
             };
 

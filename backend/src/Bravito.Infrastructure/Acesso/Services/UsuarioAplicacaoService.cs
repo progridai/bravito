@@ -30,6 +30,7 @@ namespace Bravito.Infrastructure.Acesso.Services
 
             var usuario = await _context.Usuarios
                 .Include(u => u.PerfisAcesso)
+                    .ThenInclude(pa => pa.PerfilAcesso)
                 .FirstOrDefaultAsync(u => u.KeycloakId == keycloakId, cancellationToken);
 
             if (usuario == null)
