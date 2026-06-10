@@ -20,7 +20,7 @@ class HomePage extends ConsumerWidget {
     bool possuiRecursos = false;
 
     if (authState is AuthAuthenticated) {
-      userName = authState.user.firstName;
+      userName = authState.user.firstName.isNotEmpty ? authState.user.firstName : (authState.user.username.isNotEmpty ? authState.user.username : 'Usuário');
       temAcessoChat = authState.user.possuiRecurso(RecursosApp.chatAcessar);
       possuiRecursos = authState.user.recursos.isNotEmpty;
     }
