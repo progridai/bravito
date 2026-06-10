@@ -22,6 +22,345 @@ namespace Bravito.Infrastructure.Migrations
 
             NpgsqlModelBuilderExtensions.UseIdentityByDefaultColumns(modelBuilder);
 
+            modelBuilder.Entity("Bravito.Domain.Acesso.PerfilAcesso", b =>
+                {
+                    b.Property<Guid>("Id")
+                        .ValueGeneratedOnAdd()
+                        .HasColumnType("uuid")
+                        .HasColumnName("id")
+                        .HasDefaultValueSql("gen_random_uuid()");
+
+                    b.Property<bool>("Ativo")
+                        .HasColumnType("boolean")
+                        .HasColumnName("ativo");
+
+                    b.Property<DateTime?>("DataAlteracao")
+                        .HasColumnType("timestamp with time zone")
+                        .HasColumnName("data_alteracao");
+
+                    b.Property<DateTime>("DataCriacao")
+                        .HasColumnType("timestamp with time zone")
+                        .HasColumnName("data_criacao");
+
+                    b.Property<string>("Descricao")
+                        .HasMaxLength(1000)
+                        .HasColumnType("character varying(1000)")
+                        .HasColumnName("descricao");
+
+                    b.Property<string>("Nome")
+                        .IsRequired()
+                        .HasMaxLength(255)
+                        .HasColumnType("character varying(255)")
+                        .HasColumnName("nome");
+
+                    b.HasKey("Id");
+
+                    b.HasIndex("Nome")
+                        .IsUnique();
+
+                    b.ToTable("perfis_acesso", (string)null);
+
+                    b.HasData(
+                        new
+                        {
+                            Id = new Guid("11111111-1111-1111-1111-111111111111"),
+                            Ativo = true,
+                            DataCriacao = new DateTime(2026, 6, 10, 1, 24, 33, 782, DateTimeKind.Utc).AddTicks(7858),
+                            Descricao = "Acesso total ao sistema",
+                            Nome = "Administrador"
+                        },
+                        new
+                        {
+                            Id = new Guid("22222222-2222-2222-2222-222222222222"),
+                            Ativo = true,
+                            DataCriacao = new DateTime(2026, 6, 10, 1, 24, 33, 782, DateTimeKind.Utc).AddTicks(8496),
+                            Descricao = "Acesso a operações diárias e chat",
+                            Nome = "Operador"
+                        },
+                        new
+                        {
+                            Id = new Guid("33333333-3333-3333-3333-333333333333"),
+                            Ativo = true,
+                            DataCriacao = new DateTime(2026, 6, 10, 1, 24, 33, 782, DateTimeKind.Utc).AddTicks(8501),
+                            Descricao = "Acesso restrito ao chat",
+                            Nome = "Somente Chat"
+                        });
+                });
+
+            modelBuilder.Entity("Bravito.Domain.Acesso.PerfilAcessoRecurso", b =>
+                {
+                    b.Property<Guid>("Id")
+                        .ValueGeneratedOnAdd()
+                        .HasColumnType("uuid")
+                        .HasColumnName("id")
+                        .HasDefaultValueSql("gen_random_uuid()");
+
+                    b.Property<DateTime>("DataCriacao")
+                        .HasColumnType("timestamp with time zone")
+                        .HasColumnName("data_criacao");
+
+                    b.Property<Guid>("PerfilAcessoId")
+                        .HasColumnType("uuid")
+                        .HasColumnName("perfil_acesso_id");
+
+                    b.Property<Guid>("RecursoId")
+                        .HasColumnType("uuid")
+                        .HasColumnName("recurso_id");
+
+                    b.HasKey("Id");
+
+                    b.HasIndex("RecursoId");
+
+                    b.HasIndex("PerfilAcessoId", "RecursoId")
+                        .IsUnique();
+
+                    b.ToTable("perfis_acesso_recursos", (string)null);
+
+                    b.HasData(
+                        new
+                        {
+                            Id = new Guid("70bdf262-235c-4773-a788-755a004772ab"),
+                            DataCriacao = new DateTime(2026, 6, 10, 1, 24, 33, 784, DateTimeKind.Utc).AddTicks(4663),
+                            PerfilAcessoId = new Guid("11111111-1111-1111-1111-111111111111"),
+                            RecursoId = new Guid("a0000000-0000-0000-0000-000000000001")
+                        },
+                        new
+                        {
+                            Id = new Guid("df2eec64-573f-4cfd-9694-d7aa62411323"),
+                            DataCriacao = new DateTime(2026, 6, 10, 1, 24, 33, 784, DateTimeKind.Utc).AddTicks(5053),
+                            PerfilAcessoId = new Guid("11111111-1111-1111-1111-111111111111"),
+                            RecursoId = new Guid("a0000000-0000-0000-0000-000000000002")
+                        },
+                        new
+                        {
+                            Id = new Guid("28358a04-9e81-48b2-b8b0-54d0f399a223"),
+                            DataCriacao = new DateTime(2026, 6, 10, 1, 24, 33, 784, DateTimeKind.Utc).AddTicks(5064),
+                            PerfilAcessoId = new Guid("11111111-1111-1111-1111-111111111111"),
+                            RecursoId = new Guid("a0000000-0000-0000-0000-000000000003")
+                        },
+                        new
+                        {
+                            Id = new Guid("b1c000dd-cde3-4e22-9f49-cb30cc9e2510"),
+                            DataCriacao = new DateTime(2026, 6, 10, 1, 24, 33, 784, DateTimeKind.Utc).AddTicks(5066),
+                            PerfilAcessoId = new Guid("11111111-1111-1111-1111-111111111111"),
+                            RecursoId = new Guid("a0000000-0000-0000-0000-000000000004")
+                        },
+                        new
+                        {
+                            Id = new Guid("6f1461ca-9f5a-4b7a-a82c-5c852ddcf794"),
+                            DataCriacao = new DateTime(2026, 6, 10, 1, 24, 33, 784, DateTimeKind.Utc).AddTicks(5068),
+                            PerfilAcessoId = new Guid("11111111-1111-1111-1111-111111111111"),
+                            RecursoId = new Guid("a0000000-0000-0000-0000-000000000005")
+                        },
+                        new
+                        {
+                            Id = new Guid("c74a4d20-085e-4a9d-a24a-982d0660b629"),
+                            DataCriacao = new DateTime(2026, 6, 10, 1, 24, 33, 784, DateTimeKind.Utc).AddTicks(5075),
+                            PerfilAcessoId = new Guid("11111111-1111-1111-1111-111111111111"),
+                            RecursoId = new Guid("a0000000-0000-0000-0000-000000000006")
+                        },
+                        new
+                        {
+                            Id = new Guid("0e742b5f-a6c4-46c1-864f-dd85e950207f"),
+                            DataCriacao = new DateTime(2026, 6, 10, 1, 24, 33, 784, DateTimeKind.Utc).AddTicks(5086),
+                            PerfilAcessoId = new Guid("22222222-2222-2222-2222-222222222222"),
+                            RecursoId = new Guid("a0000000-0000-0000-0000-000000000001")
+                        },
+                        new
+                        {
+                            Id = new Guid("ee0a0225-c756-4b89-aa56-86cc2b77da35"),
+                            DataCriacao = new DateTime(2026, 6, 10, 1, 24, 33, 784, DateTimeKind.Utc).AddTicks(5089),
+                            PerfilAcessoId = new Guid("22222222-2222-2222-2222-222222222222"),
+                            RecursoId = new Guid("a0000000-0000-0000-0000-000000000002")
+                        },
+                        new
+                        {
+                            Id = new Guid("304bf687-de5b-4122-9182-5b14ca475800"),
+                            DataCriacao = new DateTime(2026, 6, 10, 1, 24, 33, 784, DateTimeKind.Utc).AddTicks(5092),
+                            PerfilAcessoId = new Guid("33333333-3333-3333-3333-333333333333"),
+                            RecursoId = new Guid("a0000000-0000-0000-0000-000000000001")
+                        });
+                });
+
+            modelBuilder.Entity("Bravito.Domain.Acesso.Recurso", b =>
+                {
+                    b.Property<Guid>("Id")
+                        .ValueGeneratedOnAdd()
+                        .HasColumnType("uuid")
+                        .HasColumnName("id")
+                        .HasDefaultValueSql("gen_random_uuid()");
+
+                    b.Property<bool>("Ativo")
+                        .HasColumnType("boolean")
+                        .HasColumnName("ativo");
+
+                    b.Property<string>("Codigo")
+                        .IsRequired()
+                        .HasMaxLength(255)
+                        .HasColumnType("character varying(255)")
+                        .HasColumnName("codigo");
+
+                    b.Property<DateTime?>("DataAlteracao")
+                        .HasColumnType("timestamp with time zone")
+                        .HasColumnName("data_alteracao");
+
+                    b.Property<DateTime>("DataCriacao")
+                        .HasColumnType("timestamp with time zone")
+                        .HasColumnName("data_criacao");
+
+                    b.Property<string>("Descricao")
+                        .HasMaxLength(1000)
+                        .HasColumnType("character varying(1000)")
+                        .HasColumnName("descricao");
+
+                    b.Property<string>("Nome")
+                        .IsRequired()
+                        .HasMaxLength(255)
+                        .HasColumnType("character varying(255)")
+                        .HasColumnName("nome");
+
+                    b.HasKey("Id");
+
+                    b.HasIndex("Codigo")
+                        .IsUnique();
+
+                    b.ToTable("recursos", (string)null);
+
+                    b.HasData(
+                        new
+                        {
+                            Id = new Guid("a0000000-0000-0000-0000-000000000001"),
+                            Ativo = true,
+                            Codigo = "chat.acessar",
+                            DataCriacao = new DateTime(2026, 6, 10, 1, 24, 33, 784, DateTimeKind.Utc).AddTicks(713),
+                            Descricao = "Permite acessar e enviar mensagens no chat",
+                            Nome = "Acessar Chat"
+                        },
+                        new
+                        {
+                            Id = new Guid("a0000000-0000-0000-0000-000000000002"),
+                            Ativo = true,
+                            Codigo = "conversas.visualizar",
+                            DataCriacao = new DateTime(2026, 6, 10, 1, 24, 33, 784, DateTimeKind.Utc).AddTicks(1213),
+                            Descricao = "Permite visualizar histórico de conversas",
+                            Nome = "Visualizar Conversas"
+                        },
+                        new
+                        {
+                            Id = new Guid("a0000000-0000-0000-0000-000000000003"),
+                            Ativo = true,
+                            Codigo = "usuarios.visualizar",
+                            DataCriacao = new DateTime(2026, 6, 10, 1, 24, 33, 784, DateTimeKind.Utc).AddTicks(1221),
+                            Descricao = "Permite visualizar lista de usuários",
+                            Nome = "Visualizar Usuários"
+                        },
+                        new
+                        {
+                            Id = new Guid("a0000000-0000-0000-0000-000000000004"),
+                            Ativo = true,
+                            Codigo = "usuarios.cadastrar",
+                            DataCriacao = new DateTime(2026, 6, 10, 1, 24, 33, 784, DateTimeKind.Utc).AddTicks(1245),
+                            Descricao = "Permite cadastrar novos usuários",
+                            Nome = "Cadastrar Usuários"
+                        },
+                        new
+                        {
+                            Id = new Guid("a0000000-0000-0000-0000-000000000005"),
+                            Ativo = true,
+                            Codigo = "usuarios.editar",
+                            DataCriacao = new DateTime(2026, 6, 10, 1, 24, 33, 784, DateTimeKind.Utc).AddTicks(1249),
+                            Descricao = "Permite editar usuários existentes",
+                            Nome = "Editar Usuários"
+                        },
+                        new
+                        {
+                            Id = new Guid("a0000000-0000-0000-0000-000000000006"),
+                            Ativo = true,
+                            Codigo = "usuarios.desativar",
+                            DataCriacao = new DateTime(2026, 6, 10, 1, 24, 33, 784, DateTimeKind.Utc).AddTicks(1267),
+                            Descricao = "Permite desativar/ativar usuários",
+                            Nome = "Desativar Usuários"
+                        });
+                });
+
+            modelBuilder.Entity("Bravito.Domain.Acesso.Usuario", b =>
+                {
+                    b.Property<Guid>("Id")
+                        .ValueGeneratedOnAdd()
+                        .HasColumnType("uuid")
+                        .HasColumnName("id")
+                        .HasDefaultValueSql("gen_random_uuid()");
+
+                    b.Property<bool>("Ativo")
+                        .HasColumnType("boolean")
+                        .HasColumnName("ativo");
+
+                    b.Property<DateTime?>("DataAlteracao")
+                        .HasColumnType("timestamp with time zone")
+                        .HasColumnName("data_alteracao");
+
+                    b.Property<DateTime>("DataCriacao")
+                        .HasColumnType("timestamp with time zone")
+                        .HasColumnName("data_criacao");
+
+                    b.Property<string>("Email")
+                        .IsRequired()
+                        .HasMaxLength(255)
+                        .HasColumnType("character varying(255)")
+                        .HasColumnName("email");
+
+                    b.Property<string>("KeycloakId")
+                        .IsRequired()
+                        .HasMaxLength(255)
+                        .HasColumnType("character varying(255)")
+                        .HasColumnName("keycloak_id");
+
+                    b.Property<string>("Nome")
+                        .IsRequired()
+                        .HasMaxLength(255)
+                        .HasColumnType("character varying(255)")
+                        .HasColumnName("nome");
+
+                    b.HasKey("Id");
+
+                    b.HasIndex("Email");
+
+                    b.HasIndex("KeycloakId")
+                        .IsUnique();
+
+                    b.ToTable("usuarios", (string)null);
+                });
+
+            modelBuilder.Entity("Bravito.Domain.Acesso.UsuarioPerfilAcesso", b =>
+                {
+                    b.Property<Guid>("Id")
+                        .ValueGeneratedOnAdd()
+                        .HasColumnType("uuid")
+                        .HasColumnName("id")
+                        .HasDefaultValueSql("gen_random_uuid()");
+
+                    b.Property<DateTime>("DataCriacao")
+                        .HasColumnType("timestamp with time zone")
+                        .HasColumnName("data_criacao");
+
+                    b.Property<Guid>("PerfilAcessoId")
+                        .HasColumnType("uuid")
+                        .HasColumnName("perfil_acesso_id");
+
+                    b.Property<Guid>("UsuarioId")
+                        .HasColumnType("uuid")
+                        .HasColumnName("usuario_id");
+
+                    b.HasKey("Id");
+
+                    b.HasIndex("PerfilAcessoId");
+
+                    b.HasIndex("UsuarioId", "PerfilAcessoId")
+                        .IsUnique();
+
+                    b.ToTable("usuarios_perfis_acesso", (string)null);
+                });
+
             modelBuilder.Entity("Bravito.Domain.Chat.Conversa", b =>
                 {
                     b.Property<Guid>("Id")
@@ -195,6 +534,44 @@ namespace Bravito.Infrastructure.Migrations
                     b.ToTable("conversas_mensagens", (string)null);
                 });
 
+            modelBuilder.Entity("Bravito.Domain.Acesso.PerfilAcessoRecurso", b =>
+                {
+                    b.HasOne("Bravito.Domain.Acesso.PerfilAcesso", "PerfilAcesso")
+                        .WithMany("Recursos")
+                        .HasForeignKey("PerfilAcessoId")
+                        .OnDelete(DeleteBehavior.Cascade)
+                        .IsRequired();
+
+                    b.HasOne("Bravito.Domain.Acesso.Recurso", "Recurso")
+                        .WithMany("PerfisAcesso")
+                        .HasForeignKey("RecursoId")
+                        .OnDelete(DeleteBehavior.Cascade)
+                        .IsRequired();
+
+                    b.Navigation("PerfilAcesso");
+
+                    b.Navigation("Recurso");
+                });
+
+            modelBuilder.Entity("Bravito.Domain.Acesso.UsuarioPerfilAcesso", b =>
+                {
+                    b.HasOne("Bravito.Domain.Acesso.PerfilAcesso", "PerfilAcesso")
+                        .WithMany("Usuarios")
+                        .HasForeignKey("PerfilAcessoId")
+                        .OnDelete(DeleteBehavior.Cascade)
+                        .IsRequired();
+
+                    b.HasOne("Bravito.Domain.Acesso.Usuario", "Usuario")
+                        .WithMany("PerfisAcesso")
+                        .HasForeignKey("UsuarioId")
+                        .OnDelete(DeleteBehavior.Cascade)
+                        .IsRequired();
+
+                    b.Navigation("PerfilAcesso");
+
+                    b.Navigation("Usuario");
+                });
+
             modelBuilder.Entity("Bravito.Domain.Chat.ConversaContexto", b =>
                 {
                     b.HasOne("Bravito.Domain.Chat.Conversa", "Conversa")
@@ -226,6 +603,23 @@ namespace Bravito.Infrastructure.Migrations
                         .IsRequired();
 
                     b.Navigation("Conversa");
+                });
+
+            modelBuilder.Entity("Bravito.Domain.Acesso.PerfilAcesso", b =>
+                {
+                    b.Navigation("Recursos");
+
+                    b.Navigation("Usuarios");
+                });
+
+            modelBuilder.Entity("Bravito.Domain.Acesso.Recurso", b =>
+                {
+                    b.Navigation("PerfisAcesso");
+                });
+
+            modelBuilder.Entity("Bravito.Domain.Acesso.Usuario", b =>
+                {
+                    b.Navigation("PerfisAcesso");
                 });
 
             modelBuilder.Entity("Bravito.Domain.Chat.Conversa", b =>

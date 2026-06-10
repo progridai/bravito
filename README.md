@@ -11,10 +11,14 @@ O foco da primeira fase é a consolidação de uma fundação extremamente segur
 *   **📱 Aplicação Flutter (Mobile/Web)**: Interface responsiva desenvolvida em Flutter com arquitetura de ponta baseada em Material 3.
     *   **Autenticação:** Integrado via `flutter_appauth` e interceptores do `Dio`.
     *   **Roteamento:** Gerenciado via `go_router` com proteção de rotas baseada no AuthState.
+    *   **Segurança da Conta:** Alterações sensíveis, como alteração de senha, são redirecionadas à tela oficial do Keycloak.
 *   **⚙️ API Backend em ASP.NET Core**: Gateway seguro e centralizador com implementação de Clean Architecture.
     *   **n8n Assistant Webhook:** Integração segura (Server-to-Server) com o assistente n8n via API backend ASP.NET Core (`POST /api/chat/enviar`). A API atua como um proxy de segurança, populando e blindando o contexto do usuário autenticado no Keycloak antes de enviar ao Webhook, de modo que a URL do n8n e metadados confidenciais nunca cheguem ao Frontend.
 *   **🗄️ Banco PostgreSQL**: Armazenamento relacional robusto e versionado via migrations.
-*   **🛡️ Autenticação Segura API**: API ASP.NET Core configurada para validar JWT Bearer garantindo restrição severa de endpoints (CORS local e GlobalExceptionHandler prontos).
+*   **🛡️ Autenticação Segura API**: API ASP.NET Core configurada para validar JWT Bearer garantindo restrição severa de endpoints.
+*   **🔐 Autorização por Recursos**: Sistema de controle de acesso granular armazenado no banco local. A API verifica permissões exclusivas da aplicação usando atributos como `[RequerRecurso("chat.acessar")]`.
+*   **👥 Gestão Administrativa de Usuários**: Endpoints internos robustos com CRUD sincronizado automaticamente entre PostgreSQL e Keycloak Admin API, sem salvar senhas locais. Há também telas Flutter totalmente responsivas e seguras que integram com estes endpoints.
+*   **📱 Proteção Visual e UX (Flutter)**: A interface ajusta o menu, oculta botões e redireciona rotas protegidas (Acesso Negado) lendo as permissões vindas do login.
 *   **💬 Chat com Assistente no n8n**: Canal de chat integrado à inteligência artificial por meio de webhooks seguros.
 *   **📝 Auditoria & Logs Estruturados**: Logs estruturados em tempo real (Serilog) e trilha básica de auditoria de dados.
 *   **🌱 Estrutura Escalável**: Código-fonte desacoplado e modelagem preparada para expansão contínua.
@@ -168,5 +172,5 @@ Para testar o fluxo completo de mensagens (Flutter -> Backend -> n8n -> Backend 
    flutter run -d chrome
    ```
 3. Faça Login usando as credenciais do Keycloak (`dev.admin` e `Admin@123456`).
-4. Ao ser redirecionado para a página do Chat, digite uma mensagem. A API encaminhará a mensagem autenticada para o Webhook do n8n de forma segura e invisível para o Client.
+4. Ao ser redirecionado para a tela inicial, clique em "Abrir Chat" e digite uma mensagem. A API encaminhará a mensagem autenticada para o Webhook do n8n de forma segura e invisível para o Client.
 5. Em alguns instantes o balão do assistente deverá aparecer com a resposta do webhook!

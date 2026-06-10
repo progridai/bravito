@@ -7,6 +7,7 @@ using Bravito.Application.Chat.Interfaces;
 using Bravito.Application.Chat.Models;
 using Bravito.Domain.Chat;
 using System.Linq;
+using Bravito.Api.Filters;
 
 namespace Bravito.Api.Controllers
 {
@@ -25,6 +26,7 @@ namespace Bravito.Api.Controllers
         }
 
         [HttpPost("enviar")]
+        [RequerRecurso("chat.acessar")]
         public async Task<IActionResult> EnviarMensagem([FromBody] EnviarMensagemChatRequest request, CancellationToken cancellationToken)
         {
             if (string.IsNullOrWhiteSpace(request.Mensagem))
@@ -96,6 +98,7 @@ namespace Bravito.Api.Controllers
         }
 
         [HttpGet("historico")]
+        [RequerRecurso("conversas.visualizar")]
         public async Task<IActionResult> ObterHistorico(CancellationToken cancellationToken)
         {
             var usuarioId = User.FindFirst(ClaimTypes.NameIdentifier)?.Value;

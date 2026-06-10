@@ -25,6 +25,16 @@ builder.Services.AddDbContext<Bravito.Infrastructure.Data.BravitoDbContext>(opti
 // Configure Repositories
 builder.Services.AddScoped<Bravito.Application.Chat.Interfaces.IConversaRepository, Bravito.Infrastructure.Data.Repositories.ConversaRepository>();
 
+// Configure Access Services
+builder.Services.AddHttpContextAccessor();
+builder.Services.AddScoped<Bravito.Application.Acesso.Interfaces.IUsuarioAtualService, Bravito.Infrastructure.Acesso.Services.UsuarioAtualService>();
+builder.Services.AddScoped<Bravito.Application.Acesso.Interfaces.IUsuarioAplicacaoService, Bravito.Infrastructure.Acesso.Services.UsuarioAplicacaoService>();
+builder.Services.AddScoped<Bravito.Application.Acesso.Interfaces.IAutorizacaoAplicacaoService, Bravito.Infrastructure.Acesso.Services.AutorizacaoAplicacaoService>();
+
+builder.Services.Configure<Bravito.Infrastructure.Integrations.Keycloak.Options.KeycloakAdminOptions>(builder.Configuration.GetSection("KeycloakAdmin"));
+builder.Services.AddHttpClient<Bravito.Application.Acesso.Interfaces.IKeycloakAdminService, Bravito.Infrastructure.Integrations.Keycloak.KeycloakAdminService>();
+builder.Services.AddScoped<Bravito.Application.Acesso.Interfaces.IUsuariosAdminService, Bravito.Infrastructure.Acesso.Services.UsuariosAdminService>();
+
 builder.Services.AddAuthentication(JwtBearerDefaults.AuthenticationScheme)
     .AddJwtBearer(options =>
     {

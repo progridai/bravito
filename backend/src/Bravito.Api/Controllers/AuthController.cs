@@ -1,6 +1,9 @@
 using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
 using System.Security.Claims;
+using System.Threading.Tasks;
+using System.Linq;
+using Bravito.Application.Acesso.Interfaces;
 
 namespace Bravito.Api.Controllers
 {
@@ -8,24 +11,33 @@ namespace Bravito.Api.Controllers
     [Route("api/[controller]")]
     public class AuthController : ControllerBase
     {
+        private readonly IUsuarioAplicacaoService _usuarioAplicacaoService;
+        private readonly IAutorizacaoAplicacaoService _autorizacaoAplicacaoService;
+
+        public AuthController(IUsuarioAplicacaoService usuarioAplicacaoService, IAutorizacaoAplicacaoService autorizacaoAplicacaoService)
+        {
+            _usuarioAplicacaoService = usuarioAplicacaoService;
+            _autorizacaoAplicacaoService = autorizacaoAplicacaoService;
+        }
+
         [HttpGet("me")]
         [Authorize]
-        public IActionResult GetMe()
+        public async Task<IActionResult> GetMe()
         {
-            var user = HttpContext.User;
+            // Sincroniza o usuário atual com o banco (cria se primeiro login)
+            var usuario = await _usuarioAplicacaoService.SincronizarUsuarioAtualAsync();
 
-            var roles = user.Claims
-                .Where(c => c.Type == ClaimTypes.Role || c.Type == "realm_access")
-                .Select(c => c.Value)
-                .ToList();
+            // Busca os recursos
+            var recursos = await _autorizacaoAplicacaoService.ObterRecursosUsuarioAsync(usuario.Id);
 
             var userInfo = new
             {
-                Id = user.FindFirst(ClaimTypes.NameIdentifier)?.Value,
-                Username = user.FindFirst("preferred_username")?.Value,
-                Name = user.FindFirst("name")?.Value,
-                Email = user.FindFirst(ClaimTypes.Email)?.Value,
-                Roles = roles
+                UsuarioId = usuario.Id.ToString(),
+                KeycloakId = usuario.KeycloakId,
+                Nome = usuario.Nome,
+                Email = usuario.Email,
+                Perfis = usuario.PerfisAcesso.Select(p => p.PerfilAcesso.Nome).ToList(),
+                Recursos = recursos
             };
 
             return Ok(userInfo);
