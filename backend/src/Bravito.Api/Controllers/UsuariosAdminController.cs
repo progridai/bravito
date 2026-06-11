@@ -82,7 +82,7 @@ namespace Bravito.Api.Controllers
             }
             catch (Exception ex)
             {
-                return StatusCode(500, new { erro = "Erro interno ao atualizar usuário. " + ex.Message });
+                return StatusCode(500, new { erro = "Erro interno ao atualizar usuário. " + ex.ToString() });
             }
         }
 

@@ -108,22 +108,28 @@ namespace Bravito.Infrastructure.Acesso.Services
             // Atualiza Keycloak
             await _keycloakAdminService.AtualizarUsuarioAsync(usuario.KeycloakId, request.Nome, request.Email, request.Ativo, cancellationToken);
 
-            // Atualiza Banco
-            usuario.Nome = request.Nome;
-            usuario.Email = request.Email;
-            usuario.Ativo = request.Ativo;
-            usuario.DataAlteracao = DateTime.UtcNow;
+            // Atualiza Banco diretamente (bypass tracking bugs)
+            await _context.Usuarios
+                .Where(u => u.Id == id)
+                .ExecuteUpdateAsync(s => s
+                    .SetProperty(u => u.Nome, request.Nome)
+                    .SetProperty(u => u.Email, request.Email)
+                    .SetProperty(u => u.Ativo, request.Ativo)
+                    .SetProperty(u => u.DataAlteracao, DateTime.UtcNow), 
+                    cancellationToken);
 
-            // Remove todos os perfis atuais
-            _context.UsuariosPerfisAcesso.RemoveRange(usuario.PerfisAcesso);
+            // Remove todos os perfis atuais diretamente no banco
+            await _context.UsuariosPerfisAcesso
+                .Where(pa => pa.UsuarioId == id)
+                .ExecuteDeleteAsync(cancellationToken);
 
             // Adiciona os novos perfis selecionados
             foreach (var perfilId in request.PerfilIds)
             {
-                usuario.PerfisAcesso.Add(new UsuarioPerfilAcesso
+                _context.UsuariosPerfisAcesso.Add(new UsuarioPerfilAcesso
                 {
                     Id = Guid.NewGuid(),
-                    UsuarioId = usuario.Id,
+                    UsuarioId = id,
                     PerfilAcessoId = perfilId,
                     DataCriacao = DateTime.UtcNow
                 });
