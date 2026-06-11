@@ -36,7 +36,7 @@ class MenuPage extends ConsumerWidget {
                 leading: const Icon(Icons.people_outline, color: BravitoColors.dourado),
                 title: const Text(
                   'Usuários',
-                  style: TextStyle(fontWeight: FontWeight.bold, color: BravitoColors.pretoSuave),
+                  style: TextStyle(fontWeight: FontWeight.bold),
                 ),
                 trailing: const Icon(Icons.arrow_forward_ios, size: 16),
                 onTap: () {
@@ -52,7 +52,7 @@ class MenuPage extends ConsumerWidget {
               leading: const Icon(Icons.lock_outline, color: BravitoColors.dourado),
               title: const Text(
                 'Alterar Senha',
-                style: TextStyle(fontWeight: FontWeight.bold, color: BravitoColors.pretoSuave),
+                style: TextStyle(fontWeight: FontWeight.bold),
               ),
               trailing: const Icon(Icons.arrow_forward_ios, size: 16),
               onTap: () {
@@ -68,7 +68,7 @@ class MenuPage extends ConsumerWidget {
                 leading: const Icon(Icons.chat_bubble_outline, color: BravitoColors.dourado),
                 title: const Text(
                   'Visualizar Conversas',
-                  style: TextStyle(fontWeight: FontWeight.bold, color: BravitoColors.pretoSuave),
+                  style: TextStyle(fontWeight: FontWeight.bold),
                 ),
                 trailing: const Icon(Icons.arrow_forward_ios, size: 16),
                 onTap: () {

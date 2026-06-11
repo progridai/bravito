@@ -44,6 +44,8 @@ class _UsuarioFormPageState extends ConsumerState<UsuarioFormPage> {
     _usernameController.dispose();
     _emailController.dispose();
     _senhaController.dispose();
+    // Limpa o estado global ao fechar a tela
+    ref.read(usuarioFormControllerProvider.notifier).limpar();
     super.dispose();
   }
 

@@ -21,12 +21,10 @@ class AppTextStyles {
   static const TextStyle bodyText = TextStyle(
     fontSize: 16,
     fontFamily: 'Inter',
-    color: BravitoColors.pretoSuave,
   );
 
   static const TextStyle caption = TextStyle(
     fontSize: 12,
     fontFamily: 'Inter',
-    color: BravitoColors.pretoSuave,
   );
 }

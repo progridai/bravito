@@ -116,7 +116,7 @@ class _ChatPageState extends ConsumerState<ChatPage> {
                     child: Text(
                       'Como posso ajudar você hoje?',
                       style: TextStyle(
-                        color: BravitoColors.pretoSuave.withOpacity(0.6),
+                        color: Theme.of(context).colorScheme.onSurface.withValues(alpha: 0.6),
                         fontSize: 16,
                       ),
                     ),
