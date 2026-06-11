@@ -102,14 +102,12 @@ class UsuarioFormController extends Notifier<UsuarioFormState> {
       final data = e.response?.data;
       String errorMessage = 'Não foi possível salvar o usuário. Tente novamente.';
       
-      if (e.response?.statusCode == 403) {
+      if (data is Map && data.containsKey('erro')) {
+        errorMessage = data['erro'];
+      } else if (e.response?.statusCode == 403) {
         errorMessage = 'Você não possui permissão para executar esta ação.';
       } else if (e.response?.statusCode == 409) {
         errorMessage = 'Já existe um usuário cadastrado com este e-mail.';
-      } else if (e.response?.statusCode == 400) {
-        if (data is Map && data.containsKey('erro')) {
-           errorMessage = data['erro'];
-        }
       }
 
       if (previousState != null) {
