@@ -1,6 +1,6 @@
 # 🦉 Bravito
 
-O **Bravito** é uma aplicação corporativa multiplataforma de alta performance, desenvolvida em **Flutter** e **ASP.NET Core**. O sistema é projetado sob rígidos padrões de segurança, autenticação centralizada, controle fino de acesso e integração nativa com assistentes de Inteligência Artificial via **n8n**, com visão de escalabilidade futura como extensão integrada de um sistema ERP.
+O **Bravito** é uma aplicação corporativa multiplataforma de alta performance, desenvolvida em **Flutter** e **ASP.NET Core**. O sistema é projetado sob rígidos padrões de segurança, autenticação centralizada, controle fino de acesso e integração nativa com assistentes de Inteligência Artificial via **n8n**, com visão de escalabilidade futura como extensão integrada de um sistema ERP..
 
 ---
 
