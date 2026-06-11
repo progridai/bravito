@@ -89,6 +89,7 @@ class UsuarioFormController extends Notifier<UsuarioFormState> {
       } else {
         await _editarUsuario(id, EditarUsuarioRequestModel(
           nome: nome,
+          username: username,
           email: email,
           ativo: ativo,
           perfilIds: perfilIds,

@@ -15,12 +15,14 @@ namespace Bravito.Infrastructure.Data.Configurations
 
             builder.Property(c => c.KeycloakId).HasColumnName("keycloak_id").IsRequired().HasMaxLength(255);
             builder.Property(c => c.Nome).HasColumnName("nome").IsRequired().HasMaxLength(255);
+            builder.Property(c => c.Username).HasColumnName("username").IsRequired().HasMaxLength(255);
             builder.Property(c => c.Email).HasColumnName("email").IsRequired().HasMaxLength(255);
             builder.Property(c => c.Ativo).HasColumnName("ativo");
             builder.Property(c => c.DataCriacao).HasColumnName("data_criacao");
             builder.Property(c => c.DataAlteracao).HasColumnName("data_alteracao");
 
             builder.HasIndex(c => c.KeycloakId).IsUnique();
+            builder.HasIndex(c => c.Username).IsUnique();
             builder.HasIndex(c => c.Email);
         }
     }

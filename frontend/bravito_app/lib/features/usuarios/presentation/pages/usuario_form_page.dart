@@ -50,6 +50,7 @@ class _UsuarioFormPageState extends ConsumerState<UsuarioFormPage> {
   void _preencherFormulario(UsuarioFormLoaded state) {
     if (state.usuario != null && _nomeController.text.isEmpty) {
       _nomeController.text = state.usuario!.nome;
+      _usernameController.text = state.usuario!.username;
       _emailController.text = state.usuario!.email;
       _ativo = state.usuario!.ativo;
       
@@ -134,7 +135,6 @@ class _UsuarioFormPageState extends ConsumerState<UsuarioFormPage> {
               const SizedBox(height: AppSpacing.md),
               TextFormField(
                 controller: _usernameController,
-                enabled: !isEdit,
                 decoration: const InputDecoration(
                   labelText: 'Nome de usuário (Login)',
                   prefixIcon: Icon(Icons.account_circle),

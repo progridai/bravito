@@ -51,6 +51,7 @@ namespace Bravito.Infrastructure.Acesso.Services
                 Id = Guid.NewGuid(),
                 KeycloakId = keycloakId,
                 Nome = request.Nome,
+                Username = request.Username,
                 Email = request.Email,
                 Ativo = request.Ativo,
                 DataCriacao = DateTime.UtcNow
@@ -105,14 +106,15 @@ namespace Bravito.Infrastructure.Acesso.Services
                 throw new InvalidOperationException("Um ou mais perfis informados são inválidos.");
             }
 
-            // Atualiza Keycloak
-            await _keycloakAdminService.AtualizarUsuarioAsync(usuario.KeycloakId, request.Nome, request.Email, request.Ativo, cancellationToken);
+            // 2. Atualizar no Keycloak (agora suporta Username também)
+            await _keycloakAdminService.AtualizarUsuarioAsync(usuario.KeycloakId, request.Username, request.Nome, request.Email, request.Ativo, cancellationToken);
 
-            // Atualiza Banco diretamente (bypass tracking bugs)
+            // 3. Atualizar dados locais
             await _context.Usuarios
                 .Where(u => u.Id == id)
                 .ExecuteUpdateAsync(s => s
                     .SetProperty(u => u.Nome, request.Nome)
+                    .SetProperty(u => u.Username, request.Username)
                     .SetProperty(u => u.Email, request.Email)
                     .SetProperty(u => u.Ativo, request.Ativo)
                     .SetProperty(u => u.DataAlteracao, DateTime.UtcNow), 
@@ -191,6 +193,7 @@ namespace Bravito.Infrastructure.Acesso.Services
                 Id = usuario.Id,
                 KeycloakId = usuario.KeycloakId,
                 Nome = usuario.Nome,
+                Username = usuario.Username,
                 Email = usuario.Email,
                 Ativo = usuario.Ativo,
                 DataCriacao = usuario.DataCriacao,
@@ -217,6 +220,7 @@ namespace Bravito.Infrastructure.Acesso.Services
                     Id = u.Id,
                     KeycloakId = u.KeycloakId,
                     Nome = u.Nome,
+                    Username = u.Username,
                     Email = u.Email,
                     Ativo = u.Ativo,
                     DataCriacao = u.DataCriacao,

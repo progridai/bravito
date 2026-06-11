@@ -113,7 +113,7 @@ namespace Bravito.Infrastructure.Integrations.Keycloak
             return id;
         }
 
-        public async Task AtualizarUsuarioAsync(string keycloakId, string nome, string email, bool ativo, CancellationToken cancellationToken = default)
+        public async Task AtualizarUsuarioAsync(string keycloakId, string username, string nome, string email, bool ativo, CancellationToken cancellationToken = default)
         {
             var token = await GetAdminTokenAsync(cancellationToken);
             
@@ -126,6 +126,7 @@ namespace Bravito.Infrastructure.Integrations.Keycloak
 
             var userData = new
             {
+                username = username,
                 email = email,
                 enabled = ativo,
                 firstName = firstName,
