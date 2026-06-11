@@ -29,6 +29,7 @@ class _UsuarioFormPageState extends ConsumerState<UsuarioFormPage> {
   
   bool _ativo = true;
   List<String> _selectedPerfis = [];
+  String? _loadedUsuarioId;
 
   @override
   void initState() {
@@ -50,7 +51,8 @@ class _UsuarioFormPageState extends ConsumerState<UsuarioFormPage> {
   }
 
   void _preencherFormulario(UsuarioFormLoaded state) {
-    if (state.usuario != null && _nomeController.text.isEmpty) {
+    if (state.usuario != null && _loadedUsuarioId != state.usuario!.id && state.usuario!.id == widget.usuarioId) {
+      _loadedUsuarioId = state.usuario!.id;
       _nomeController.text = state.usuario!.nome;
       _usernameController.text = state.usuario!.username;
       _emailController.text = state.usuario!.email;
