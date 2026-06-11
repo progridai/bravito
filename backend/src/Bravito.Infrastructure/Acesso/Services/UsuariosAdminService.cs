@@ -114,30 +114,19 @@ namespace Bravito.Infrastructure.Acesso.Services
             usuario.Ativo = request.Ativo;
             usuario.DataAlteracao = DateTime.UtcNow;
 
-            // Remove perfis antigos
-            var perfisAtuais = usuario.PerfisAcesso.ToList();
-            foreach (var pa in perfisAtuais)
-            {
-                if (!request.PerfilIds.Contains(pa.PerfilAcessoId))
-                {
-                    _context.UsuariosPerfisAcesso.Remove(pa);
-                }
-            }
+            // Remove todos os perfis atuais
+            _context.UsuariosPerfisAcesso.RemoveRange(usuario.PerfisAcesso);
 
-            // Adiciona novos perfis
-            var perfisAtuaisIds = perfisAtuais.Select(p => p.PerfilAcessoId).ToList();
+            // Adiciona os novos perfis selecionados
             foreach (var perfilId in request.PerfilIds)
             {
-                if (!perfisAtuaisIds.Contains(perfilId))
+                usuario.PerfisAcesso.Add(new UsuarioPerfilAcesso
                 {
-                    usuario.PerfisAcesso.Add(new UsuarioPerfilAcesso
-                    {
-                        Id = Guid.NewGuid(),
-                        UsuarioId = usuario.Id,
-                        PerfilAcessoId = perfilId,
-                        DataCriacao = DateTime.UtcNow
-                    });
-                }
+                    Id = Guid.NewGuid(),
+                    UsuarioId = usuario.Id,
+                    PerfilAcessoId = perfilId,
+                    DataCriacao = DateTime.UtcNow
+                });
             }
 
             await _context.SaveChangesAsync(cancellationToken);
