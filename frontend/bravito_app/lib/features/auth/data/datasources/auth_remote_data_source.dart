@@ -84,4 +84,14 @@ class AuthRemoteDataSource {
     final token = await _storageService.getAccessToken();
     return token != null;
   }
+
+  Future<void> alterarSenha(String novaSenha) async {
+    try {
+      await _dio.post('/api/auth/alterar-senha', data: {
+        'novaSenha': novaSenha,
+      });
+    } on DioException catch (e) {
+      throw Exception('Falha ao alterar senha: ${e.response?.data?['erro'] ?? e.message}');
+    }
+  }
 }

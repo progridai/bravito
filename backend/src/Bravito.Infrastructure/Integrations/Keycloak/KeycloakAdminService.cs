@@ -165,5 +165,30 @@ namespace Bravito.Infrastructure.Integrations.Keycloak
                 throw new Exception($"Erro ao habilitar/desabilitar usuário no Keycloak: {response.StatusCode} - {errorMsg}");
             }
         }
+
+        public async Task AlterarSenhaAsync(string keycloakId, string novaSenha, bool temporaria = false, CancellationToken cancellationToken = default)
+        {
+            var token = await GetAdminTokenAsync(cancellationToken);
+
+            var request = new HttpRequestMessage(HttpMethod.Put, $"{_options.BaseUrl}/admin/realms/{_options.Realm}/users/{keycloakId}/reset-password");
+            request.Headers.Authorization = new AuthenticationHeaderValue("Bearer", token);
+
+            var passwordData = new
+            {
+                type = "password",
+                value = novaSenha,
+                temporary = temporaria
+            };
+
+            request.Content = new StringContent(JsonSerializer.Serialize(passwordData), Encoding.UTF8, "application/json");
+
+            var response = await _httpClient.SendAsync(request, cancellationToken);
+
+            if (!response.IsSuccessStatusCode)
+            {
+                var errorMsg = await response.Content.ReadAsStringAsync(cancellationToken);
+                throw new Exception($"Erro ao alterar a senha do usuário no Keycloak: {response.StatusCode} - {errorMsg}");
+            }
+        }
     }
 }

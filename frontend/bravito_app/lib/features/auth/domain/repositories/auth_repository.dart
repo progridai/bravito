@@ -5,4 +5,5 @@ abstract class AuthRepository {
   Future<void> logout();
   Future<UserEntity?> getCurrentUser();
   Future<bool> isAuthenticated();
+  Future<void> alterarSenha(String novaSenha);
 }
