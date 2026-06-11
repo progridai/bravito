@@ -126,7 +126,6 @@ namespace Bravito.Infrastructure.Integrations.Keycloak
 
             var userData = new
             {
-                username = email,
                 email = email,
                 enabled = ativo,
                 firstName = firstName,
