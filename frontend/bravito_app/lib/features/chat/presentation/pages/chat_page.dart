@@ -158,6 +158,10 @@ class _ChatPageState extends ConsumerState<ChatPage> {
                   child: TextField(
                     controller: _textController,
                     onSubmitted: (_) => _enviarMensagem(),
+                    keyboardType: TextInputType.multiline,
+                    textInputAction: TextInputAction.newline,
+                    minLines: 1,
+                    maxLines: 5,
                     decoration: InputDecoration(
                       hintText: 'Digite sua mensagem...',
                       border: OutlineInputBorder(

@@ -146,6 +146,11 @@ class ChatController extends Notifier<ChatState> {
   void limparEstado() {
     state = ChatState();
   }
+
+  void excluirMensagem(String id) {
+    final novasMensagens = state.mensagens.where((msg) => msg.id != id).toList();
+    state = state.copyWith(mensagens: novasMensagens);
+  }
 }
 
 final chatControllerProvider = NotifierProvider<ChatController, ChatState>(() {
