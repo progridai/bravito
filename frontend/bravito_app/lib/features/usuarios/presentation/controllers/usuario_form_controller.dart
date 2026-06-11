@@ -25,7 +25,7 @@ final listarPerfisDisponiveisUseCaseProvider = Provider((ref) {
   return ListarPerfisDisponiveisUseCase(ref.watch(usuariosRepositoryProvider));
 });
 
-class UsuarioFormController extends Notifier<UsuarioFormState> {
+class UsuarioFormController extends AutoDisposeNotifier<UsuarioFormState> {
   late ObterUsuarioUseCase _obterUsuario;
   late CriarUsuarioUseCase _criarUsuario;
   late EditarUsuarioUseCase _editarUsuario;
@@ -131,6 +131,6 @@ class UsuarioFormController extends Notifier<UsuarioFormState> {
   }
 }
 
-final usuarioFormControllerProvider = NotifierProvider<UsuarioFormController, UsuarioFormState>(() {
+final usuarioFormControllerProvider = AutoDisposeNotifierProvider<UsuarioFormController, UsuarioFormState>(() {
   return UsuarioFormController();
 });
