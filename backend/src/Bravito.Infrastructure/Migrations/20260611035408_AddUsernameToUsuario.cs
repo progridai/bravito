@@ -63,8 +63,20 @@ namespace Bravito.Infrastructure.Migrations
                 table: "usuarios",
                 type: "character varying(255)",
                 maxLength: 255,
+                nullable: true);
+
+            migrationBuilder.Sql("UPDATE usuarios SET username = email WHERE username IS NULL;");
+
+            migrationBuilder.AlterColumn<string>(
+                name: "username",
+                table: "usuarios",
+                type: "character varying(255)",
+                maxLength: 255,
                 nullable: false,
-                defaultValueSql: "\"email\"");
+                oldClrType: typeof(string),
+                oldType: "character varying(255)",
+                oldMaxLength: 255,
+                oldNullable: true);
 
             migrationBuilder.UpdateData(
                 table: "perfis_acesso",

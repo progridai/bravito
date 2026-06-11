@@ -122,7 +122,8 @@ class _AlterarSenhaPageState extends ConsumerState<AlterarSenhaPage> {
                         width: double.infinity,
                         child: BravitoPrimaryButton(
                           text: state.carregando ? 'Aguarde...' : 'Alterar Senha',
-                          onPressed: state.carregando ? null : _submit,
+                          isLoading: state.carregando,
+                          onPressed: _submit,
                         ),
                       ),
                     ],
