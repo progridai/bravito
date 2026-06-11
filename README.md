@@ -7,7 +7,7 @@ O **Bravito** é uma aplicação corporativa multiplataforma de alta performance
 ## 🚀 Objetivo da Fase 1
 O foco da primeira fase é a consolidação de uma fundação extremamente segura, performática e modular, englobando os seguintes pilares:
 
-*   **🔒 Login com o Keycloak**: Autenticação centralizada e segura no padrão OpenID Connect (OIDC).
+*   **🔒 Login com Keycloak**: Autenticação centralizada e segura no padrão OpenID Connect (OIDC).
 *   **📱 Aplicação Flutter (Mobile/Web)**: Interface responsiva desenvolvida em Flutter com arquitetura de ponta baseada em Material 3.
     *   **Autenticação:** Integrado via `flutter_appauth` e interceptores do `Dio`.
     *   **Roteamento:** Gerenciado via `go_router` com proteção de rotas baseada no AuthState.
