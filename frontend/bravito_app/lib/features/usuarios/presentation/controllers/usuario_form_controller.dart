@@ -65,6 +65,7 @@ class UsuarioFormController extends Notifier<UsuarioFormState> {
   Future<String?> salvarUsuario({
     String? id,
     required String nome,
+    required String username,
     required String email,
     required String senhaTemporaria,
     required bool ativo,
@@ -79,6 +80,7 @@ class UsuarioFormController extends Notifier<UsuarioFormState> {
       if (id == null) {
         await _criarUsuario(CriarUsuarioRequestModel(
           nome: nome,
+          username: username,
           email: email,
           senhaTemporaria: senhaTemporaria,
           ativo: ativo,

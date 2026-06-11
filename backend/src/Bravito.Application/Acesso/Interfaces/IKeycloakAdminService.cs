@@ -5,7 +5,7 @@ namespace Bravito.Application.Acesso.Interfaces
 {
     public interface IKeycloakAdminService
     {
-        Task<string> CriarUsuarioAsync(string nome, string email, string senhaTemporaria, bool ativo, CancellationToken cancellationToken = default);
+        Task<string> CriarUsuarioAsync(string username, string nome, string email, string senhaTemporaria, bool ativo, CancellationToken cancellationToken = default);
         Task AtualizarUsuarioAsync(string keycloakId, string nome, string email, bool ativo, CancellationToken cancellationToken = default);
         Task HabilitarDesabilitarUsuarioAsync(string keycloakId, bool ativo, CancellationToken cancellationToken = default);
     }

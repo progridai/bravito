@@ -23,6 +23,7 @@ class UsuarioFormPage extends ConsumerStatefulWidget {
 class _UsuarioFormPageState extends ConsumerState<UsuarioFormPage> {
   final _formKey = GlobalKey<FormState>();
   final _nomeController = TextEditingController();
+  final _usernameController = TextEditingController();
   final _emailController = TextEditingController();
   final _senhaController = TextEditingController();
   
@@ -40,6 +41,7 @@ class _UsuarioFormPageState extends ConsumerState<UsuarioFormPage> {
   @override
   void dispose() {
     _nomeController.dispose();
+    _usernameController.dispose();
     _emailController.dispose();
     _senhaController.dispose();
     super.dispose();
@@ -73,8 +75,9 @@ class _UsuarioFormPageState extends ConsumerState<UsuarioFormPage> {
       final controller = ref.read(usuarioFormControllerProvider.notifier);
       final errorMessage = await controller.salvarUsuario(
         id: widget.usuarioId,
-        nome: _nomeController.text,
-        email: _emailController.text,
+        nome: _nomeController.text.trim(),
+        username: _usernameController.text.trim().toLowerCase(),
+        email: _emailController.text.trim(),
         senhaTemporaria: _senhaController.text,
         ativo: _ativo,
         perfilIds: _selectedPerfis,
@@ -127,6 +130,16 @@ class _UsuarioFormPageState extends ConsumerState<UsuarioFormPage> {
                 label: 'Nome completo',
                 controller: _nomeController,
                 validator: (val) => val == null || val.isEmpty ? 'Nome é obrigatório' : null,
+              ),
+              const SizedBox(height: AppSpacing.md),
+              TextFormField(
+                controller: _usernameController,
+                enabled: !isEdit,
+                decoration: const InputDecoration(
+                  labelText: 'Nome de usuário (Login)',
+                  prefixIcon: Icon(Icons.account_circle),
+                ),
+                validator: (val) => val == null || val.isEmpty ? 'Campo obrigatório' : null,
               ),
               const SizedBox(height: AppSpacing.md),
               BravitoTextField(

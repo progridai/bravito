@@ -60,7 +60,7 @@ namespace Bravito.Infrastructure.Integrations.Keycloak
             return _adminToken!;
         }
 
-        public async Task<string> CriarUsuarioAsync(string nome, string email, string senhaTemporaria, bool ativo, CancellationToken cancellationToken = default)
+        public async Task<string> CriarUsuarioAsync(string username, string nome, string email, string senhaTemporaria, bool ativo, CancellationToken cancellationToken = default)
         {
             var token = await GetAdminTokenAsync(cancellationToken);
             
@@ -74,7 +74,7 @@ namespace Bravito.Infrastructure.Integrations.Keycloak
 
             var userData = new
             {
-                username = email,
+                username = username,
                 email = email,
                 enabled = ativo,
                 emailVerified = true,

@@ -43,7 +43,7 @@ namespace Bravito.Infrastructure.Acesso.Services
             }
 
             // 3. Criar no Keycloak
-            var keycloakId = await _keycloakAdminService.CriarUsuarioAsync(request.Nome, request.Email, request.SenhaTemporaria, request.Ativo, cancellationToken);
+            var keycloakId = await _keycloakAdminService.CriarUsuarioAsync(request.Username, request.Nome, request.Email, request.SenhaTemporaria, request.Ativo, cancellationToken);
 
             // 4. Criar no Banco Local
             var usuario = new Usuario
