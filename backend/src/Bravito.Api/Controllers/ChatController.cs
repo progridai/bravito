@@ -47,6 +47,12 @@ namespace Bravito.Api.Controllers
             if (!string.IsNullOrEmpty(request.ConversaId) && Guid.TryParse(request.ConversaId, out var id))
             {
                 conversa = await _conversaRepository.ObterPorIdAsync(id, cancellationToken);
+                
+                // SEGURANÇA: Impede que um usuário mande mensagem numa conversa de outro usuário
+                if (conversa != null && conversa.UsuarioId != usuario.Id)
+                {
+                    conversa = null;
+                }
             }
 
             if (conversa == null)
