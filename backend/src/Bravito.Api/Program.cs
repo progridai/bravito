@@ -112,11 +112,9 @@ using (var scope = app.Services.CreateScope())
 // Configure the HTTP request pipeline.
 app.UseMiddleware<GlobalExceptionHandler>();
 
-if (app.Environment.IsDevelopment())
-{
-    app.UseSwagger();
-    app.UseSwaggerUI();
-}
+// Enable Swagger in all environments
+app.UseSwagger();
+app.UseSwaggerUI();
 app.UseCors("AllowAll");
 
 // app.UseHttpsRedirection(); // Removido pois o Easypanel (Traefik) já cuida do HTTPS e redirecionamentos

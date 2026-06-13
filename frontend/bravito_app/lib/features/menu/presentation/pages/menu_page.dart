@@ -49,6 +49,21 @@ class MenuPage extends ConsumerWidget {
           BravitoCard(
             padding: const EdgeInsets.all(0),
             child: ListTile(
+              leading: const Icon(Icons.library_books_outlined, color: BravitoColors.dourado),
+              title: const Text(
+                'Base de Conhecimento',
+                style: TextStyle(fontWeight: FontWeight.bold, color: BravitoColors.pretoSuave),
+              ),
+              trailing: const Icon(Icons.arrow_forward_ios, size: 16),
+              onTap: () {
+                context.push('/menu/base-conhecimento');
+              },
+            ),
+          ),
+          const SizedBox(height: AppSpacing.sm),
+          BravitoCard(
+            padding: const EdgeInsets.all(0),
+            child: ListTile(
               leading: const Icon(Icons.lock_outline, color: BravitoColors.dourado),
               title: const Text(
                 'Alterar Senha',

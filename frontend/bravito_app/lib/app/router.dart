@@ -11,6 +11,7 @@ import '../features/menu/presentation/pages/alterar_senha_page.dart';
 import '../features/menu/presentation/pages/conversas_page.dart';
 import '../features/usuarios/presentation/pages/usuarios_page.dart';
 import '../features/usuarios/presentation/pages/usuario_form_page.dart';
+import '../features/base_conhecimento/presentation/pages/base_conhecimento_page.dart';
 import '../shared/pages/acesso_negado_page.dart';
 import '../core/security/recursos_app.dart';
 
@@ -104,6 +105,10 @@ final routerProvider = Provider<GoRouter>((ref) {
           final id = state.pathParameters['id'];
           return UsuarioFormPage(usuarioId: id);
         },
+      ),
+      GoRoute(
+        path: '/menu/base-conhecimento',
+        builder: (context, state) => const BaseConhecimentoPage(),
       ),
     ],
   );
