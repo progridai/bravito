@@ -30,7 +30,6 @@ class BravitoTextField extends StatelessWidget {
           label,
           style: const TextStyle(
             fontWeight: FontWeight.w600,
-            color: BravitoColors.pretoSuave,
           ),
         ),
         const SizedBox(height: 8),

@@ -31,7 +31,6 @@ class AcessoNegadoPage extends StatelessWidget {
                 style: TextStyle(
                   fontSize: 24,
                   fontWeight: FontWeight.bold,
-                  color: BravitoColors.pretoSuave,
                 ),
               ),
               const SizedBox(height: AppSpacing.sm),

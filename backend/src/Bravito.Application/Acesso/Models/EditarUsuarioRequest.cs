@@ -10,6 +10,10 @@ namespace Bravito.Application.Acesso.Models
         [MaxLength(255)]
         public string Nome { get; set; } = string.Empty;
 
+        [Required(ErrorMessage = "O nome de usuário é obrigatório.")]
+        [MaxLength(255)]
+        public string Username { get; set; } = string.Empty;
+
         [Required(ErrorMessage = "O e-mail é obrigatório.")]
         [EmailAddress(ErrorMessage = "O e-mail informado não é válido.")]
         [MaxLength(255)]

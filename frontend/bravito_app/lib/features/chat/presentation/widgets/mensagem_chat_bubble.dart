@@ -1,10 +1,14 @@
 import 'package:flutter/material.dart';
+import 'package:flutter/services.dart';
+import 'package:flutter_riverpod/flutter_riverpod.dart';
+
 import '../../../../core/constants/app_colors.dart';
 import '../../../../core/constants/app_spacing.dart';
 import '../../domain/entities/mensagem_chat.dart';
 import '../../domain/entities/tipo_remetente.dart';
+import '../controllers/chat_controller.dart';
 
-class MensagemChatBubble extends StatelessWidget {
+class MensagemChatBubble extends ConsumerWidget {
   final MensagemChat mensagem;
 
   const MensagemChatBubble({
@@ -12,8 +16,42 @@ class MensagemChatBubble extends StatelessWidget {
     required this.mensagem,
   });
 
+  void _mostrarOpcoes(BuildContext context, WidgetRef ref) {
+    showModalBottomSheet(
+      context: context,
+      builder: (ctx) {
+        return SafeArea(
+          child: Column(
+            mainAxisSize: MainAxisSize.min,
+            children: [
+              ListTile(
+                leading: const Icon(Icons.copy),
+                title: const Text('Copiar'),
+                onTap: () {
+                  Clipboard.setData(ClipboardData(text: mensagem.texto));
+                  Navigator.pop(ctx);
+                  ScaffoldMessenger.of(context).showSnackBar(
+                    const SnackBar(content: Text('Mensagem copiada!')),
+                  );
+                },
+              ),
+              ListTile(
+                leading: const Icon(Icons.delete, color: BravitoColors.erro),
+                title: const Text('Excluir', style: TextStyle(color: BravitoColors.erro)),
+                onTap: () {
+                  ref.read(chatControllerProvider.notifier).excluirMensagem(mensagem.id);
+                  Navigator.pop(ctx);
+                },
+              ),
+            ],
+          ),
+        );
+      },
+    );
+  }
+
   @override
-  Widget build(BuildContext context) {
+  Widget build(BuildContext context, WidgetRef ref) {
     final isUsuario = mensagem.tipoRemetente == TipoRemetente.usuario;
     final isSistema = mensagem.tipoRemetente == TipoRemetente.sistema;
 
@@ -39,45 +77,48 @@ class MensagemChatBubble extends StatelessWidget {
           : isUsuario 
               ? Alignment.centerRight 
               : Alignment.centerLeft,
-      child: Container(
-        constraints: BoxConstraints(
-          maxWidth: MediaQuery.of(context).size.width * 0.75,
-        ),
-        margin: const EdgeInsets.symmetric(vertical: AppSpacing.xs),
-        padding: const EdgeInsets.symmetric(
-          horizontal: AppSpacing.md,
-          vertical: AppSpacing.sm,
-        ),
-        decoration: BoxDecoration(
-          color: bubbleColor,
-          borderRadius: BorderRadius.only(
-            topLeft: const Radius.circular(16),
-            topRight: const Radius.circular(16),
-            bottomLeft: Radius.circular(isUsuario || isSistema ? 16 : 4),
-            bottomRight: Radius.circular(isUsuario ? 4 : 16),
+      child: GestureDetector(
+        onLongPress: () => _mostrarOpcoes(context, ref),
+        child: Container(
+          constraints: BoxConstraints(
+            maxWidth: MediaQuery.of(context).size.width * 0.75,
           ),
-        ),
-        child: Column(
-          crossAxisAlignment: CrossAxisAlignment.start,
-          children: [
-            Text(
-              mensagem.texto,
-              style: TextStyle(
-                color: textColor,
-                fontSize: 15,
-              ),
+          margin: const EdgeInsets.symmetric(vertical: AppSpacing.xs),
+          padding: const EdgeInsets.symmetric(
+            horizontal: AppSpacing.md,
+            vertical: AppSpacing.sm,
+          ),
+          decoration: BoxDecoration(
+            color: bubbleColor,
+            borderRadius: BorderRadius.only(
+              topLeft: const Radius.circular(16),
+              topRight: const Radius.circular(16),
+              bottomLeft: Radius.circular(isUsuario || isSistema ? 16 : 4),
+              bottomRight: Radius.circular(isUsuario ? 4 : 16),
             ),
-            if (mensagem.erro != null) ...[
-              const SizedBox(height: 4),
+          ),
+          child: Column(
+            crossAxisAlignment: CrossAxisAlignment.start,
+            children: [
               Text(
-                mensagem.erro!,
-                style: const TextStyle(
-                  color: BravitoColors.erro,
-                  fontSize: 12,
+                mensagem.texto,
+                style: TextStyle(
+                  color: textColor,
+                  fontSize: 15,
                 ),
               ),
-            ]
-          ],
+              if (mensagem.erro != null) ...[
+                const SizedBox(height: 4),
+                Text(
+                  mensagem.erro!,
+                  style: const TextStyle(
+                    color: BravitoColors.erro,
+                    fontSize: 12,
+                  ),
+                ),
+              ]
+            ],
+          ),
         ),
       ),
     );

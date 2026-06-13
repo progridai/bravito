@@ -43,7 +43,7 @@ namespace Bravito.Infrastructure.Acesso.Services
             }
 
             // 3. Criar no Keycloak
-            var keycloakId = await _keycloakAdminService.CriarUsuarioAsync(request.Nome, request.Email, request.SenhaTemporaria, request.Ativo, cancellationToken);
+            var keycloakId = await _keycloakAdminService.CriarUsuarioAsync(request.Username, request.Nome, request.Email, request.SenhaTemporaria, request.Ativo, cancellationToken);
 
             // 4. Criar no Banco Local
             var usuario = new Usuario
@@ -51,6 +51,7 @@ namespace Bravito.Infrastructure.Acesso.Services
                 Id = Guid.NewGuid(),
                 KeycloakId = keycloakId,
                 Nome = request.Nome,
+                Username = request.Username,
                 Email = request.Email,
                 Ativo = request.Ativo,
                 DataCriacao = DateTime.UtcNow
@@ -105,39 +106,35 @@ namespace Bravito.Infrastructure.Acesso.Services
                 throw new InvalidOperationException("Um ou mais perfis informados são inválidos.");
             }
 
-            // Atualiza Keycloak
-            await _keycloakAdminService.AtualizarUsuarioAsync(usuario.KeycloakId, request.Nome, request.Email, request.Ativo, cancellationToken);
+            // 2. Atualizar no Keycloak (agora suporta Username também)
+            await _keycloakAdminService.AtualizarUsuarioAsync(usuario.KeycloakId, request.Username, request.Nome, request.Email, request.Ativo, cancellationToken);
 
-            // Atualiza Banco
-            usuario.Nome = request.Nome;
-            usuario.Email = request.Email;
-            usuario.Ativo = request.Ativo;
-            usuario.DataAlteracao = DateTime.UtcNow;
+            // 3. Atualizar dados locais
+            await _context.Usuarios
+                .Where(u => u.Id == id)
+                .ExecuteUpdateAsync(s => s
+                    .SetProperty(u => u.Nome, request.Nome)
+                    .SetProperty(u => u.Username, request.Username)
+                    .SetProperty(u => u.Email, request.Email)
+                    .SetProperty(u => u.Ativo, request.Ativo)
+                    .SetProperty(u => u.DataAlteracao, DateTime.UtcNow), 
+                    cancellationToken);
 
-            // Remove perfis antigos
-            var perfisAtuais = usuario.PerfisAcesso.ToList();
-            foreach (var pa in perfisAtuais)
-            {
-                if (!request.PerfilIds.Contains(pa.PerfilAcessoId))
-                {
-                    _context.UsuariosPerfisAcesso.Remove(pa);
-                }
-            }
+            // Remove todos os perfis atuais diretamente no banco
+            await _context.UsuariosPerfisAcesso
+                .Where(pa => pa.UsuarioId == id)
+                .ExecuteDeleteAsync(cancellationToken);
 
-            // Adiciona novos perfis
-            var perfisAtuaisIds = perfisAtuais.Select(p => p.PerfilAcessoId).ToList();
+            // Adiciona os novos perfis selecionados
             foreach (var perfilId in request.PerfilIds)
             {
-                if (!perfisAtuaisIds.Contains(perfilId))
+                _context.UsuariosPerfisAcesso.Add(new UsuarioPerfilAcesso
                 {
-                    usuario.PerfisAcesso.Add(new UsuarioPerfilAcesso
-                    {
-                        Id = Guid.NewGuid(),
-                        UsuarioId = usuario.Id,
-                        PerfilAcessoId = perfilId,
-                        DataCriacao = DateTime.UtcNow
-                    });
-                }
+                    Id = Guid.NewGuid(),
+                    UsuarioId = id,
+                    PerfilAcessoId = perfilId,
+                    DataCriacao = DateTime.UtcNow
+                });
             }
 
             await _context.SaveChangesAsync(cancellationToken);
@@ -196,6 +193,7 @@ namespace Bravito.Infrastructure.Acesso.Services
                 Id = usuario.Id,
                 KeycloakId = usuario.KeycloakId,
                 Nome = usuario.Nome,
+                Username = usuario.Username,
                 Email = usuario.Email,
                 Ativo = usuario.Ativo,
                 DataCriacao = usuario.DataCriacao,
@@ -222,6 +220,7 @@ namespace Bravito.Infrastructure.Acesso.Services
                     Id = u.Id,
                     KeycloakId = u.KeycloakId,
                     Nome = u.Nome,
+                    Username = u.Username,
                     Email = u.Email,
                     Ativo = u.Ativo,
                     DataCriacao = u.DataCriacao,

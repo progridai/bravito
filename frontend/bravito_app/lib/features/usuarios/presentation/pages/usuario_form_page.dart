@@ -23,11 +23,13 @@ class UsuarioFormPage extends ConsumerStatefulWidget {
 class _UsuarioFormPageState extends ConsumerState<UsuarioFormPage> {
   final _formKey = GlobalKey<FormState>();
   final _nomeController = TextEditingController();
+  final _usernameController = TextEditingController();
   final _emailController = TextEditingController();
   final _senhaController = TextEditingController();
   
   bool _ativo = true;
   List<String> _selectedPerfis = [];
+  String? _loadedUsuarioId;
 
   @override
   void initState() {
@@ -40,14 +42,19 @@ class _UsuarioFormPageState extends ConsumerState<UsuarioFormPage> {
   @override
   void dispose() {
     _nomeController.dispose();
+    _usernameController.dispose();
     _emailController.dispose();
     _senhaController.dispose();
+    // Limpa o estado global ao fechar a tela
+    ref.read(usuarioFormControllerProvider.notifier).limpar();
     super.dispose();
   }
 
   void _preencherFormulario(UsuarioFormLoaded state) {
-    if (state.usuario != null && _nomeController.text.isEmpty) {
+    if (state.usuario != null && _loadedUsuarioId != state.usuario!.id && state.usuario!.id == widget.usuarioId) {
+      _loadedUsuarioId = state.usuario!.id;
       _nomeController.text = state.usuario!.nome;
+      _usernameController.text = state.usuario!.username;
       _emailController.text = state.usuario!.email;
       _ativo = state.usuario!.ativo;
       
@@ -71,20 +78,27 @@ class _UsuarioFormPageState extends ConsumerState<UsuarioFormPage> {
       }
 
       final controller = ref.read(usuarioFormControllerProvider.notifier);
-      final success = await controller.salvarUsuario(
+      final errorMessage = await controller.salvarUsuario(
         id: widget.usuarioId,
-        nome: _nomeController.text,
-        email: _emailController.text,
+        nome: _nomeController.text.trim(),
+        username: _usernameController.text.trim().toLowerCase(),
+        email: _emailController.text.trim(),
         senhaTemporaria: _senhaController.text,
         ativo: _ativo,
         perfilIds: _selectedPerfis,
       );
 
-      if (success && mounted) {
-        ScaffoldMessenger.of(context).showSnackBar(
-          const SnackBar(content: Text('Usuário salvo com sucesso!'), backgroundColor: Colors.green),
-        );
-        context.pop();
+      if (mounted) {
+        if (errorMessage == null) {
+          ScaffoldMessenger.of(context).showSnackBar(
+            const SnackBar(content: Text('Usuário salvo com sucesso!'), backgroundColor: Colors.green),
+          );
+          context.pop();
+        } else {
+          ScaffoldMessenger.of(context).showSnackBar(
+            SnackBar(content: Text(errorMessage), backgroundColor: Colors.red),
+          );
+        }
       }
     }
   }
@@ -93,13 +107,7 @@ class _UsuarioFormPageState extends ConsumerState<UsuarioFormPage> {
   Widget build(BuildContext context) {
     final state = ref.watch(usuarioFormControllerProvider);
 
-    ref.listen<UsuarioFormState>(usuarioFormControllerProvider, (previous, next) {
-      if (next is UsuarioFormError) {
-        ScaffoldMessenger.of(context).showSnackBar(
-          SnackBar(content: Text(next.message), backgroundColor: Colors.red),
-        );
-      }
-    });
+
 
     return BravitoAppScaffold(
       title: widget.usuarioId == null ? 'Novo Usuário' : 'Editar Usuário',
@@ -127,6 +135,15 @@ class _UsuarioFormPageState extends ConsumerState<UsuarioFormPage> {
                 label: 'Nome completo',
                 controller: _nomeController,
                 validator: (val) => val == null || val.isEmpty ? 'Nome é obrigatório' : null,
+              ),
+              const SizedBox(height: AppSpacing.md),
+              TextFormField(
+                controller: _usernameController,
+                decoration: const InputDecoration(
+                  labelText: 'Nome de usuário (Login)',
+                  prefixIcon: Icon(Icons.account_circle),
+                ),
+                validator: (val) => val == null || val.isEmpty ? 'Campo obrigatório' : null,
               ),
               const SizedBox(height: AppSpacing.md),
               BravitoTextField(

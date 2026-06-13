@@ -60,7 +60,7 @@ namespace Bravito.Infrastructure.Integrations.Keycloak
             return _adminToken!;
         }
 
-        public async Task<string> CriarUsuarioAsync(string nome, string email, string senhaTemporaria, bool ativo, CancellationToken cancellationToken = default)
+        public async Task<string> CriarUsuarioAsync(string username, string nome, string email, string senhaTemporaria, bool ativo, CancellationToken cancellationToken = default)
         {
             var token = await GetAdminTokenAsync(cancellationToken);
             
@@ -74,7 +74,7 @@ namespace Bravito.Infrastructure.Integrations.Keycloak
 
             var userData = new
             {
-                username = email,
+                username = username,
                 email = email,
                 enabled = ativo,
                 emailVerified = true,
@@ -113,7 +113,7 @@ namespace Bravito.Infrastructure.Integrations.Keycloak
             return id;
         }
 
-        public async Task AtualizarUsuarioAsync(string keycloakId, string nome, string email, bool ativo, CancellationToken cancellationToken = default)
+        public async Task AtualizarUsuarioAsync(string keycloakId, string username, string nome, string email, bool ativo, CancellationToken cancellationToken = default)
         {
             var token = await GetAdminTokenAsync(cancellationToken);
             
@@ -126,7 +126,7 @@ namespace Bravito.Infrastructure.Integrations.Keycloak
 
             var userData = new
             {
-                username = email,
+                username = username,
                 email = email,
                 enabled = ativo,
                 firstName = firstName,
@@ -164,6 +164,31 @@ namespace Bravito.Infrastructure.Integrations.Keycloak
             {
                 var errorMsg = await response.Content.ReadAsStringAsync(cancellationToken);
                 throw new Exception($"Erro ao habilitar/desabilitar usuário no Keycloak: {response.StatusCode} - {errorMsg}");
+            }
+        }
+
+        public async Task AlterarSenhaAsync(string keycloakId, string novaSenha, bool temporaria = false, CancellationToken cancellationToken = default)
+        {
+            var token = await GetAdminTokenAsync(cancellationToken);
+
+            var request = new HttpRequestMessage(HttpMethod.Put, $"{_options.BaseUrl}/admin/realms/{_options.Realm}/users/{keycloakId}/reset-password");
+            request.Headers.Authorization = new AuthenticationHeaderValue("Bearer", token);
+
+            var passwordData = new
+            {
+                type = "password",
+                value = novaSenha,
+                temporary = temporaria
+            };
+
+            request.Content = new StringContent(JsonSerializer.Serialize(passwordData), Encoding.UTF8, "application/json");
+
+            var response = await _httpClient.SendAsync(request, cancellationToken);
+
+            if (!response.IsSuccessStatusCode)
+            {
+                var errorMsg = await response.Content.ReadAsStringAsync(cancellationToken);
+                throw new Exception($"Erro ao alterar a senha do usuário no Keycloak: {response.StatusCode} - {errorMsg}");
             }
         }
     }

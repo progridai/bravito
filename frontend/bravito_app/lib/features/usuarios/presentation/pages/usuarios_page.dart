@@ -46,7 +46,7 @@ class _UsuariosPageState extends ConsumerState<UsuariosPage> {
         actions: [
           TextButton(
             onPressed: () => Navigator.of(context).pop(false),
-            child: const Text('Cancelar', style: TextStyle(color: BravitoColors.pretoSuave)),
+            child: const Text('Cancelar'),
           ),
           TextButton(
             onPressed: () => Navigator.of(context).pop(true),

@@ -62,19 +62,25 @@ class UsuarioFormController extends Notifier<UsuarioFormState> {
     }
   }
 
-  Future<bool> salvarUsuario({
+  Future<String?> salvarUsuario({
     String? id,
     required String nome,
+    required String username,
     required String email,
     required String senhaTemporaria,
     required bool ativo,
     required List<String> perfilIds,
   }) async {
+    UsuarioFormLoaded? previousState;
+    if (state is UsuarioFormLoaded) {
+      previousState = state as UsuarioFormLoaded;
+    }
     state = UsuarioFormLoading();
     try {
       if (id == null) {
         await _criarUsuario(CriarUsuarioRequestModel(
           nome: nome,
+          username: username,
           email: email,
           senhaTemporaria: senhaTemporaria,
           ativo: ativo,
@@ -83,6 +89,7 @@ class UsuarioFormController extends Notifier<UsuarioFormState> {
       } else {
         await _editarUsuario(id, EditarUsuarioRequestModel(
           nome: nome,
+          username: username,
           email: email,
           ativo: ativo,
           perfilIds: perfilIds,
@@ -93,27 +100,38 @@ class UsuarioFormController extends Notifier<UsuarioFormState> {
       ref.read(usuariosControllerProvider.notifier).carregarUsuarios();
       
       state = UsuarioFormSuccess();
-      return true;
+      return null;
     } on DioException catch (e) {
       final data = e.response?.data;
       String errorMessage = 'Não foi possível salvar o usuário. Tente novamente.';
       
-      if (e.response?.statusCode == 403) {
+      if (data is Map && data.containsKey('erro')) {
+        errorMessage = data['erro'];
+      } else if (e.response?.statusCode == 403) {
         errorMessage = 'Você não possui permissão para executar esta ação.';
       } else if (e.response?.statusCode == 409) {
         errorMessage = 'Já existe um usuário cadastrado com este e-mail.';
-      } else if (e.response?.statusCode == 400) {
-        if (data is Map && data.containsKey('erro')) {
-           errorMessage = data['erro'];
-        }
       }
 
-      state = UsuarioFormError(errorMessage);
-      return false;
+      if (previousState != null) {
+        state = previousState;
+      } else {
+        state = UsuarioFormError(errorMessage);
+      }
+      return errorMessage;
     } catch (e) {
-      state = UsuarioFormError('Não foi possível salvar o usuário. Tente novamente.');
-      return false;
+      String errorMessage = 'Não foi possível salvar o usuário. Tente novamente.';
+      if (previousState != null) {
+        state = previousState;
+      } else {
+        state = UsuarioFormError(errorMessage);
+      }
+      return errorMessage;
     }
+  }
+
+  void limpar() {
+    state = UsuarioFormInitial();
   }
 }
 

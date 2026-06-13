@@ -4,6 +4,7 @@ class UsuarioAdminModel extends Usuario {
   UsuarioAdminModel({
     required super.id,
     required super.nome,
+    required super.username,
     required super.email,
     required super.ativo,
     super.perfis = const [],
@@ -13,6 +14,7 @@ class UsuarioAdminModel extends Usuario {
     return UsuarioAdminModel(
       id: json['id'] ?? '',
       nome: json['nome'] ?? '',
+      username: json['username'] ?? '',
       email: json['email'] ?? '',
       ativo: json['ativo'] ?? false,
       perfis: (json['perfis'] as List<dynamic>?)?.map((e) => e.toString()).toList() ?? [],

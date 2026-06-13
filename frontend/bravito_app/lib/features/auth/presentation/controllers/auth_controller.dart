@@ -10,6 +10,7 @@ import '../../domain/usecases/login_usecase.dart';
 import '../../domain/usecases/logout_usecase.dart';
 import '../../domain/usecases/get_current_user_usecase.dart';
 import '../../domain/entities/user_entity.dart';
+import '../../../../features/chat/presentation/controllers/chat_controller.dart';
 import 'auth_state.dart';
 
 
@@ -95,6 +96,8 @@ class AuthController extends Notifier<AuthState> {
     state = AuthLoading();
     try {
       await _logoutUseCase();
+      // Limpa os dados de chat que estavam em memória para não vazar pro próximo usuário
+      ref.read(chatControllerProvider.notifier).limparEstado();
       state = AuthUnauthenticated();
     } catch (e) {
       state = AuthError('Erro ao realizar logout.');

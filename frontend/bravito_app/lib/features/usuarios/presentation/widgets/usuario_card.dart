@@ -45,7 +45,6 @@ class UsuarioCard extends StatelessWidget {
                   style: const TextStyle(
                     fontWeight: FontWeight.bold,
                     fontSize: 16,
-                    color: BravitoColors.pretoSuave,
                   ),
                 ),
                 const SizedBox(height: 4),
@@ -100,7 +99,7 @@ class UsuarioCard extends StatelessWidget {
             children: [
               if (podeEditar)
                 IconButton(
-                  icon: const Icon(Icons.edit, color: BravitoColors.pretoSuave, size: 20),
+                  icon: const Icon(Icons.edit, size: 20),
                   onPressed: onEdit,
                   tooltip: 'Editar',
                 ),

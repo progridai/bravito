@@ -26,4 +26,9 @@ class AuthRepositoryImpl implements AuthRepository {
   Future<bool> isAuthenticated() async {
     return await _remoteDataSource.isAuthenticated();
   }
+
+  @override
+  Future<void> alterarSenha(String novaSenha) async {
+    await _remoteDataSource.alterarSenha(novaSenha);
+  }
 }

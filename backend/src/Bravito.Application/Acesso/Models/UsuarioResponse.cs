@@ -8,6 +8,7 @@ namespace Bravito.Application.Acesso.Models
         public Guid Id { get; set; }
         public string KeycloakId { get; set; } = string.Empty;
         public string Nome { get; set; } = string.Empty;
+        public string Username { get; set; } = string.Empty;
         public string Email { get; set; } = string.Empty;
         public bool Ativo { get; set; }
         public DateTime DataCriacao { get; set; }

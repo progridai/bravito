@@ -13,11 +13,16 @@ namespace Bravito.Api.Controllers
     {
         private readonly IUsuarioAplicacaoService _usuarioAplicacaoService;
         private readonly IAutorizacaoAplicacaoService _autorizacaoAplicacaoService;
+        private readonly IKeycloakAdminService _keycloakAdminService;
 
-        public AuthController(IUsuarioAplicacaoService usuarioAplicacaoService, IAutorizacaoAplicacaoService autorizacaoAplicacaoService)
+        public AuthController(
+            IUsuarioAplicacaoService usuarioAplicacaoService, 
+            IAutorizacaoAplicacaoService autorizacaoAplicacaoService,
+            IKeycloakAdminService keycloakAdminService)
         {
             _usuarioAplicacaoService = usuarioAplicacaoService;
             _autorizacaoAplicacaoService = autorizacaoAplicacaoService;
+            _keycloakAdminService = keycloakAdminService;
         }
 
         [HttpGet("me")]
@@ -41,6 +46,27 @@ namespace Bravito.Api.Controllers
             };
 
             return Ok(userInfo);
+        }
+
+        [HttpPost("alterar-senha")]
+        [Authorize]
+        public async Task<IActionResult> AlterarSenha([FromBody] Bravito.Application.Acesso.Models.AlterarSenhaRequest request, System.Threading.CancellationToken cancellationToken)
+        {
+            var keycloakId = User.FindFirst(ClaimTypes.NameIdentifier)?.Value;
+            if (string.IsNullOrEmpty(keycloakId))
+            {
+                return Unauthorized();
+            }
+
+            try
+            {
+                await _keycloakAdminService.AlterarSenhaAsync(keycloakId, request.NovaSenha, false, cancellationToken);
+                return Ok(new { sucesso = true });
+            }
+            catch (System.Exception ex)
+            {
+                return StatusCode(500, new { erro = "Erro ao alterar senha. " + ex.Message });
+            }
         }
     }
 }

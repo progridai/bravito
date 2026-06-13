@@ -74,7 +74,7 @@ class AppTheme {
       elevatedButtonTheme: ElevatedButtonThemeData(
         style: ElevatedButton.styleFrom(
           backgroundColor: BravitoColors.dourado,
-          foregroundColor: BravitoColors.pretoSuave,
+          foregroundColor: BravitoColors.branco,
           shape: RoundedRectangleBorder(
             borderRadius: BorderRadius.circular(AppRadius.md),
           ),

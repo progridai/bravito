@@ -1,5 +1,6 @@
 class CriarUsuarioRequestModel {
   final String nome;
+  final String username;
   final String email;
   final String senhaTemporaria;
   final bool ativo;
@@ -7,6 +8,7 @@ class CriarUsuarioRequestModel {
 
   CriarUsuarioRequestModel({
     required this.nome,
+    required this.username,
     required this.email,
     required this.senhaTemporaria,
     required this.ativo,
@@ -16,6 +18,7 @@ class CriarUsuarioRequestModel {
   Map<String, dynamic> toJson() {
     return {
       'nome': nome,
+      'username': username,
       'email': email,
       'senhaTemporaria': senhaTemporaria,
       'ativo': ativo,

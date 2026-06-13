@@ -43,7 +43,8 @@ class ChatController extends Notifier<ChatState> {
 
   Future<void> carregarHistorico() async {
     try {
-      state = state.copyWith(carregando: true, clearErro: true);
+      // Limpa o estado atual antes de carregar para não misturar conversas de usuários diferentes!
+      state = ChatState(carregando: true);
       
       final response = await _obterHistoricoUseCase();
       if (response.sucesso) {
@@ -55,10 +56,10 @@ class ChatController extends Notifier<ChatState> {
           carregando: false,
         );
       } else {
-        state = state.copyWith(carregando: false);
+        state = ChatState(carregando: false);
       }
     } catch (e) {
-      state = state.copyWith(
+      state = ChatState(
         carregando: false,
         erro: _formatarErro(e),
       );
@@ -140,6 +141,15 @@ class ChatController extends Notifier<ChatState> {
       return msg.replaceFirst('Exception: ', '');
     }
     return 'Ocorreu um erro inesperado de comunicação.';
+  }
+
+  void limparEstado() {
+    state = ChatState();
+  }
+
+  void excluirMensagem(String id) {
+    final novasMensagens = state.mensagens.where((msg) => msg.id != id).toList();
+    state = state.copyWith(mensagens: novasMensagens);
   }
 }
 
