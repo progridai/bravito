@@ -55,6 +55,21 @@ builder.Services.Configure<Bravito.Infrastructure.Knowledge.Options.GeminiOption
     {
         options.ApiKey = envKey;
     }
+
+    var envModel = Environment.GetEnvironmentVariable("KNOWLEDGE_EMBEDDING_MODEL");
+    if (!string.IsNullOrEmpty(envModel))
+    {
+        // Se o usuário passou "gemini-embedding-001", mapeamos pro nome canônico correto da API do Google ("embedding-001")
+        if (envModel.Contains("gemini-embedding-001"))
+        {
+            options.EmbeddingModel = "models/embedding-001";
+        }
+        else
+        {
+            // Garante que o prefixo "models/" esteja presente
+            options.EmbeddingModel = envModel.StartsWith("models/") ? envModel : $"models/{envModel}";
+        }
+    }
 });
 
 // Configure Knowledge Base Database
