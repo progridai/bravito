@@ -38,6 +38,29 @@ builder.Services.Configure<Bravito.Infrastructure.Integrations.Keycloak.Options.
 builder.Services.AddHttpClient<Bravito.Application.Acesso.Interfaces.IKeycloakAdminService, Bravito.Infrastructure.Integrations.Keycloak.KeycloakAdminService>();
 builder.Services.AddScoped<Bravito.Application.Acesso.Interfaces.IUsuariosAdminService, Bravito.Infrastructure.Acesso.Services.UsuariosAdminService>();
 
+// Configure Knowledge Base Options
+builder.Services.Configure<Bravito.Infrastructure.Knowledge.Options.KnowledgeOptions>(builder.Configuration);
+builder.Services.Configure<Bravito.Infrastructure.Knowledge.Options.GeminiOptions>(builder.Configuration);
+
+// Configure Knowledge Base Database
+builder.Services.AddDbContext<Bravito.Infrastructure.Data.KnowledgeDbContext>(options =>
+{
+    options.UseNpgsql(builder.Configuration.GetConnectionString("KnowledgeDb"));
+});
+
+// Configure Knowledge Base Services
+builder.Services.AddScoped<Bravito.Application.Knowledge.Interfaces.IKnowledgeDocumentRepository, Bravito.Infrastructure.Data.Repositories.KnowledgeDocumentRepository>();
+builder.Services.AddScoped<Bravito.Application.Knowledge.Interfaces.IVectorDocumentRepository, Bravito.Infrastructure.Data.Repositories.PgVectorDocumentRepository>();
+builder.Services.AddScoped<Bravito.Application.Knowledge.Interfaces.IFileStorageService, Bravito.Infrastructure.Storage.LocalFileStorageService>();
+builder.Services.AddScoped<Bravito.Application.Knowledge.Interfaces.ITextChunkingService, Bravito.Infrastructure.Chunking.SimpleTextChunkingService>();
+builder.Services.AddScoped<Bravito.Application.Knowledge.Interfaces.IKnowledgeDocumentService, Bravito.Application.Knowledge.Services.KnowledgeDocumentService>();
+
+builder.Services.AddHttpClient<Bravito.Application.Knowledge.Interfaces.IEmbeddingService, Bravito.Infrastructure.Embeddings.GeminiEmbeddingService>();
+
+builder.Services.AddScoped<Bravito.Application.Knowledge.Interfaces.ITextExtractionService, Bravito.Infrastructure.TextExtraction.PdfTextExtractionService>();
+builder.Services.AddScoped<Bravito.Application.Knowledge.Interfaces.ITextExtractionService, Bravito.Infrastructure.TextExtraction.DocxTextExtractionService>();
+builder.Services.AddScoped<Bravito.Application.Knowledge.Interfaces.ITextExtractionService, Bravito.Infrastructure.TextExtraction.TxtTextExtractionService>();
+
 builder.Services.AddAuthentication(JwtBearerDefaults.AuthenticationScheme)
     .AddJwtBearer(options =>
     {
