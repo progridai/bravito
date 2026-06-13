@@ -109,28 +109,46 @@ class KnowledgeService {
   }
 
   Exception _handleError(dynamic error, String defaultMessage) {
-    if (error is DioException && error.response?.data != null) {
-      final data = error.response!.data;
-      if (data is Map<String, dynamic>) {
-        final msg = data['message'] ?? defaultMessage;
-        final step = data['step']?.toString();
-        final details = data['details']?.toString();
-        final traceId = data['traceId']?.toString();
+    if (error is DioException) {
+      if (error.response?.data != null) {
+        final data = error.response!.data;
+        if (data is Map<String, dynamic>) {
+          // Extrai campos padronizados do ASP.NET Core e do nosso padrao customizado
+          final msg = data['message'] ?? data['title'] ?? defaultMessage;
+          final step = data['step']?.toString();
+          final details = data['details']?.toString() ?? data['detail']?.toString();
+          final traceId = data['traceId']?.toString();
+          final errors = data['errors']; // ASP.NET validation errors
 
-        if (step != null || details != null || traceId != null) {
-          log('Knowledge API Error -> Step: $step | Details: $details | TraceId: $traceId',
-              error: error, name: 'KnowledgeService');
+          String extraInfo = '';
+          if (details != null) extraInfo += ' - $details';
+          if (errors != null) extraInfo += ' | Erros: $errors';
+
+          // Se nao tivermos nem message customizada nem title do ASP.NET,
+          // significa que e um JSON desconhecido. Vamos jogar o JSON todo na tela.
+          if (data['message'] == null && data['title'] == null) {
+            extraInfo += ' | Raw JSON: $data';
+          }
+
+          final fullMessage = '$msg$extraInfo (Status: ${error.response?.statusCode})';
+
+          return KnowledgeApiException(
+            message: fullMessage,
+            step: step,
+            details: details,
+            traceId: traceId,
+          );
+        } else {
+          // O backend retornou algo, mas não é o JSON esperado (ex: string simples)
+          return Exception('$defaultMessage: ${error.response!.data}');
         }
-
-        return KnowledgeApiException(
-          message: msg,
-          step: step,
-          details: details,
-          traceId: traceId,
-        );
       }
+      
+      // Sem dados na resposta (ex: CORS, timeout, servidor fora do ar)
+      return Exception('$defaultMessage: ${error.message} (Status: ${error.response?.statusCode})');
     }
+    
     log('Knowledge API Unexpected Error', error: error, name: 'KnowledgeService');
-    return Exception(defaultMessage);
+    return Exception('$defaultMessage: $error');
   }
 }

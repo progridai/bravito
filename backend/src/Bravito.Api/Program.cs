@@ -39,8 +39,23 @@ builder.Services.AddHttpClient<Bravito.Application.Acesso.Interfaces.IKeycloakAd
 builder.Services.AddScoped<Bravito.Application.Acesso.Interfaces.IUsuariosAdminService, Bravito.Infrastructure.Acesso.Services.UsuariosAdminService>();
 
 // Configure Knowledge Base Options
-builder.Services.Configure<Bravito.Infrastructure.Knowledge.Options.KnowledgeOptions>(builder.Configuration);
-builder.Services.Configure<Bravito.Infrastructure.Knowledge.Options.GeminiOptions>(builder.Configuration);
+builder.Services.Configure<Bravito.Infrastructure.Knowledge.Options.KnowledgeOptions>(options => 
+{
+    builder.Configuration.GetSection("KnowledgeBase").Bind(options);
+    builder.Configuration.Bind(options); // Fallback to root for backward compatibility
+});
+
+builder.Services.Configure<Bravito.Infrastructure.Knowledge.Options.GeminiOptions>(options =>
+{
+    builder.Configuration.GetSection("Gemini").Bind(options);
+    builder.Configuration.Bind(options); // Fallback to root for backward compatibility
+    
+    var envKey = Environment.GetEnvironmentVariable("GEMINI_API_KEY");
+    if (!string.IsNullOrEmpty(envKey))
+    {
+        options.ApiKey = envKey;
+    }
+});
 
 // Configure Knowledge Base Database
 builder.Services.AddDbContext<Bravito.Infrastructure.Data.KnowledgeDbContext>(options =>
