@@ -51,17 +51,23 @@ public class KnowledgeDocumentsController : ControllerBase
         return Ok(doc);
     }
 
+    public class UploadDocumentRequest
+    {
+        public IFormFile File { get; set; } = null!;
+        public string? App { get; set; }
+    }
+
     [HttpPost("documents/upload")]
     [Consumes("multipart/form-data")]
-    public async Task<IActionResult> UploadDocument([FromForm] IFormFile file, [FromForm] string? app, CancellationToken cancellationToken)
+    public async Task<IActionResult> UploadDocument([FromForm] UploadDocumentRequest request, CancellationToken cancellationToken)
     {
-        if (file == null || file.Length == 0)
+        if (request.File == null || request.File.Length == 0)
             return BadRequest(new ErrorResponse { Message = "Nenhum arquivo enviado." });
 
         try
         {
-            using var stream = file.OpenReadStream();
-            var response = await _knowledgeService.UploadAsync(stream, file.FileName, app, cancellationToken);
+            using var stream = request.File.OpenReadStream();
+            var response = await _knowledgeService.UploadAsync(stream, request.File.FileName, request.App, cancellationToken);
             return Ok(response);
         }
         catch (Exception ex)
@@ -89,17 +95,22 @@ public class KnowledgeDocumentsController : ControllerBase
         }
     }
 
+    public class ReplaceDocumentRequest
+    {
+        public IFormFile File { get; set; } = null!;
+    }
+
     [HttpPost("documents/{id}/replace")]
     [Consumes("multipart/form-data")]
-    public async Task<IActionResult> ReplaceDocument(Guid id, [FromForm] IFormFile file, CancellationToken cancellationToken)
+    public async Task<IActionResult> ReplaceDocument(Guid id, [FromForm] ReplaceDocumentRequest request, CancellationToken cancellationToken)
     {
-        if (file == null || file.Length == 0)
+        if (request.File == null || request.File.Length == 0)
             return BadRequest(new ErrorResponse { Message = "Nenhum arquivo enviado." });
 
         try
         {
-            using var stream = file.OpenReadStream();
-            var response = await _knowledgeService.ReplaceAsync(id, stream, file.FileName, cancellationToken);
+            using var stream = request.File.OpenReadStream();
+            var response = await _knowledgeService.ReplaceAsync(id, stream, request.File.FileName, cancellationToken);
             return Ok(response);
         }
         catch (Exception ex)
