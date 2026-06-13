@@ -5,4 +5,5 @@ class RecursosApp {
   static const usuariosCadastrar = 'usuarios.cadastrar';
   static const usuariosEditar = 'usuarios.editar';
   static const usuariosDesativar = 'usuarios.desativar';
+  static const knowledgeGerenciar = 'knowledge.gerenciar';
 }

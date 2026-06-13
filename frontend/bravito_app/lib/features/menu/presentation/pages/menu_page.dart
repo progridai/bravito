@@ -18,10 +18,14 @@ class MenuPage extends ConsumerWidget {
     final authState = ref.watch(authControllerProvider);
     bool podeVerUsuarios = false;
     bool podeVerConversas = false;
+    bool podeVerKnowledge = false;
 
     if (authState is AuthAuthenticated) {
       podeVerUsuarios = authState.user.possuiRecurso(RecursosApp.usuariosVisualizar);
       podeVerConversas = authState.user.possuiRecurso(RecursosApp.conversasVisualizar);
+      // Preparado para futuro bloqueio de permissão
+      // podeVerKnowledge = authState.user.possuiRecurso(RecursosApp.knowledgeGerenciar);
+      podeVerKnowledge = true; // Liberado nesta primeira versão
     }
 
     return BravitoAppScaffold(
@@ -73,6 +77,23 @@ class MenuPage extends ConsumerWidget {
                 trailing: const Icon(Icons.arrow_forward_ios, size: 16),
                 onTap: () {
                   context.push('/menu/conversas');
+                },
+              ),
+            ),
+          ],
+          if (podeVerKnowledge) ...[
+            const SizedBox(height: AppSpacing.sm),
+            BravitoCard(
+              padding: const EdgeInsets.all(0),
+              child: ListTile(
+                leading: const Icon(Icons.library_books, color: BravitoColors.dourado),
+                title: const Text(
+                  'Base de Conhecimento',
+                  style: TextStyle(fontWeight: FontWeight.bold),
+                ),
+                trailing: const Icon(Icons.arrow_forward_ios, size: 16),
+                onTap: () {
+                  context.push('/menu/knowledge');
                 },
               ),
             ),
