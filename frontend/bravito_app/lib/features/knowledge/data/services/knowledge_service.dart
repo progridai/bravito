@@ -132,6 +132,10 @@ class KnowledgeService {
 
           final fullMessage = '$msg$extraInfo (Status: ${error.response?.statusCode})';
 
+          if (step != null || details != null || traceId != null) {
+            print('Knowledge API Error -> Step: $step | Details: $details | TraceId: $traceId | Error: $error');
+          }
+
           return KnowledgeApiException(
             message: fullMessage,
             step: step,
@@ -140,7 +144,7 @@ class KnowledgeService {
           );
         } else {
           // O backend retornou algo, mas não é o JSON esperado (ex: string simples)
-          return Exception('$defaultMessage: ${error.response!.data}');
+          return Exception('$defaultMessage: Resposta não-JSON: "${error.response?.data}" (Status: ${error.response?.statusCode})');
         }
       }
       
@@ -148,7 +152,9 @@ class KnowledgeService {
       return Exception('$defaultMessage: ${error.message} (Status: ${error.response?.statusCode})');
     }
     
-    log('Knowledge API Unexpected Error', error: error, name: 'KnowledgeService');
-    return Exception('$defaultMessage: $error');
+    print('Knowledge API Unexpected Error: $error');
+    String errStr = error?.toString() ?? 'null';
+    if (errStr.trim().isEmpty) errStr = '<Erro vazio>';
+    return Exception('$defaultMessage: [$errStr]');
   }
 }
