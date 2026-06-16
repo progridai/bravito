@@ -13,6 +13,12 @@ O sistema de permissões do Bravito foi construído com uma granularidade fina u
 
 Quando você precisa criar um **novo menu** ou proteger uma **nova funcionalidade** (como a "Base de Conhecimento"), você deve criar um Recurso novo e associá-lo aos Perfis que terão direito a ele.
 
+> [!WARNING]
+> **Atenção (Perfis vs. Recursos na Interface):**
+> A tela de edição de usuários do aplicativo (onde existem os checkboxes) lista exclusivamente os **Perfis de Acesso** (Cargos). 
+> Criar um novo **Recurso** (como `base_conhecimento.acessar`) no banco de dados e atrelá-lo ao perfil de "Administrador" **NÃO** fará com que um novo checkbox apareça na interface de usuários. Qualquer usuário que tiver o checkbox de "Administrador" marcado já herdará o novo recurso automaticamente. 
+> *Se a sua regra de negócio exigir um checkbox separado apenas para esse módulo, você deverá criar um novo **Perfil de Acesso** (ex: "Gestor de Conhecimento") em vez de apenas adicionar o recurso a um perfil existente.*
+
 ---
 
 ## 🛠️ Passo a Passo para Proteger um Novo Módulo

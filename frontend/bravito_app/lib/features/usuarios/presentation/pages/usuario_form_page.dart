@@ -31,12 +31,40 @@ class _UsuarioFormPageState extends ConsumerState<UsuarioFormPage> {
   List<String> _selectedPerfis = [];
   String? _loadedUsuarioId;
 
+  bool _usernameModificadoManualmente = false;
+
   @override
   void initState() {
     super.initState();
+    _nomeController.addListener(_sugerirUsername);
     WidgetsBinding.instance.addPostFrameCallback((_) {
       ref.read(usuarioFormControllerProvider.notifier).inicializarFormulario(usuarioId: widget.usuarioId);
     });
+  }
+
+  void _sugerirUsername() {
+    if (widget.usuarioId == null && !_usernameModificadoManualmente) {
+      final nome = _nomeController.text.trim();
+      if (nome.isNotEmpty) {
+        var suggest = nome.toLowerCase();
+        suggest = suggest.replaceAll(RegExp(r'[áàãâä]'), 'a');
+        suggest = suggest.replaceAll(RegExp(r'[éèêë]'), 'e');
+        suggest = suggest.replaceAll(RegExp(r'[íìîï]'), 'i');
+        suggest = suggest.replaceAll(RegExp(r'[óòõôö]'), 'o');
+        suggest = suggest.replaceAll(RegExp(r'[úùûü]'), 'u');
+        suggest = suggest.replaceAll(RegExp(r'[ç]'), 'c');
+        suggest = suggest.replaceAll(RegExp(r'[^a-z0-9\s]'), '');
+        
+        final parts = suggest.split(RegExp(r'\s+'));
+        if (parts.length > 1) {
+          _usernameController.text = '${parts.first}.${parts.last}';
+        } else {
+          _usernameController.text = parts.first;
+        }
+      } else {
+        _usernameController.text = '';
+      }
+    }
   }
 
   @override
@@ -143,6 +171,7 @@ class _UsuarioFormPageState extends ConsumerState<UsuarioFormPage> {
                   labelText: 'Nome de usuário (Login)',
                   prefixIcon: Icon(Icons.account_circle),
                 ),
+                onChanged: (_) => _usernameModificadoManualmente = true,
                 validator: (val) => val == null || val.isEmpty ? 'Campo obrigatório' : null,
               ),
               const SizedBox(height: AppSpacing.md),
