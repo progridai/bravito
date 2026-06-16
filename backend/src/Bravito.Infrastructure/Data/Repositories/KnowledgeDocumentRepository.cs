@@ -50,6 +50,12 @@ public class KnowledgeDocumentRepository : IKnowledgeDocumentRepository
         await _dbContext.SaveChangesAsync(cancellationToken);
     }
 
+    public async Task DeleteAsync(KnowledgeDocument document, CancellationToken cancellationToken = default)
+    {
+        _dbContext.KnowledgeDocuments.Remove(document);
+        await _dbContext.SaveChangesAsync(cancellationToken);
+    }
+
     public async Task BeginTransactionAsync(CancellationToken cancellationToken = default)
     {
         if (_currentTransaction != null)

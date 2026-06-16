@@ -12,6 +12,7 @@ public interface IKnowledgeDocumentRepository
     Task<List<KnowledgeDocument>> ListAsync(string? app = null, bool includeDeleted = false, CancellationToken cancellationToken = default);
     Task AddAsync(KnowledgeDocument document, CancellationToken cancellationToken = default);
     Task UpdateAsync(KnowledgeDocument document, CancellationToken cancellationToken = default);
+    Task DeleteAsync(KnowledgeDocument document, CancellationToken cancellationToken = default);
     Task BeginTransactionAsync(CancellationToken cancellationToken = default);
     Task CommitTransactionAsync(CancellationToken cancellationToken = default);
     Task RollbackTransactionAsync(CancellationToken cancellationToken = default);

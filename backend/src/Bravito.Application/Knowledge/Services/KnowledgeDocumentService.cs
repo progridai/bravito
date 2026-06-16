@@ -227,10 +227,7 @@ public class KnowledgeDocumentService : IKnowledgeDocumentService
         {
             int deletedChunks = await _vectorRepository.DeleteChunksByDocumentIdAsync(id, cancellationToken);
 
-            doc.Status = KnowledgeDocumentStatus.Deleted.ToString().ToLowerInvariant();
-            doc.DeletedAt = DateTime.UtcNow;
-
-            await _documentRepository.UpdateAsync(doc, cancellationToken);
+            await _documentRepository.DeleteAsync(doc, cancellationToken);
             await _documentRepository.CommitTransactionAsync(cancellationToken);
 
             try { await _storageService.DeleteFileAsync(doc.FilePath); } catch { /* ignore if fails to delete physically */ }
