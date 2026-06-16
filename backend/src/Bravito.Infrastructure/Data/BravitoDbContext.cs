@@ -62,7 +62,8 @@ namespace Bravito.Infrastructure.Data
                 new Recurso { Id = Guid.Parse("a0000000-0000-0000-0000-000000000003"), Codigo = "usuarios.visualizar", Nome = "Visualizar Usuários", Descricao = "Permite visualizar lista de usuários", Ativo = true, DataCriacao = DateTime.UtcNow },
                 new Recurso { Id = Guid.Parse("a0000000-0000-0000-0000-000000000004"), Codigo = "usuarios.cadastrar", Nome = "Cadastrar Usuários", Descricao = "Permite cadastrar novos usuários", Ativo = true, DataCriacao = DateTime.UtcNow },
                 new Recurso { Id = Guid.Parse("a0000000-0000-0000-0000-000000000005"), Codigo = "usuarios.editar", Nome = "Editar Usuários", Descricao = "Permite editar usuários existentes", Ativo = true, DataCriacao = DateTime.UtcNow },
-                new Recurso { Id = Guid.Parse("a0000000-0000-0000-0000-000000000006"), Codigo = "usuarios.desativar", Nome = "Desativar Usuários", Descricao = "Permite desativar/ativar usuários", Ativo = true, DataCriacao = DateTime.UtcNow }
+                new Recurso { Id = Guid.Parse("a0000000-0000-0000-0000-000000000006"), Codigo = "usuarios.desativar", Nome = "Desativar Usuários", Descricao = "Permite desativar/ativar usuários", Ativo = true, DataCriacao = DateTime.UtcNow },
+                new Recurso { Id = Guid.Parse("a0000000-0000-0000-0000-000000000007"), Codigo = "base_conhecimento.acessar", Nome = "Acessar Base de Conhecimento", Descricao = "Permite acessar a Base de Conhecimento", Ativo = true, DataCriacao = DateTime.UtcNow }
             };
 
             modelBuilder.Entity<Recurso>().HasData(recursos);
