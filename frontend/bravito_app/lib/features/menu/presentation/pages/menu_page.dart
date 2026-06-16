@@ -23,9 +23,7 @@ class MenuPage extends ConsumerWidget {
     if (authState is AuthAuthenticated) {
       podeVerUsuarios = authState.user.possuiRecurso(RecursosApp.usuariosVisualizar);
       podeVerConversas = authState.user.possuiRecurso(RecursosApp.conversasVisualizar);
-      // Preparado para futuro bloqueio de permissão
-      // podeVerKnowledge = authState.user.possuiRecurso(RecursosApp.knowledgeGerenciar);
-      podeVerKnowledge = true; // Liberado nesta primeira versão
+      podeVerKnowledge = authState.user.possuiRecurso(RecursosApp.baseConhecimentoAcessar);
     }
 
     return BravitoAppScaffold(
