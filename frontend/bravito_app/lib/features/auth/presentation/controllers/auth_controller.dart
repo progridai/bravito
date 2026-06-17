@@ -64,7 +64,7 @@ class AuthController extends Notifier<AuthState> {
               );
               
               if (!didAuthenticate) {
-                state = AuthUnauthenticated();
+                state = AuthUnauthenticated(canRetryBiometric: true);
                 return;
               }
             } on PlatformException catch (e) {

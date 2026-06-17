@@ -85,6 +85,24 @@ class LoginPage extends ConsumerWidget {
                       ref.read(authControllerProvider.notifier).login();
                     },
                   ),
+                  if (authState is AuthUnauthenticated && authState.canRetryBiometric) ...[
+                    const SizedBox(height: AppSpacing.md),
+                    OutlinedButton.icon(
+                      onPressed: isLoading
+                          ? null
+                          : () {
+                              ref.read(authControllerProvider.notifier).checkAuthStatus(requireBiometric: true);
+                            },
+                      icon: const Icon(Icons.fingerprint),
+                      label: const Text('Entrar com Biometria'),
+                      style: OutlinedButton.styleFrom(
+                        padding: const EdgeInsets.symmetric(vertical: 16),
+                        shape: RoundedRectangleBorder(
+                          borderRadius: BorderRadius.circular(8),
+                        ),
+                      ),
+                    ),
+                  ],
                 ],
               ),
             ),

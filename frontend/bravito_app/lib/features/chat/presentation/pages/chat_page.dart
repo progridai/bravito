@@ -42,15 +42,13 @@ class _ChatPageState extends ConsumerState<ChatPage> {
   }
 
   void _rolarParaFinal() {
-    Future.delayed(const Duration(milliseconds: 100), () {
-      if (_scrollController.hasClients) {
-        _scrollController.animateTo(
-          _scrollController.position.maxScrollExtent + 200,
-          duration: const Duration(milliseconds: 300),
-          curve: Curves.easeOut,
-        );
-      }
-    });
+    if (_scrollController.hasClients && _scrollController.offset > 0) {
+      _scrollController.animateTo(
+        0.0,
+        duration: const Duration(milliseconds: 300),
+        curve: Curves.easeOut,
+      );
+    }
   }
 
   @override
@@ -123,11 +121,13 @@ class _ChatPageState extends ConsumerState<ChatPage> {
                     ),
                   )
                 : ListView.builder(
+                    reverse: true,
                     controller: _scrollController,
                     padding: const EdgeInsets.all(AppSpacing.md),
                     itemCount: chatState.mensagens.length,
                     itemBuilder: (context, index) {
-                      final mensagem = chatState.mensagens[index];
+                      final reversedIndex = chatState.mensagens.length - 1 - index;
+                      final mensagem = chatState.mensagens[reversedIndex];
                       return MensagemChatBubble(mensagem: mensagem);
                     },
                   ),
