@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:flutter/services.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 
 import '../../../../core/constants/app_colors.dart';
@@ -155,13 +156,25 @@ class _ChatPageState extends ConsumerState<ChatPage> {
             child: Row(
               children: [
                 Expanded(
-                  child: TextField(
-                    controller: _textController,
-                    onSubmitted: (_) => _enviarMensagem(),
-                    keyboardType: TextInputType.multiline,
-                    textInputAction: TextInputAction.newline,
-                    minLines: 1,
-                    maxLines: 5,
+                  child: Focus(
+                    onKeyEvent: (node, event) {
+                      if (event is KeyDownEvent && event.logicalKey == LogicalKeyboardKey.enter) {
+                        if (!HardwareKeyboard.instance.isShiftPressed) {
+                          if (!chatState.carregando) {
+                            _enviarMensagem();
+                          }
+                          return KeyEventResult.handled;
+                        }
+                      }
+                      return KeyEventResult.ignored;
+                    },
+                    child: TextField(
+                      controller: _textController,
+                      onSubmitted: (_) => _enviarMensagem(),
+                      keyboardType: TextInputType.multiline,
+                      textInputAction: TextInputAction.newline,
+                      minLines: 1,
+                      maxLines: 5,
                     decoration: InputDecoration(
                       hintText: 'Digite sua mensagem...',
                       border: OutlineInputBorder(
@@ -177,6 +190,7 @@ class _ChatPageState extends ConsumerState<ChatPage> {
                     ),
                   ),
                 ),
+              ),
                 const SizedBox(width: AppSpacing.sm),
                 CircleAvatar(
                   backgroundColor: BravitoColors.dourado,

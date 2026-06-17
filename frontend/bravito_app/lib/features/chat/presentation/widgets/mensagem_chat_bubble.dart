@@ -1,6 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
+import 'package:flutter_markdown/flutter_markdown.dart';
 
 import '../../../../core/constants/app_colors.dart';
 import '../../../../core/constants/app_spacing.dart';
@@ -100,11 +101,17 @@ class MensagemChatBubble extends ConsumerWidget {
           child: Column(
             crossAxisAlignment: CrossAxisAlignment.start,
             children: [
-              Text(
-                mensagem.texto,
-                style: TextStyle(
-                  color: textColor,
-                  fontSize: 15,
+              MarkdownBody(
+                data: mensagem.texto,
+                selectable: true,
+                styleSheet: MarkdownStyleSheet(
+                  p: TextStyle(color: textColor, fontSize: 15),
+                  strong: TextStyle(color: textColor, fontSize: 15, fontWeight: FontWeight.bold),
+                  em: TextStyle(color: textColor, fontSize: 15, fontStyle: FontStyle.italic),
+                  listBullet: TextStyle(color: textColor, fontSize: 15),
+                  h1: TextStyle(color: textColor, fontSize: 24, fontWeight: FontWeight.bold),
+                  h2: TextStyle(color: textColor, fontSize: 22, fontWeight: FontWeight.bold),
+                  h3: TextStyle(color: textColor, fontSize: 20, fontWeight: FontWeight.bold),
                 ),
               ),
               if (mensagem.erro != null) ...[

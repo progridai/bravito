@@ -54,6 +54,7 @@ namespace Bravito.Infrastructure.Integrations.N8n
                 
                 string textoResposta = string.Empty;
                 bool sucesso = true;
+                string? errorCode = null;
 
                 try
                 {
@@ -62,32 +63,20 @@ namespace Bravito.Infrastructure.Integrations.N8n
 
                     if (root.ValueKind == JsonValueKind.Object)
                     {
+                        if (root.TryGetProperty("success", out var successElement) && (successElement.ValueKind == JsonValueKind.True || successElement.ValueKind == JsonValueKind.False))
+                        {
+                            sucesso = successElement.GetBoolean();
+                        }
+
+                        if (root.TryGetProperty("errorCode", out var errElement) && errElement.ValueKind == JsonValueKind.String)
+                        {
+                            errorCode = errElement.GetString();
+                        }
+
                         if (root.TryGetProperty("message", out var msgElement) && msgElement.ValueKind == JsonValueKind.String)
                         {
                             textoResposta = msgElement.GetString() ?? string.Empty;
-                            if (root.TryGetProperty("success", out var successElement)) sucesso = successElement.GetBoolean();
                         }
-                        else if (root.TryGetProperty("resposta", out var respElement) && respElement.ValueKind == JsonValueKind.String)
-                        {
-                            textoResposta = respElement.GetString() ?? string.Empty;
-                            if (root.TryGetProperty("sucesso", out var sucessoElement)) sucesso = sucessoElement.GetBoolean();
-                        }
-                        else if (root.TryGetProperty("output", out var outElement) && outElement.ValueKind == JsonValueKind.String)
-                        {
-                            textoResposta = outElement.GetString() ?? string.Empty;
-                        }
-                        else if (root.TryGetProperty("text", out var textElement) && textElement.ValueKind == JsonValueKind.String)
-                        {
-                            textoResposta = textElement.GetString() ?? string.Empty;
-                        }
-                        else
-                        {
-                            textoResposta = responseString; // JSON genérico
-                        }
-                    }
-                    else if (root.ValueKind == JsonValueKind.Array && root.GetArrayLength() > 0)
-                    {
-                        textoResposta = root[0].ToString(); // Array JSON
                     }
                     else
                     {
@@ -96,21 +85,28 @@ namespace Bravito.Infrastructure.Integrations.N8n
                 }
                 catch (JsonException)
                 {
-                    // Não é JSON, provavelmente texto puro retornado pelo Respond to Webhook do n8n
                     textoResposta = responseString;
                 }
 
                 if (string.IsNullOrWhiteSpace(textoResposta))
                 {
-                    textoResposta = "✅ O n8n recebeu a mensagem com sucesso, mas retornou uma resposta vazia.";
+                    textoResposta = "Não consegui processar sua solicitação agora. Tente novamente em alguns instantes.";
                 }
 
-                _logger.LogInformation("Mensagem processada pelo assistente com sucesso. UsuarioId: {UsuarioId}", usuario.Id);
+                if (!sucesso)
+                {
+                    _logger.LogWarning("n8n retornou sucesso = false. ErrorCode: {ErrorCode}. Message: {Message}", errorCode, textoResposta);
+                }
+                else
+                {
+                    _logger.LogInformation("Mensagem processada pelo assistente com sucesso. UsuarioId: {UsuarioId}", usuario.Id);
+                }
 
                 return new EnviarMensagemChatResponse
                 {
                     Sucesso = sucesso,
                     Resposta = textoResposta,
+                    MensagemErro = sucesso ? null : textoResposta,
                     ConversaId = request.ConversaId
                 };
             }
